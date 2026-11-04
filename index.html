@@ -71,7 +71,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 .flip .face.back{transform:rotateY(180deg) translateZ(1px);padding-bottom:0}
 .flip .face.back .hd .dot{background:#E7F1EA;color:#2F6047}
 .namecard{display:flex;gap:15px;align-items:center;margin-top:14px}
-.namecard img{width:92px;height:122px;object-fit:cover;border-radius:6px;background:#EDEAE1;flex:none}
+.namecard .nphoto{width:100px;height:132px;border-radius:4px;flex:none;background:#EDEAE1 url('assets/img/speakers/s01.jpg') center/cover no-repeat;box-shadow:0 0 0 1px rgba(42,15,20,.08)}
 .namecard .ninfo{min-width:0}
 .namecard .ninfo b{display:block;font-size:21px;font-weight:700;letter-spacing:-.01em}
 .namecard .ninfo em{display:block;font-style:normal;font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}
@@ -316,6 +316,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 }
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
+<link rel="preload" as="image" href="assets/img/speakers/s01.jpg">
 <link rel="stylesheet" href="assets/motion.css">
 </head>
 <body>
@@ -370,7 +371,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
           <span class="badge">名片</span>
           <div class="hd"><div class="dot">✎</div><div><b>宣讲人</b><em>预约后由团里统一指派</em></div></div>
           <div class="namecard">
-            <img src="assets/img/speakers/s01.jpg" alt="林知远">
+            <div class="nphoto" role="img" aria-label="林知远证件照"></div>
             <div class="ninfo">
               <b>林知远</b>
               <em>西安交通大学学生微宣讲团</em>
