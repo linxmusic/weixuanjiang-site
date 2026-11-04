@@ -52,9 +52,17 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 /* 分团 */
 .br-list{display:flex;flex-direction:column;gap:9px}
 .br-item{display:flex;gap:12px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:12px;
-  background:rgba(255,255,255,.66);text-decoration:none;color:inherit}
-.br-item .seal{flex:none;width:46px;height:46px;border:2px solid var(--c);border-radius:3px;color:var(--c);
+  background:rgba(255,255,255,.66);text-decoration:none;color:inherit;width:100%;text-align:left;
+  font-family:inherit;cursor:pointer}
+.br-item .br-txt{min-width:0;flex:1}
+.br-item .seal,.br-sheet-hd .seal{flex:none;width:46px;height:46px;border:2px solid var(--c);border-radius:3px;color:var(--c);
   display:flex;align-items:center;justify-content:center;text-align:center;font-family:'LXGW',serif;font-size:10.5px;line-height:1.3;transform:rotate(-3deg)}
+.br-sheet-hd{display:flex;gap:12px;align-items:center;padding-right:36px}
+.br-sheet-hd h4{font-size:17px;font-weight:700}
+.br-sheet-hd .sub{font-size:11.5px;color:var(--muted);margin-top:3px}
+.bd-stats{display:flex;gap:26px;margin:16px 0;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bd-stats b{font-size:21px;font-weight:700}
+.bd-stats span{font-size:11px;color:var(--muted);margin-left:4px}
 .br-item b{display:block;font-size:13.5px;letter-spacing:-.01em}
 .br-item em{display:block;font-style:normal;font-size:10.5px;color:var(--muted);margin-top:3px}
 .br-item p{font-size:11.5px;color:var(--muted);line-height:1.65;margin-top:6px}
@@ -314,15 +322,41 @@ $('#topics').addEventListener('click', e => {
 
 /* ── 分团 ── */
 const BR = (window.SITE && window.SITE.branches) || [];
-$('#brList').innerHTML = BR.map(b => `
-  <a class="br-item" href="#cols" data-go="cols">
+$('#brList').innerHTML = BR.map((b, i) => `
+  <button class="br-item" type="button" data-br="${i}">
     <span class="seal" style="--c:${b.color}">${esc(b.short).replace(' · ','<br>')}</span>
-    <div>
+    <span class="br-txt">
       <b>${esc(b.name)}</b>
       <em>2026 年 6–8 月 · ${b.sessions} 场 / ${b.people} 人次</em>
       <p>${esc(b.bio)}</p>
+    </span>
+  </button>`).join('');
+
+function openBranch(i){
+  const b = BR[i];
+  if(!b) return;
+  $('#sheet').innerHTML = `
+    <button class="close" type="button" onclick="closeSheet()">✕</button>
+    <div class="br-sheet-hd">
+      <span class="seal" style="--c:${b.color}">${esc(b.short).replace(' · ','<br>')}</span>
+      <div><h4>${esc(b.name)}</h4><div class="sub">${esc(b.org)}</div></div>
     </div>
-  </a>`).join('');
+    <div class="bd-stats"><div><b>${b.sessions}</b><span>场宣讲</span></div><div><b>${b.people}</b><span>人次</span></div></div>
+    <p class="bio">${esc(b.bio)}</p>
+    <div class="topics">
+      <div><span>场合</span>${esc(b.where)}</div>
+      <div><span>宣讲人</span>${esc((b.members||[]).join('、'))}</div>
+      ${(b.topics||[]).map(t => `<div><span>题目</span>${esc(t)}</div>`).join('')}
+    </div>
+    <button class="go" type="button" data-go="cols" onclick="closeSheet()">看分团动态</button>`;
+  $('#sheetMask').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+$('#brList').addEventListener('click', e => {
+  const b = e.target.closest('[data-br]');
+  if(b) openBranch(+b.dataset.br);
+});
+window.openBranch = openBranch;
 
 /* ── 优秀宣讲人 ── */
 const SPK = (window.SITE && window.SITE.speakers) || [];

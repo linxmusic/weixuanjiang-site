@@ -123,7 +123,8 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 .hd-note{font-size:12.5px;color:var(--muted)}
 .br-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
 .br{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.62);
-  padding:20px;text-decoration:none;color:inherit;transition:border-color .25s,transform .25s,background .25s}
+  padding:20px;text-decoration:none;color:inherit;transition:border-color .25s,transform .25s,background .25s;
+  font-family:inherit;text-align:left;width:100%;cursor:pointer}
 .br:hover{border-color:rgba(42,15,20,.3);transform:translateY(-2px);background:#fff}
 .br-seal{flex:none;width:64px;height:64px;border:2px solid var(--c,#9E1B22);border-radius:4px;color:var(--c,#9E1B22);
   display:flex;align-items:center;justify-content:center;text-align:center;font-family:'LXGW',serif;font-size:13px;line-height:1.35;
@@ -165,6 +166,19 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 .spk-detail .tk-list span{color:var(--muted);flex:none}
 .spk-detail .go{width:100%;margin-top:16px;background:var(--ink);color:#fff;border:0;border-radius:9px;padding:13px;font-size:14px;font-weight:600;cursor:pointer}
 .spk-detail .fine2{font-size:11px;color:var(--muted);margin-top:9px;line-height:1.7}
+
+/* 分团详情 */
+.br-detail .br-detail-hd{display:flex;gap:14px;align-items:center}
+.br-detail h4{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.br-detail .sub{font-size:12px;color:var(--muted);margin-top:4px}
+.bd-stats{display:flex;gap:34px;margin:18px 0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bd-stats b{font-size:24px;font-weight:700;letter-spacing:-.02em}
+.bd-stats span{font-size:11.5px;color:var(--muted);margin-left:5px}
+.br-detail p{font-size:13px;line-height:1.85;color:var(--muted);margin-top:12px}
+.br-detail .tk-list{margin-top:14px;border-top:1px solid var(--line)}
+.br-detail .tk-list div{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.6}
+.br-detail .tk-list span{color:var(--muted);flex:none;width:64px}
+.br-detail .go{display:block;text-align:center;width:100%;margin-top:16px;background:var(--ink);color:#fff;border:0;border-radius:9px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none}
 
 /* ── 结尾 ── */
 .cta{margin:70px 0 0;padding:52px 0;border-top:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;gap:30px}
@@ -644,16 +658,50 @@ function renderBranches(){
   const box = document.getElementById('brGrid');
   const list = (window.SITE && SITE.branches) || [];
   if(!box || !list.length) return;
-  box.innerHTML = list.map(b => `
-    <a class="br" href="#columns">
+  box.innerHTML = list.map((b, i) => `
+    <button class="br" type="button" data-br="${i}" aria-label="查看 ${escHtml(b.name)}">
       <span class="br-seal" style="--c:${b.color}">${escHtml(b.short).replace(' · ','<br>')}</span>
-      <div class="br-main">
+      <span class="br-main">
         <b>${escHtml(b.name)}</b>
         <em>2026 年 6–8 月 · 宣讲 ${b.sessions} 场 / ${b.people} 人次</em>
         <p>${escHtml(b.bio)}</p>
-      </div>
-    </a>`).join('');
+      </span>
+    </button>`).join('');
+  box.querySelectorAll('[data-br]').forEach(el => {
+    el.addEventListener('click', () => openBranch(+el.dataset.br));
+  });
 }
+
+function openBranch(i){
+  const b = ((window.SITE && SITE.branches) || [])[i];
+  if(!b) return;
+  pauseSpeakers();
+  title.textContent = '分团介绍';
+  sub.textContent = '数据来自《学生宣讲工作月报（2026 年 6-8 月）》的宣讲统计。';
+  body.innerHTML = `
+    <div class="br-detail">
+      <div class="br-detail-hd">
+        <span class="br-seal" style="--c:${b.color}">${escHtml(b.short).replace(' · ','<br>')}</span>
+        <div>
+          <h4>${escHtml(b.name)}</h4>
+          <div class="sub">${escHtml(b.org)}</div>
+        </div>
+      </div>
+      <div class="bd-stats">
+        <div><b>${b.sessions}</b><span>场宣讲</span></div>
+        <div><b>${b.people}</b><span>人次</span></div>
+      </div>
+      <p>${escHtml(b.bio)}</p>
+      <div class="tk-list">
+        <div><span>主要场合</span>${escHtml(b.where)}</div>
+        <div><span>宣讲人</span>${escHtml((b.members||[]).join('、'))}</div>
+        ${(b.topics||[]).map(t => `<div><span>代表题目</span>${escHtml(t)}</div>`).join('')}
+      </div>
+      <a class="go" href="#columns" onclick="closeMask()">看分团动态 →</a>
+    </div>`;
+  openMask();
+}
+window.openBranch = openBranch;
 
 /* 优秀宣讲人：连续滚动 + 鼠标/触屏拖拽 */
 const SPK = (window.SITE && SITE.speakers) || [];
@@ -718,15 +766,21 @@ function resumeSpeakers(){ spkPaused = false; }
 function initSpkDrag(){
   const box = document.querySelector('.spk-box');
   if(!box) return;
+  let spkCaptured = false, spkPointerId = null;
   box.addEventListener('pointerdown', e => {
-    spkDragging = true; spkDragMoved = 0;
+    spkDragging = true; spkDragMoved = 0; spkCaptured = false;
+    spkPointerId = e.pointerId;
     spkDragX = e.clientX; spkDragOffset = spkOffset;
-    if(box.setPointerCapture) box.setPointerCapture(e.pointerId);
+    // 先不抓指针：一抓，后面的 click 会落到 box 上，卡片就点不开了
   });
   box.addEventListener('pointermove', e => {
     if(!spkDragging) return;
     const dx = e.clientX - spkDragX;
     spkDragMoved = Math.max(spkDragMoved, Math.abs(dx));
+    if(!spkCaptured && Math.abs(dx) > 6){
+      spkCaptured = true;
+      if(box.setPointerCapture) { try { box.setPointerCapture(spkPointerId); } catch(err){} }
+    }
     spkOffset = spkDragOffset - dx;
     if(spkSetW > 0) {
       while(spkOffset >= spkSetW) spkOffset -= spkSetW;
@@ -737,6 +791,10 @@ function initSpkDrag(){
     if(!spkDragging) return;
     spkDragging = false;
     spkDragEnd = Date.now();
+    if(spkCaptured && box.releasePointerCapture && spkPointerId !== null){
+      try { box.releasePointerCapture(spkPointerId); } catch(err){}
+      spkCaptured = false;
+    }
   };
   box.addEventListener('pointerup', end);
   box.addEventListener('pointercancel', end);

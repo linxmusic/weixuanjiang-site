@@ -240,7 +240,7 @@
     ctx.restore();
 
     /* 环上的宣讲关键词：跟着环走，但字保持水平 */
-    if (labels.length) {
+    if (!mobile && labels.length) {
       ctx.save();
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
