@@ -659,17 +659,14 @@ function renderBranches(){
   const list = (window.SITE && SITE.branches) || [];
   if(!box || !list.length) return;
   box.innerHTML = list.map((b, i) => `
-    <button class="br" type="button" data-br="${i}" aria-label="查看 ${escHtml(b.name)}">
+    <a class="br" href="branch.html?b=${i}" aria-label="查看 ${escHtml(b.name)}">
       <span class="br-seal" style="--c:${b.color}">${escHtml(b.short).replace(' · ','<br>')}</span>
       <span class="br-main">
         <b>${escHtml(b.name)}</b>
         <em>2026 年 6–8 月 · 宣讲 ${b.sessions} 场 / ${b.people} 人次</em>
         <p>${escHtml(b.bio)}</p>
       </span>
-    </button>`).join('');
-  box.querySelectorAll('[data-br]').forEach(el => {
-    el.addEventListener('click', () => openBranch(+el.dataset.br));
-  });
+    </a>`).join('');
 }
 
 function openBranch(i){

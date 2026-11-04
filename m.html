@@ -323,40 +323,14 @@ $('#topics').addEventListener('click', e => {
 /* ── 分团 ── */
 const BR = (window.SITE && window.SITE.branches) || [];
 $('#brList').innerHTML = BR.map((b, i) => `
-  <button class="br-item" type="button" data-br="${i}">
+  <a class="br-item" href="branch.html?b=${i}">
     <span class="seal" style="--c:${b.color}">${esc(b.short).replace(' · ','<br>')}</span>
     <span class="br-txt">
       <b>${esc(b.name)}</b>
       <em>2026 年 6–8 月 · ${b.sessions} 场 / ${b.people} 人次</em>
       <p>${esc(b.bio)}</p>
     </span>
-  </button>`).join('');
-
-function openBranch(i){
-  const b = BR[i];
-  if(!b) return;
-  $('#sheet').innerHTML = `
-    <button class="close" type="button" onclick="closeSheet()">✕</button>
-    <div class="br-sheet-hd">
-      <span class="seal" style="--c:${b.color}">${esc(b.short).replace(' · ','<br>')}</span>
-      <div><h4>${esc(b.name)}</h4><div class="sub">${esc(b.org)}</div></div>
-    </div>
-    <div class="bd-stats"><div><b>${b.sessions}</b><span>场宣讲</span></div><div><b>${b.people}</b><span>人次</span></div></div>
-    <p class="bio">${esc(b.bio)}</p>
-    <div class="topics">
-      <div><span>场合</span>${esc(b.where)}</div>
-      <div><span>宣讲人</span>${esc((b.members||[]).join('、'))}</div>
-      ${(b.topics||[]).map(t => `<div><span>题目</span>${esc(t)}</div>`).join('')}
-    </div>
-    <button class="go" type="button" data-go="cols" onclick="closeSheet()">看分团动态</button>`;
-  $('#sheetMask').classList.add('on');
-  document.body.style.overflow = 'hidden';
-}
-$('#brList').addEventListener('click', e => {
-  const b = e.target.closest('[data-br]');
-  if(b) openBranch(+b.dataset.br);
-});
-window.openBranch = openBranch;
+  </a>`).join('');
 
 /* ── 优秀宣讲人 ── */
 const SPK = (window.SITE && window.SITE.speakers) || [];

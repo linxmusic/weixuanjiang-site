@@ -46,6 +46,56 @@ a{color:inherit}
 .stat b{display:block;font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .stat span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
 
+.head p.subnote{font-size:11px;color:#9A8F88;margin-top:3px}
+
+/* 日历台账 */
+.calbox{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px 18px}
+.calhd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.calhd b{font-size:16px;letter-spacing:-.01em;margin-right:auto}
+.calbtn{border:1px solid rgba(42,15,20,.14);background:#fff;border-radius:8px;height:30px;min-width:30px;padding:0 8px;
+  font-size:15px;line-height:1;cursor:pointer;color:var(--ink);font-family:inherit}
+.calbtn:hover{border-color:rgba(42,15,20,.4)}
+.caltoday{font-size:12px}
+.calclear{font-size:12px;color:var(--accent);cursor:pointer;margin-left:4px}
+.calclear:empty{display:none}
+.calweek{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
+.calweek span{font-size:11px;color:var(--muted);text-align:center;letter-spacing:.06em}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.calday{min-height:74px;border:1px solid var(--line);border-radius:8px;padding:6px 7px;background:#FDFDFB;
+  cursor:pointer;position:relative;transition:border-color .2s,background .2s}
+.calday:hover{border-color:rgba(42,15,20,.3)}
+.calday.empty{background:transparent;border-color:transparent;cursor:default}
+.calday .d{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.calday.today .d{color:var(--accent);font-weight:700}
+.calday.has{background:#FFFDF4}
+.calday.on{border-color:var(--ink);box-shadow:0 0 0 2px rgba(255,228,92,.7) inset}
+.calday .cnt{position:absolute;right:7px;top:6px;font-size:11px;font-weight:700;color:var(--ink)}
+.calday .dots{display:flex;gap:3px;flex-wrap:wrap;margin-top:7px}
+.calday .dot{width:6px;height:6px;border-radius:50%}
+.calday .lbl{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 访问码 */
+.gate{position:fixed;inset:0;z-index:300;background:rgba(248,250,247,.97);display:flex;align-items:center;justify-content:center;padding:24px}
+.gate.off{display:none}
+.gatebox{width:100%;max-width:330px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 26px;
+  text-align:center;box-shadow:0 30px 60px -40px rgba(42,15,20,.5)}
+.gatebox img{width:40px;height:40px}
+.gatebox h2{font-size:19px;margin-top:10px;letter-spacing:-.01em}
+.gatebox p{font-size:12px;color:var(--muted);margin-top:6px}
+.gatebox input{width:100%;margin-top:18px;border:1px solid rgba(42,15,20,.18);border-radius:10px;padding:12px;
+  font-size:16px;text-align:center;letter-spacing:.2em;font-family:inherit;background:#FDFDFB;color:var(--ink)}
+.gatebox input:focus{outline:2px solid rgba(255,228,92,.9);outline-offset:1px}
+.gatebox button{width:100%;margin-top:12px;border:0;background:var(--ink);color:#fff;border-radius:10px;padding:12px;
+  font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.gateerr{font-size:12px;color:var(--accent);margin-top:10px;min-height:16px}
+
+@media (max-width:900px){
+  .calbox{padding:13px}
+  .calday{min-height:56px;padding:4px 5px}
+  .calday .lbl{display:none}
+  .calday .cnt{font-size:10px;right:5px;top:4px}
+}
+
 .bar{display:flex;align-items:center;gap:10px;margin:26px 0 10px}
 .bar input[type=search]{flex:1;max-width:280px;border:1px solid rgba(42,15,20,.16);border-radius:9px;padding:9px 12px;font-size:13px;font-family:inherit;background:#fff}
 .bar select{border:1px solid rgba(42,15,20,.16);border-radius:9px;padding:9px 10px;font-size:13px;font-family:inherit;background:#fff}
@@ -95,6 +145,16 @@ a{color:inherit}
 </style>
 </head>
 <body>
+<div class="gate" id="gate">
+  <div class="gatebox">
+    <img src="assets/img/logo-mark.png" alt="">
+    <h2>预约管理</h2>
+    <p>请输入访问码</p>
+    <input id="gateInput" type="password" inputmode="numeric" placeholder="访问码" autocomplete="off">
+    <button id="gateBtn" type="button">进入</button>
+    <div class="gateerr" id="gateErr"></div>
+  </div>
+</div>
 <div class="wrap">
 
   <nav class="nav">
@@ -107,7 +167,8 @@ a{color:inherit}
   <div class="head">
     <div>
       <h1 id="hTitle">全部预约</h1>
-      <p>受理后由宣讲人确认，确认了才算排定。记录保存在本机浏览器，换设备看不到别人的单子。</p>
+      <p>受理、派讲师、确认，每一步都留在记录里。</p>
+      <p class="subnote">演示版：数据只保存在这台电脑的浏览器里。</p>
     </div>
     <div class="btns">
       <button class="btn" id="btnCsv">导出 CSV</button>
@@ -116,6 +177,18 @@ a{color:inherit}
   </div>
 
   <div class="stats" id="stats"></div>
+
+  <div class="calbox">
+    <div class="calhd">
+      <b id="calTitle">—</b>
+      <button class="calbtn" id="calPrev" aria-label="上个月">‹</button>
+      <button class="calbtn" id="calNext" aria-label="下个月">›</button>
+      <button class="calbtn caltoday" id="calToday">今天</button>
+      <span class="calclear" id="calClear"></span>
+    </div>
+    <div class="calweek"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+    <div class="calgrid" id="calGrid"></div>
+  </div>
 
   <div class="bar">
     <input type="search" id="q" placeholder="搜单位、联系人、单号…">
@@ -155,6 +228,9 @@ const save = list => { MEM = list.slice(); if(LS){ try { LS.setItem(KEY, JSON.st
 let filter = '全部';
 let keyword = '';
 let sortBy = 'new';
+let dayFilter = '';
+let calY = new Date().getFullYear();
+let calM = new Date().getMonth();
 
 const $ = id => document.getElementById(id);
 
@@ -186,6 +262,7 @@ function renderStats(all){
 function visible(all){
   let out = all.slice();
   if(filter !== '全部') out = out.filter(x => x.status === filter);
+  if(dayFilter) out = out.filter(x => x.date === dayFilter);
   if(keyword){
     const k = keyword.toLowerCase();
     out = out.filter(x => [x.no,x.org,x.name,x.topic,x.phone,x.place,x.speaker].join(' ').toLowerCase().includes(k));
@@ -196,9 +273,54 @@ function visible(all){
   return out;
 }
 
+function renderCal(all){
+  const map = {};
+  all.forEach(r => {
+    if(/^\d{4}-\d{2}-\d{2}$/.test(r.date || '')) (map[r.date] = map[r.date] || []).push(r);
+  });
+
+  $('calTitle').textContent = `${calY} 年 ${calM + 1} 月`;
+  const first = new Date(calY, calM, 1);
+  const start = (first.getDay() + 6) % 7;              // 周一为一周第一天
+  const days = new Date(calY, calM + 1, 0).getDate();
+  const t = new Date();
+  const todayStr = `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
+
+  let html = '';
+  for(let i = 0; i < start; i++) html += '<div class="calday empty"></div>';
+  for(let d = 1; d <= days; d++){
+    const ds = `${calY}-${String(calM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const recs = map[ds] || [];
+    const cls = ['calday'];
+    if(recs.length) cls.push('has');
+    if(ds === todayStr) cls.push('today');
+    if(ds === dayFilter) cls.push('on');
+    const dots = recs.slice(0, 5).map(r => {
+      const c = (COLOR[r.status] || ['#999'])[0];
+      return `<span class="dot" style="background:${c}"></span>`;
+    }).join('');
+    const lbl = recs.length ? esc(recs[0].org) + (recs.length > 1 ? ` +${recs.length - 1}` : '') : '';
+    html += `<div class="${cls.join(' ')}" data-date="${ds}" title="${recs.length ? recs.length + ' 条预约' : ''}">
+      <span class="d">${d}</span>
+      ${recs.length ? `<span class="cnt">${recs.length}</span><div class="dots">${dots}</div><div class="lbl">${lbl}</div>` : ''}
+    </div>`;
+  }
+  $('calGrid').innerHTML = html;
+
+  $('calGrid').querySelectorAll('[data-date]').forEach(el => {
+    el.addEventListener('click', () => {
+      const ds = el.dataset.date;
+      dayFilter = dayFilter === ds ? '' : ds;
+      render();
+    });
+  });
+  $('calClear').textContent = dayFilter ? '显示全部' : '';
+}
+
 function render(){
   const all = load();
   renderStats(all);
+  renderCal(all);
   const rows = visible(all);
   $('cnt').textContent = `共 ${rows.length} 条`;
   const box = $('list');
@@ -313,6 +435,47 @@ function seedDemo(){
   ]);
   render();
 }
+
+/* 日历翻页与清除 */
+$('calPrev').addEventListener('click', () => {
+  calM--; if(calM < 0){ calM = 11; calY--; }
+  render();
+});
+$('calNext').addEventListener('click', () => {
+  calM++; if(calM > 11){ calM = 0; calY++; }
+  render();
+});
+$('calToday').addEventListener('click', () => {
+  const d = new Date();
+  calY = d.getFullYear(); calM = d.getMonth();
+  dayFilter = `${calY}-${String(calM+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  render();
+});
+$('calClear').addEventListener('click', () => { if(dayFilter){ dayFilter = ''; render(); } });
+
+/* 访问码：只挡一下，不是真安全 */
+const GATE_KEY = 'xyyj_admin_ok';
+const ACCESS_CODE = '8888';
+function unlockAdmin(){
+  const g = $('gate');
+  if(g) g.classList.add('off');
+  document.body.style.overflow = '';
+}
+try {
+  if(sessionStorage.getItem(GATE_KEY) === '1') unlockAdmin();
+  else document.body.style.overflow = 'hidden';
+} catch(e){ document.body.style.overflow = 'hidden'; }
+$('gateBtn').addEventListener('click', () => {
+  const v = $('gateInput').value.trim();
+  if(v === ACCESS_CODE){
+    try { sessionStorage.setItem(GATE_KEY, '1'); } catch(e){}
+    unlockAdmin();
+  } else {
+    $('gateErr').textContent = '访问码不对';
+    $('gateInput').select();
+  }
+});
+$('gateInput').addEventListener('keydown', e => { if(e.key === 'Enter') $('gateBtn').click(); });
 
 render();
 </script>
