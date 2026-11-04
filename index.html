@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>学生微宣讲团 · 预约宣讲</title>
+<meta name="description" content="西安交通大学学生微宣讲团校内预约。校内单位免费，一场 5–60 分钟，线上或线下均可。">
+<style>
+@font-face{font-family:'LXGW';src:url('assets/fonts/lxgw-subset.woff2') format('woff2');font-display:swap}
+:root{
+  --bg:#F8FAF7; --ink:#2A0F14; --muted:#6E6A66; --line:rgba(42,15,20,.10);
+  --mark:#FFE45C; --accent:#D6303F; --card:#FFFFFF;
+  --sans:"HarmonyOS Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --serif:'LXGW',"Source Han Serif SC",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:
+    repeating-linear-gradient(90deg,rgba(42,15,20,.045) 0 1px,transparent 1px 108px),
+    repeating-linear-gradient(0deg,rgba(42,15,20,.045) 0 1px,transparent 1px 108px);
+  background-position:74px -12px;
+}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+button{font-family:inherit}
+
+/* ── 顶栏 ── */
+.nav{display:flex;align-items:center;gap:30px;padding:22px 0}
+.brand{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:700;letter-spacing:-.01em}
+.brand img{width:26px;height:26px}
+.links{display:flex;gap:22px;font-size:13.5px}
+.links a{display:flex;align-items:center;gap:7px;text-decoration:none;opacity:.86;transition:opacity .2s}
+.links a:hover{opacity:1}
+.links i{width:9px;height:9px;border-radius:2px;display:block}
+.c1 i{background:#2E7D5B}.c2 i{background:#3F628F}.c3 i{background:#E85F8A}.c4 i{background:#E8A33F}
+.nav .right{margin-left:auto;display:flex;align-items:center;gap:20px}
+.nav .right a{font-size:13.5px;text-decoration:none}
+.nav .mine{border:0;background:none;font-size:13.5px;cursor:pointer;padding:0;color:var(--ink)}
+.nav .book{background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-weight:500;border:0;font-size:13.5px;cursor:pointer}
+
+/* ── 首屏 ── */
+.hero{display:grid;grid-template-columns:1fr 372px;gap:60px;align-items:center;padding:34px 0 24px;min-height:62vh}
+h1{font-size:64px;line-height:1.06;font-weight:700;letter-spacing:-.035em}
+h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color:inherit;padding:0 2px}
+.lede{margin-top:24px;font-size:15px;line-height:1.8;color:var(--muted);max-width:31em}
+.acts{display:flex;align-items:center;gap:16px;margin-top:30px}
+.btn-p{background:var(--mark);color:var(--ink);border:0;font-size:15px;font-weight:600;padding:16px 26px;border-radius:999px;cursor:pointer;box-shadow:0 1px 0 rgba(42,15,20,.14);transition:transform .2s,box-shadow .2s}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 6px 16px -8px rgba(42,15,20,.5)}
+.btn-s{font-size:14px;text-decoration:none;border-bottom:1px solid rgba(42,15,20,.35);padding-bottom:2px}
+.stats{display:flex;gap:44px;margin-top:44px}
+.stats b{display:block;font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stats span{display:block;font-size:11.5px;color:var(--muted);letter-spacing:.06em;margin-top:2px}
+
+/* 示例预约单 */
+.ticket{background:var(--card);border-radius:16px;padding:20px;box-shadow:0 18px 40px -18px rgba(42,15,20,.28),0 2px 6px rgba(42,15,20,.06);transform:rotate(-1.2deg);animation:float 6s ease-in-out infinite;position:relative}
+@keyframes float{0%,100%{transform:rotate(-1.2deg) translateY(0)}50%{transform:rotate(-1.2deg) translateY(-9px)}}
+.ticket .badge{position:absolute;top:-9px;right:16px;background:var(--ink);color:#fff;font-size:10px;letter-spacing:.14em;padding:3px 9px;border-radius:999px}
+.ticket .hd{display:flex;align-items:center;gap:10px}
+.ticket .hd .dot{width:26px;height:26px;border-radius:8px;background:var(--mark);display:flex;align-items:center;justify-content:center;font-size:13px}
+.ticket .hd b{font-size:14px;font-weight:600}
+.ticket .hd em{font-style:normal;font-size:10.5px;color:var(--muted);display:block;margin-top:2px}
+.tk{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.tk:first-of-type{margin-top:16px;border-top:1px solid var(--line)}
+.tk .k{color:var(--muted);width:56px;flex:none}
+.tk .v{flex:1;display:flex;justify-content:flex-end;text-align:right}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#F1EFE6;border-radius:999px;padding:5px 11px;font-size:11.5px}
+.chip i{width:6px;height:6px;border-radius:50%;background:#2E7D5B}
+
+/* ── 合照大图 ── */
+.cover{margin:34px 0 0;position:relative}
+.cover img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:4px;background:#e9ece8}
+.cover .cap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:12px;font-size:12px;color:var(--muted)}
+.cover .cap b{font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+
+/* ── 跑马灯 ── */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:15px 0;margin-top:40px;background:rgba(248,250,247,.6)}
+.ticker .t{display:flex;gap:44px;width:max-content;white-space:nowrap;animation:run 30s linear infinite}
+.ticker span{font-size:15px;font-weight:600;letter-spacing:-.01em;color:rgba(42,15,20,.26)}
+.ticker span.hl{color:var(--ink)}
+@keyframes run{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker .t,.ticket{animation:none}}
+
+/* ── 现场 ── */
+.sec{padding:56px 0 0}
+.sec-hd{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.sec-hd h2{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.sec-hd a{font-size:12.5px;color:var(--accent);text-decoration:none}
+.band{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px}
+.band figure{position:relative;overflow:hidden;border-radius:6px}
+.band img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.band figure:hover img{transform:scale(1.04)}
+.band figcaption{font-size:11px;color:var(--muted);margin-top:9px;display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.band figcaption b{font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+
+/* ── 栏目 ── */
+.rlist{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;margin-top:6px}
+
+/* 栏目手风琴 */
+.cols{margin-top:6px;border-top:1px solid var(--line)}
+.col{border-bottom:1px solid var(--line)}
+.col summary{display:flex;align-items:center;gap:14px;padding:16px 0;cursor:pointer;list-style:none;font-size:14.5px}
+.col summary::-webkit-details-marker{display:none}
+.col summary i{width:8px;height:8px;border-radius:2px;flex:none}
+.col summary em{margin-left:auto;font-style:normal;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.col summary .ar{font-size:17px;color:var(--muted);transition:transform .25s;width:14px;text-align:center;line-height:1}
+.col[open] summary .ar{transform:rotate(90deg)}
+.col[open] summary{font-weight:700}
+.col summary:hover{color:#000}
+.arts{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;padding:2px 0 16px}
+.art{display:flex;gap:12px;padding:8px 0;text-decoration:none;color:var(--muted);font-size:13px;line-height:1.55;border-bottom:1px solid rgba(42,15,20,.05)}
+.art .ad{flex:none;width:72px;font-size:12px;color:#A9A29C;font-variant-numeric:tabular-nums;padding-top:1px}
+.art .at{flex:1}
+.art:hover .at{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+.row{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid var(--line);text-decoration:none;font-size:14.5px}
+.row i{width:8px;height:8px;border-radius:2px;display:block;flex:none}
+.row .c{margin-left:auto;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row:hover{border-bottom-color:var(--ink)}
+
+/* ── 结尾 ── */
+.cta{margin:70px 0 0;padding:52px 0;border-top:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;gap:30px}
+.cta h3{font-size:42px;line-height:1.15;font-weight:700;letter-spacing:-.03em}
+.foot{display:flex;justify-content:space-between;padding:26px 0 44px;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}
+.foot .adm{color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(42,15,20,.2)}
+.foot .adm:hover{color:var(--ink)}
+
+/* ── 弹窗 ── */
+.mask{position:fixed;inset:0;background:rgba(24,18,16,.42);backdrop-filter:blur(3px);z-index:100;display:none;align-items:center;justify-content:center;padding:24px}
+.mask.on{display:flex}
+.panel{background:var(--card);border-radius:18px;width:100%;max-width:540px;max-height:calc(100vh - 48px);overflow:auto;box-shadow:0 30px 80px -30px rgba(0,0,0,.5);position:relative}
+.panel-hd{display:flex;align-items:flex-start;gap:12px;padding:24px 24px 0}
+.panel-hd h3{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.panel-hd p{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.6}
+.panel-hd .x{margin-left:auto;border:0;background:#F1EFE6;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;color:var(--ink);flex:none}
+.panel-bd{padding:20px 24px 24px}
+
+.field{margin-bottom:15px}
+.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px}
+.field label .req{color:var(--accent)}
+.field input,.field select,.field textarea{
+  width:100%;border:1px solid rgba(42,15,20,.16);border-radius:9px;padding:11px 12px;font-size:14px;font-family:inherit;background:#FDFDFB;color:var(--ink);
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid rgba(255,228,92,.9);outline-offset:1px;border-color:rgba(42,15,20,.3)}
+.field textarea{resize:vertical;min-height:64px}
+.field .hint{font-size:11px;color:var(--muted);margin-top:5px}
+.field .err{font-size:11.5px;color:var(--accent);margin-top:5px;display:none}
+.field.bad input,.field.bad select{border-color:var(--accent);background:#FEF6F6}
+.field.bad .err{display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.radios{display:flex;gap:10px}
+.radios label{flex:1;border:1px solid rgba(42,15,20,.16);border-radius:9px;padding:10px;font-size:13.5px;text-align:center;cursor:pointer;font-weight:400;margin:0}
+.radios input{display:none}
+.radios input:checked+span{font-weight:700}
+.radios label:has(input:checked){border-color:var(--ink);background:#FFFDF2}
+.submit{width:100%;background:var(--ink);color:#fff;border:0;border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
+.submit:hover{opacity:.92}
+.fine{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7}
+
+/* 成功页 */
+.done{text-align:center;padding:8px 0 4px}
+.done .ok{width:52px;height:52px;border-radius:50%;background:#2E7D5B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px}
+.done h3{font-size:19px;font-weight:700}
+.done .no{margin:16px 0 4px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:20px;letter-spacing:.06em;background:#FBF7E6;border:1px dashed rgba(42,15,20,.25);border-radius:10px;padding:12px}
+.done .tip{font-size:12px;color:var(--muted);line-height:1.8;margin-top:12px;text-align:left}
+.done .btns{display:flex;gap:10px;margin-top:18px}
+.done .btns button{flex:1;border-radius:10px;padding:12px;font-size:14px;cursor:pointer;border:1px solid rgba(42,15,20,.16);background:#fff;color:var(--ink)}
+.done .btns .dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* 我的预约 */
+.mlist{display:flex;flex-direction:column;gap:10px}
+.mitem{border:1px solid var(--line);border-radius:12px;padding:14px}
+.mitem .top{display:flex;align-items:center;gap:10px}
+.mitem .no{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:var(--muted)}
+.mitem .st{margin-left:auto;font-size:11px;background:#FBF1DC;color:#9A6B12;padding:3px 9px;border-radius:999px}
+.mitem .t{font-size:14.5px;font-weight:600;margin-top:7px}
+.mitem .m{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.7}
+.mitem .del{margin-top:10px;border:0;background:none;color:var(--accent);font-size:12px;cursor:pointer;padding:0}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:34px 0 26px;line-height:1.9}
+
+/* ── 响应式 ── */
+@media (max-width:900px){
+  .wrap{padding:0 20px}
+  .nav{padding:16px 0;gap:12px}
+  .links{display:none}
+  .nav .right{gap:14px}
+  .nav .right .see{display:none}
+  .hero{grid-template-columns:1fr;gap:34px;padding:26px 0 10px;min-height:0}
+  h1{font-size:36px;letter-spacing:-.02em}
+  .lede{font-size:13.5px;margin-top:16px}
+  .acts{margin-top:22px}
+  .btn-p{flex:1;padding:14px 22px;font-size:14px}
+  .btn-s{flex:none}
+  .stats{gap:26px;margin-top:30px}
+  .stats b{font-size:20px}
+  .ticket{transform:none;animation:none}
+  .ticket .badge{position:static;display:inline-block;margin-bottom:10px}
+  .cover img{aspect-ratio:4/3;border-radius:3px}
+  .cover .cap{flex-direction:column;gap:4px}
+  .band{grid-template-columns:1fr 1fr;gap:12px 10px}
+  .band img{aspect-ratio:1/1}
+  .rlist{grid-template-columns:1fr;gap:0}
+  .arts{grid-template-columns:1fr;gap:0;padding-bottom:12px}
+  .art .ad{width:66px;font-size:11px}
+  .col summary{padding:15px 0;font-size:14px}
+  .cta{flex-direction:column;align-items:flex-start;padding:36px 0;margin-top:40px}
+  .cta h3{font-size:27px}
+  .sec{padding-top:40px}
+  .mask{padding:0;align-items:flex-end}
+  .panel{max-width:none;max-height:94vh;border-radius:18px 18px 0 0}
+  .panel-hd{padding:20px 20px 0}
+  .panel-bd{padding:18px 20px 28px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <nav class="nav">
+    <div class="brand"><img src="assets/img/logo-mark.png" alt="">学生微宣讲团</div>
+    <div class="links">
+      <a class="c1" href="#topics"><i></i>课单</a>
+      <a class="c2" href="#scenes"><i></i>现场</a>
+      <a class="c3" href="#columns"><i></i>栏目</a>
+      <a class="c4" href="#cover"><i></i>合影</a>
+    </div>
+    <div class="right">
+      <button class="mine" id="btnMine">我的预约</button>
+      <a class="see" href="#scenes">查看现场</a>
+      <button class="book" id="btnBookTop">发起预约</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <h1>支部、班级、部门<br><mark>都能约</mark>一场宣讲</h1>
+      <p class="lede">校内单位免费。一场 5–60 分钟，线上或线下都可以。填写单位、主题和时间，工作人员会电话联系确认。</p>
+      <div class="acts">
+        <button class="btn-p" id="btnBookHero">填写预约 · 两分钟 ›</button>
+        <a class="btn-s" href="#scenes">先看看现场</a>
+      </div>
+      <div class="stats">
+        <div><b>230+</b><span>2025 年宣讲场次</span></div>
+        <div><b>1.2万</b><span>覆盖人次</span></div>
+        <div><b>134</b><span>新增宣讲员</span></div>
+      </div>
+    </div>
+
+    <div class="ticket" aria-hidden="true">
+      <span class="badge">示例</span>
+      <div class="hd"><div class="dot">✎</div><div><b>预约单</b><em>填写后工作人员会联系你</em></div></div>
+      <div class="tk"><span class="k">单位</span><span class="v">微电子 2505 团支部</span></div>
+      <div class="tk"><span class="k">人数</span><span class="v">32 人</span></div>
+      <div class="tk"><span class="k">主题</span><span class="v"><span class="chip"><i></i>纪念长征胜利 90 周年</span></span></div>
+      <div class="tk"><span class="k">时间</span><span class="v">11 月 12 日 · 19:00</span></div>
+      <div class="tk"><span class="k">形式</span><span class="v">线下 · 会议室</span></div>
+    </div>
+  </section>
+
+  <figure class="cover" id="cover">
+    <img src="assets/img/hero-team.jpg" alt="纪念长征胜利90周年主题活动暨第十三期筑言计划现场合影">
+    <figcaption class="cap">
+      <b>纪念长征胜利 90 周年主题活动暨第十三期「筑言计划」</b>
+      <span>2026.10.21 · 西安交通大学</span>
+    </figcaption>
+  </figure>
+
+  <div class="ticker"><div class="t">
+    <span class="hl">赓续长征薪火</span><span>·</span><span>磨稿砺初心</span><span>·</span><span class="hl">传习杯四校同台</span><span>·</span><span>寻迹 · 问道 · 传声</span><span>·</span><span class="hl">七秩西迁 三校同讲</span><span>·</span>
+    <span class="hl">赓续长征薪火</span><span>·</span><span>磨稿砺初心</span><span>·</span><span class="hl">传习杯四校同台</span><span>·</span><span>寻迹 · 问道 · 传声</span><span>·</span><span class="hl">七秩西迁 三校同讲</span><span>·</span>
+  </div></div>
+
+  <section class="sec" id="scenes">
+    <div class="sec-hd"><h2>宣讲现场</h2><a href="#columns">更多动态 →</a></div>
+    <div class="band">
+      <figure><img src="assets/img/zhuyan.jpg" alt="第十三期筑言计划理论培训"><figcaption><b>第十三期「筑言计划」</b><span>理论培训 · 2026.10.21</span></figcaption></figure>
+      <figure><img src="assets/img/mogao.jpg" alt="纪念长征胜利90周年专题磨稿"><figcaption><b>纪念长征胜利 90 周年</b><span>专题磨稿 · 2026.10.13</span></figcaption></figure>
+      <figure><img src="assets/img/chuanxibei.jpg" alt="传习杯四所交通大学联合演讲比赛"><figcaption><b>「传习杯」四校联合演讲比赛</b><span>2026.09.19</span></figcaption></figure>
+      <figure><img src="assets/img/fuxiao.jpg" alt="走进交大附小宣讲生活中的核辐射"><figcaption><b>走进交大附小</b><span>生活中的核辐射 · 2026</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="sec" id="topics">
+    <div class="sec-hd"><h2>开放预约的专题</h2><a href="#" onclick="return false">完整课单 →</a></div>
+    <div class="rlist">
+      <a class="row" href="#" onclick="openBooking('习近平新时代中国特色社会主义思想');return false"><i style="background:#2E7D5B"></i>习近平新时代中国特色社会主义思想<span class="c">预约 ›</span></a>
+      <a class="row" href="#" onclick="openBooking('西迁精神');return false"><i style="background:#3F628F"></i>西迁精神<span class="c">预约 ›</span></a>
+      <a class="row" href="#" onclick="openBooking('纪念长征胜利 90 周年');return false"><i style="background:#E85F8A"></i>纪念长征胜利 90 周年<span class="c">预约 ›</span></a>
+      <a class="row" href="#" onclick="openBooking('铸牢中华民族共同体意识');return false"><i style="background:#E8A33F"></i>铸牢中华民族共同体意识<span class="c">预约 ›</span></a>
+      <a class="row" href="#" onclick="openBooking('请宣讲团推荐');return false"><i style="background:#D6303F"></i>以上都不确定，请宣讲团推荐<span class="c">预约 ›</span></a>
+    </div>
+  </section>
+
+  <section class="sec" id="columns">
+    <div class="sec-hd"><h2>栏目</h2><a href="https://weixin.sogou.com/weixin?type=1&amp;query=%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A2" target="_blank" rel="noopener">去公众号 →</a></div>
+    <div class="cols" id="cols"></div>
+  </section>
+
+  <section class="cta">
+    <h3>把这场宣讲<br>排进你们的下周议程</h3>
+    <button class="btn-p" id="btnBookCta">发起预约 ›</button>
+  </section>
+
+  <footer class="foot"><span>西安交通大学学生微宣讲团</span><span>2017 — 2026 · 校内单位免费 · <a class="adm" href="admin.html">管理</a></span></footer>
+</div>
+
+<!-- 弹窗 -->
+<div class="mask" id="mask">
+  <div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+    <div class="panel-hd">
+      <div>
+        <h3 id="panelTitle">预约宣讲</h3>
+        <p id="panelSub">填完提交即可，我们会电话联系确认时间与地点。</p>
+      </div>
+      <button class="x" id="btnClose" aria-label="关闭">✕</button>
+    </div>
+    <div class="panel-bd" id="panelBody"></div>
+  </div>
+</div>
+
+<script src="assets/site.js"></script>
+<script>
+/* ============ 数据 ============ */
+const KEY = 'xyyj_bookings_v1';
+const TOPICS = (window.SITE && window.SITE.topics) || ['习近平新时代中国特色社会主义思想','西迁精神','纪念长征胜利 90 周年','铸牢中华民族共同体意识','请宣讲团推荐'];
+const STCOLOR = {
+  '待受理':['#9A6B12','#FBF1DC'], '已受理':['#3F628F','#EAF1FB'], '待讲师确认':['#8A5B12','#FDF3E2'],
+  '已确认':['#2F6047','#E7F1EA'], '已完成':['#5E5A51','#EEEAE0'], '已退回':['#A3312A','#F8E6E4']
+};
+
+/* 本地存储不可用时（个别浏览器直接双击打开会限制）退回内存，页面内仍然可用 */
+let MEM = [];
+let LS = null;
+try { localStorage.setItem('__probe', '1'); localStorage.removeItem('__probe'); LS = localStorage; } catch(e){ LS = null; }
+const load = () => {
+  if(LS){ try { const v = JSON.parse(LS.getItem(KEY)); if(Array.isArray(v)) return v; } catch(e){} }
+  return MEM.slice();
+};
+const save = list => {
+  MEM = list.slice();
+  if(LS){ try { LS.setItem(KEY, JSON.stringify(list)); } catch(e){} }
+};
+
+function nextNo(list){
+  const d = new Date();
+  const ymd = '' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+  const today = list.filter(x => x.no.indexOf('XY'+ymd) === 0).length;
+  return 'XY' + ymd + '-' + String(today+1).padStart(3,'0');
+}
+
+/* ============ 弹窗控制 ============ */
+const mask = document.getElementById('mask');
+const body = document.getElementById('panelBody');
+const title = document.getElementById('panelTitle');
+const sub   = document.getElementById('panelSub');
+let presetTopic = '';
+
+function openMask(){ mask.classList.add('on'); document.body.style.overflow='hidden'; }
+function closeMask(){ mask.classList.remove('on'); document.body.style.overflow=''; }
+mask.addEventListener('click', e => { if(e.target === mask) closeMask(); });
+document.getElementById('btnClose').addEventListener('click', closeMask);
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && mask.classList.contains('on')) closeMask(); });
+
+function openBooking(topic){
+  presetTopic = topic || '';
+  title.textContent = '预约宣讲';
+  sub.textContent = '填完提交即可，我们会电话联系确认时间与地点。';
+  body.innerHTML = formHTML();
+  openMask();
+}
+function openMine(){
+  title.textContent = '我的预约';
+  sub.textContent = '你在本页提交过的预约，都会列在这里。';
+  body.innerHTML = mineHTML();
+  openMask();
+}
+
+document.getElementById('btnBookTop').addEventListener('click', () => openBooking());
+document.getElementById('btnBookHero').addEventListener('click', () => openBooking());
+document.getElementById('btnBookCta').addEventListener('click', () => openBooking());
+document.getElementById('btnMine').addEventListener('click', openMine);
+
+/* ============ 预约表单 ============ */
+function formHTML(){
+  const opts = TOPICS.map(t => `<option${t===presetTopic?' selected':''}>${t}</option>`).join('');
+  const d = new Date(); d.setDate(d.getDate()+7);
+  const def = d.toISOString().slice(0,10);
+  return `
+  <form id="f" novalidate>
+    <div class="field" data-for="org">
+      <label>单位 / 支部 <span class="req">*</span></label>
+      <input name="org" placeholder="例：微电子 2505 团支部" autocomplete="organization">
+      <div class="err">请填写单位或支部名称</div>
+    </div>
+    <div class="two">
+      <div class="field" data-for="name">
+        <label>联系人 <span class="req">*</span></label>
+        <input name="name" placeholder="姓名" autocomplete="name">
+        <div class="err">请填写联系人</div>
+      </div>
+      <div class="field" data-for="phone">
+        <label>手机号 <span class="req">*</span></label>
+        <input name="phone" inputmode="numeric" placeholder="11 位手机号" autocomplete="tel">
+        <div class="err">请填写正确的 11 位手机号</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>宣讲主题</label>
+      <select name="topic">${opts}</select>
+    </div>
+    <div class="two">
+      <div class="field" data-for="date">
+        <label>日期 <span class="req">*</span></label>
+        <input name="date" type="date" value="${def}">
+        <div class="err">请选择日期</div>
+      </div>
+      <div class="field" data-for="time">
+        <label>开始时间 <span class="req">*</span></label>
+        <input name="time" type="time" value="19:00">
+        <div class="err">请选择开始时间</div>
+      </div>
+    </div>
+    <div class="two">
+      <div class="field" data-for="people">
+        <label>听众人数 <span class="req">*</span></label>
+        <input name="people" inputmode="numeric" placeholder="例：32">
+        <div class="err">请填写人数</div>
+      </div>
+      <div class="field">
+        <label>时长</label>
+        <select name="dur">
+          <option>5–15 分钟</option><option selected>30 分钟左右</option><option>45–60 分钟</option><option>由宣讲团安排</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" data-for="mode">
+      <label>形式</label>
+      <div class="radios">
+        <label><input type="radio" name="mode" value="线下" checked><span>线下</span></label>
+        <label><input type="radio" name="mode" value="线上"><span>线上</span></label>
+      </div>
+    </div>
+    <div class="field" data-for="place">
+      <label>地点 / 会议链接 <span class="req">*</span></label>
+      <input name="place" placeholder="例：兴庆校区主楼 B203">
+      <div class="err">请填写地点或会议链接</div>
+    </div>
+    <div class="field">
+      <label>备注</label>
+      <textarea name="note" placeholder="有什么特别要求可以写在这里（选填）"></textarea>
+    </div>
+    <button class="submit" type="submit">提交预约</button>
+    <p class="fine">提交后我们会用手机号联系你，确认时间和地点。</p>
+  </form>`;
+}
+
+/* 线上 / 线下 切换时改地点提示 */
+body.addEventListener('change', e => {
+  if(e.target.name !== 'mode') return;
+  const place = document.querySelector('#f [name="place"]');
+  if(!place) return;
+  const online = e.target.value === '线上';
+  place.placeholder = online ? '例：腾讯会议 123-456-789' : '例：兴庆校区主楼 B203';
+  place.closest('.field').querySelector('label').firstChild.textContent = online ? '会议链接 ' : '地点 / 会议链接 ';
+});
+
+body.addEventListener('submit', e => {
+  if(e.target.id !== 'f') return;
+  e.preventDefault();
+  const f = e.target;
+  const v = k => (f.elements[k].value || '').trim();
+  let ok = true;
+  const mark = (key, good) => {
+    const box = f.querySelector(`.field[data-for="${key}"]`);
+    if(!box) return;
+    box.classList.toggle('bad', !good);
+    if(!good) ok = false;
+  };
+  mark('org', v('org').length >= 2);
+  mark('name', v('name').length >= 1);
+  mark('phone', /^1\d{10}$/.test(v('phone')));
+  mark('date', !!v('date'));
+  mark('time', !!v('time'));
+  mark('people', /^\d{1,4}$/.test(v('people')) && +v('people') > 0);
+  mark('place', v('place').length >= 2);
+  if(!ok){
+    const bad = f.querySelector('.field.bad');
+    if(bad) bad.scrollIntoView({block:'center', behavior:'smooth'});
+    return;
+  }
+
+  const list = load();
+  const rec = {
+    no: nextNo(list),
+    org: v('org'), name: v('name'), phone: v('phone'),
+    topic: v('topic'), date: v('date'), time: v('time'),
+    people: v('people'), dur: v('dur'), mode: f.elements['mode'].value,
+    place: v('place'), note: v('note'),
+    status: '待受理',
+    created: new Date().toISOString()
+  };
+  list.unshift(rec);
+  save(list);
+  presetTopic = '';
+  title.textContent = '预约已提交';
+  sub.textContent = '把单号记下来，方便之后查询进度。';
+  body.innerHTML = doneHTML(rec);
+});
+
+function fmtDate(iso){
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||'');
+  return m ? `${m[1]} 年 ${+m[2]} 月 ${+m[3]} 日` : iso;
+}
+function doneHTML(r){
+  return `
+  <div class="done">
+    <div class="ok">✓</div>
+    <div class="no">${r.no}</div>
+    <p class="tip">
+      ${r.org} · ${fmtDate(r.date)} ${r.time} · ${r.people} 人 · ${r.mode}<br>
+      主题：${r.topic}<br>
+      请把这个单号记下来，方便查询进度。工作人员会按手机号 ${r.phone.slice(0,3)}****${r.phone.slice(-4)} 联系你。
+    </p>
+    <div class="btns">
+      <button type="button" onclick="openMine()">查看我的预约</button>
+      <button type="button" class="dark" onclick="openBooking()">再约一场</button>
+    </div>
+  </div>`;
+}
+
+/* ============ 我的预约 ============ */
+function mineHTML(){
+  const list = load();
+  if(!list.length){
+    return `<div class="empty">还没有预约记录。<br>点下面按钮发起第一次预约。</div>
+      <button class="submit" onclick="openBooking()">发起预约</button>`;
+  }
+  const items = list.map(r => `
+    <div class="mitem" data-no="${r.no}">
+      <div class="top"><span class="no">${r.no}</span><span class="st" style="color:${(STCOLOR[r.status]||['#555','#eee'])[0]};background:${(STCOLOR[r.status]||['#555','#eee'])[1]}">${r.status}</span></div>
+      <div class="t">${r.org}</div>
+      <div class="m">${fmtDate(r.date)} ${r.time} · ${r.people} 人 · ${r.mode} · ${r.place}<br>主题：${r.topic}</div>
+      ${r.reject ? `<div class="m" style="color:#A3312A">退回原因：${r.reject}</div>` : ''}
+      <button class="del" data-del="${r.no}">取消这条预约</button>
+    </div>`).join('');
+  return `<div class="mlist">${items}</div>
+    <button class="submit" style="margin-top:16px" onclick="openBooking()">再约一场</button>`;
+}
+
+document.getElementById('panelBody').addEventListener('click', e => {
+  const b = e.target.closest('[data-del]');
+  if(!b) return;
+  const no = b.dataset.del;
+  if(!confirm('确定取消 ' + no + ' 这条预约吗？')) return;
+  save(load().filter(x => x.no !== no));
+  body.innerHTML = mineHTML();
+});
+
+/* 栏目：从 assets/site.js 渲染，八个栏目 + 78 篇文章 */
+function escHtml(t){ return String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function renderCols(){
+  const box = document.getElementById('cols');
+  if(!box || !window.SITE) return;
+  box.innerHTML = SITE.columns.map(c => `
+    <details class="col">
+      <summary><i style="background:${c.color}"></i><span>${escHtml(c.name)}</span><em>${c.items.length} 篇</em><b class="ar" aria-hidden="true">›</b></summary>
+      <div class="arts">${c.items.map(a => `<a class="art" href="${a.u}" target="_blank" rel="noopener"><span class="ad">${a.d}</span><span class="at">${escHtml(a.t)}</span></a>`).join('')}</div>
+    </details>`).join('');
+}
+renderCols();
+
+/* 预填主题 */
+window.openBooking = openBooking;
+window.openMine = openMine;
+</script>
+</body>
+</html>

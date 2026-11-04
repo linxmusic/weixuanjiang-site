@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<title>学生微宣讲团 · 预约宣讲</title>
+<meta name="theme-color" content="#F8FAF7">
+<style>
+@font-face{font-family:'LXGW';src:url('assets/fonts/lxgw-subset.woff2') format('woff2');font-display:swap}
+:root{
+  --bg:#F8FAF7; --ink:#2A0F14; --muted:#6E6A66; --line:rgba(42,15,20,.10);
+  --mark:#FFE45C; --accent:#D6303F; --card:#fff;
+  --sans:"HarmonyOS Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;
+  max-width:560px;margin:0 auto;min-height:100vh;
+  background-image:
+    repeating-linear-gradient(90deg,rgba(42,15,20,.035) 0 1px,transparent 1px 96px),
+    repeating-linear-gradient(0deg,rgba(42,15,20,.035) 0 1px,transparent 1px 96px);
+  padding-bottom:calc(64px + var(--safe-b));
+}
+button{font-family:inherit}
+
+/* 顶栏 */
+.appbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:9px;
+  padding:12px 16px;background:rgba(248,250,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.appbar img{width:24px;height:24px}
+.appbar b{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.appbar .more{margin-left:auto;font-size:12px;color:var(--muted);text-decoration:none}
+
+/* 视图 */
+.view{display:none;padding:0 16px}
+.view.on{display:block}
+.hero{padding:22px 0 6px}
+h1{font-size:31px;line-height:1.18;font-weight:700;letter-spacing:-.03em}
+h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color:inherit;padding:0 2px}
+.lede{margin-top:14px;font-size:13.5px;line-height:1.8;color:var(--muted)}
+.cta{margin-top:18px;display:flex;gap:10px;align-items:center}
+.btn-main{flex:1;background:var(--mark);color:var(--ink);border:0;border-radius:12px;padding:15px;font-size:15px;font-weight:700;box-shadow:0 1px 0 rgba(42,15,20,.16)}
+.btn-ghost{font-size:13px;color:var(--muted);background:none;border:0;padding:8px}
+
+.cover{margin:18px 0 0}
+.cover img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:10px;background:#e9ece8}
+.cover .cap{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6}
+
+.stats{display:flex;gap:8px;margin-top:18px}
+.stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center}
+.stat b{display:block;font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat span{display:block;font-size:10.5px;color:var(--muted);margin-top:3px}
+
+.sec-hd{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 10px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.sec-hd h2{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.sec-hd span{font-size:11.5px;color:var(--muted)}
+
+/* 现场横滑 */
+.scroll-x{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:4px;margin-right:-16px;padding-right:16px;scroll-padding-left:0}
+.scroll-x::-webkit-scrollbar{display:none}
+.shot{flex:0 0 76%;scroll-snap-align:start;text-decoration:none;color:inherit}
+.shot img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;background:#e9ece8}
+.shot b{display:block;font-size:12.5px;font-weight:600;margin-top:8px;letter-spacing:-.01em}
+.shot span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+
+/* 栏目 */
+.col{border-bottom:1px solid var(--line)}
+.col summary{display:flex;align-items:center;gap:10px;padding:15px 0;list-style:none;font-size:15px}
+.col summary::-webkit-details-marker{display:none}
+.col summary i{width:8px;height:8px;border-radius:2px;flex:none}
+.col summary em{margin-left:auto;font-style:normal;font-size:12px;color:var(--muted)}
+.col summary .ar{font-size:16px;color:var(--muted);transition:transform .25s;width:12px;text-align:center}
+.col[open] summary .ar{transform:rotate(90deg)}
+.col[open] summary{font-weight:700}
+.art{display:flex;gap:10px;padding:11px 0;text-decoration:none;color:var(--muted);font-size:13px;line-height:1.55;border-bottom:1px solid rgba(42,15,20,.05)}
+.art .ad{flex:none;width:62px;font-size:11px;color:#A9A29C;padding-top:2px}
+.art:last-child{border-bottom:0}
+
+/* 我的预约 */
+.mitem{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+.mitem .top{display:flex;align-items:center;gap:8px}
+.mitem .no{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--muted)}
+.mitem .st{margin-left:auto;font-size:10.5px;padding:3px 8px;border-radius:999px}
+.mitem .org{font-size:14.5px;font-weight:700;margin-top:7px}
+.mitem .m{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.7}
+.mitem .del{margin-top:9px;border:0;background:none;color:var(--accent);font-size:12px;padding:4px 0}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:44px 0;line-height:2}
+
+/* 表单 */
+.form{padding-bottom:24px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px}
+.field .req{color:var(--accent)}
+.field input,.field select,.field textarea{width:100%;border:1px solid rgba(42,15,20,.16);border-radius:10px;padding:13px 12px;font-size:16px;font-family:inherit;background:#FDFDFB;color:var(--ink)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid rgba(255,228,92,.9);outline-offset:1px}
+.field textarea{min-height:70px;resize:vertical}
+.field .err{display:none;font-size:11.5px;color:var(--accent);margin-top:5px}
+.field.bad input,.field.bad select{border-color:var(--accent);background:#FEF6F6}
+.field.bad .err{display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.radios{display:flex;gap:8px}
+.radios label{flex:1;border:1px solid rgba(42,15,20,.16);border-radius:10px;padding:12px;text-align:center;font-size:14px;font-weight:400;margin:0}
+.radios input{display:none}
+.radios label:has(input:checked){border-color:var(--ink);background:#FFFDF2;font-weight:700}
+.submit{width:100%;background:var(--ink);color:#fff;border:0;border-radius:12px;padding:15px;font-size:15px;font-weight:600;margin-top:6px}
+.fine{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7}
+
+.done{text-align:center;padding:20px 0}
+.done .ok{width:54px;height:54px;border-radius:50%;background:#2E7D5B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px}
+.done h3{font-size:18px;font-weight:700}
+.done .no{margin:16px 0 6px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:19px;letter-spacing:.05em;background:#FBF7E6;border:1px dashed rgba(42,15,20,.25);border-radius:10px;padding:13px}
+.done .tip{font-size:12px;color:var(--muted);line-height:1.9;text-align:left;margin-top:10px}
+.done .btns{display:flex;gap:10px;margin-top:18px}
+.done .btns button{flex:1;border-radius:10px;padding:13px;font-size:14px;border:1px solid rgba(42,15,20,.16);background:#fff;color:var(--ink)}
+.done .btns .dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* 底部标签栏 */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;max-width:560px;margin:0 auto;
+  background:rgba(248,250,247,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);
+  padding-bottom:var(--safe-b)}
+.tabs button{flex:1;border:0;background:none;padding:9px 0 8px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:10.5px}
+.tabs button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tabs button.on{color:var(--ink);font-weight:700}
+.tabs .book{color:#8A6A00}
+.tabs .book .ic{background:var(--mark);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:-18px;box-shadow:0 6px 14px -6px rgba(42,15,20,.5);color:var(--ink)}
+.tabs .book svg{width:22px;height:22px;stroke-width:1.8}
+
+.toast{position:fixed;left:50%;bottom:calc(84px + var(--safe-b));transform:translateX(-50%) translateY(10px);
+  background:rgba(42,15,20,.92);color:#fff;font-size:12.5px;padding:9px 16px;border-radius:999px;opacity:0;
+  transition:opacity .25s,transform .25s;z-index:60;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <img src="assets/img/logo-mark.png" alt="">
+  <b>学生微宣讲团</b>
+  <a class="more" href="index.html">电脑版</a>
+</header>
+
+<!-- 首页 -->
+<main class="view on" id="v-home">
+  <section class="hero">
+    <h1>支部、班级、部门<br><mark>都能约</mark>一场宣讲</h1>
+    <p class="lede">校内单位免费。一场 5–60 分钟，线上或线下都可以。填写单位、主题和时间，我们会电话联系确认。</p>
+    <div class="cta"><button class="btn-main" data-go="book">填写预约 · 两分钟</button><button class="btn-ghost" data-go="cols">看栏目</button></div>
+  </section>
+
+  <figure class="cover">
+    <img src="assets/img/hero-team.jpg" alt="纪念长征胜利90周年主题活动暨第十三期筑言计划现场">
+    <figcaption class="cap">纪念长征胜利 90 周年主题活动暨第十三期「筑言计划」<br>2026.10.21 · 西安交通大学</figcaption>
+  </figure>
+
+  <div class="stats">
+    <div class="stat"><b>230+</b><span>2025 场次</span></div>
+    <div class="stat"><b>1.2万</b><span>覆盖人次</span></div>
+    <div class="stat"><b>134</b><span>新增宣讲员</span></div>
+  </div>
+
+  <div class="sec-hd"><h2>宣讲现场</h2><span>左右滑</span></div>
+  <div class="scroll-x">
+    <a class="shot" href="#"><img src="assets/img/zhuyan.jpg" alt=""><b>第十三期「筑言计划」</b><span>理论培训 · 2026.10.21</span></a>
+    <a class="shot" href="#"><img src="assets/img/mogao.jpg" alt=""><b>纪念长征胜利 90 周年</b><span>专题磨稿 · 2026.10.13</span></a>
+    <a class="shot" href="#"><img src="assets/img/chuanxibei.jpg" alt=""><b>「传习杯」四校联合演讲比赛</b><span>2026.09.19</span></a>
+    <a class="shot" href="#"><img src="assets/img/fuxiao.jpg" alt=""><b>走进交大附小</b><span>生活中的核辐射 · 2026</span></a>
+  </div>
+
+  <div class="sec-hd"><h2>开放预约的专题</h2><span>点一下直接填</span></div>
+  <div id="topics"></div>
+</main>
+
+<!-- 栏目 -->
+<main class="view" id="v-cols">
+  <div class="sec-hd" style="margin-top:18px"><h2>栏目</h2><span id="colsCount"></span></div>
+  <div id="cols"></div>
+</main>
+
+<!-- 预约 -->
+<main class="view" id="v-book">
+  <div class="sec-hd" style="margin-top:18px"><h2>预约宣讲</h2><span>标 * 为必填</span></div>
+  <div id="formBox"></div>
+</main>
+
+<!-- 我的 -->
+<main class="view" id="v-mine">
+  <div class="sec-hd" style="margin-top:18px"><h2>我的预约</h2><span id="mineCount"></span></div>
+  <div id="mineBox"></div>
+</main>
+
+<nav class="tabs">
+  <button data-go="home" class="on"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3.5 10.6 12 3.5l8.5 7.1"/><path d="M5.8 9.4V20.5h12.4V9.4"/></svg></span>首页</button>
+  <button data-go="cols"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h10"/></svg></span>栏目</button>
+  <button data-go="book" class="book"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></svg></span>预约</button>
+  <button data-go="mine"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.2" r="3.6"/><path d="M4.5 20.5c.6-3.8 3.7-5.8 7.5-5.8s6.9 2 7.5 5.8"/></svg></span>我的</button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/site.js"></script>
+<script>
+const KEY = 'xyyj_bookings_v1';
+const TOPICS = (window.SITE && window.SITE.topics) || ['请宣讲团推荐'];
+const STCOLOR = {
+  '待受理':['#9A6B12','#FBF1DC'], '已受理':['#3F628F','#EAF1FB'], '待讲师确认':['#8A5B12','#FDF3E2'],
+  '已确认':['#2F6047','#E7F1EA'], '已完成':['#5E5A51','#EEEAE0'], '已退回':['#A3312A','#F8E6E4']
+};
+let MEM = [], LS = null;
+try { localStorage.setItem('__probe','1'); localStorage.removeItem('__probe'); LS = localStorage; } catch(e){ LS = null; }
+const load = () => {
+  if(LS){ try { const v = JSON.parse(LS.getItem(KEY)); if(Array.isArray(v)) return v; } catch(e){} }
+  return MEM.slice();
+};
+const save = list => { MEM = list.slice(); if(LS){ try { LS.setItem(KEY, JSON.stringify(list)); } catch(e){} } };
+const $ = s => document.querySelector(s);
+const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function fmtDate(iso){
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||'');
+  return m ? `${m[1]} 年 ${+m[2]} 月 ${+m[3]} 日` : (iso||'');
+}
+function toast(t){
+  const el = $('#toast'); el.textContent = t; el.classList.add('on');
+  clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('on'), 1600);
+}
+function nextNo(list){
+  const d = new Date();
+  const ymd = '' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+  const n = list.filter(x => x.no.indexOf('XY'+ymd) === 0).length;
+  return 'XY' + ymd + '-' + String(n+1).padStart(3,'0');
+}
+
+/* ── 路由 ── */
+let cur = 'home';
+function go(v){
+  cur = v;
+  document.querySelectorAll('.view').forEach(el => el.classList.toggle('on', el.id === 'v-' + v));
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.go === v));
+  window.scrollTo({top:0,behavior:'instant'});
+  if(v === 'mine') renderMine();
+  if(v === 'book') renderForm();
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-go]');
+  if(t){ e.preventDefault(); go(t.dataset.go); }
+});
+
+/* ── 首页专题 ── */
+$('#topics').innerHTML = TOPICS.map((t,i) =>
+  `<a class="art" href="#" data-topic="${esc(t)}" style="font-size:14px;color:var(--ink);padding:14px 0">
+     <span class="ad" style="color:#A9A29C">0${i+1}</span><span class="at">${esc(t)}</span><span style="color:var(--muted)">›</span></a>`).join('');
+$('#topics').addEventListener('click', e => {
+  const a = e.target.closest('[data-topic]');
+  if(!a) return;
+  e.preventDefault();
+  presetTopic = a.dataset.topic;
+  go('book');
+});
+
+/* ── 栏目 ── */
+function renderCols(){
+  const S = window.SITE;
+  if(!S || !S.columns) return;
+  const total = S.columns.reduce((n,c)=>n+c.items.length,0);
+  $('#colsCount').textContent = `${S.columns.length} 个栏目 · ${total} 篇`;
+  $('#cols').innerHTML = S.columns.map(c => `
+    <details class="col">
+      <summary><i style="background:${c.color}"></i><span>${esc(c.name)}</span><em>${c.items.length} 篇</em><b class="ar">›</b></summary>
+      ${c.items.map(a => `<a class="art" href="${a.u}" target="_blank" rel="noopener"><span class="ad">${a.d}</span><span class="at">${esc(a.t)}</span></a>`).join('')}
+    </details>`).join('');
+}
+
+/* ── 表单 ── */
+let presetTopic = '';
+function renderForm(){
+  const d = new Date(); d.setDate(d.getDate()+7);
+  const def = d.toISOString().slice(0,10);
+  $('#formBox').innerHTML = `
+  <form class="form" id="f" novalidate>
+    <div class="field" data-for="org"><label>单位 / 支部 <span class="req">*</span></label>
+      <input name="org" placeholder="例：微电子 2505 团支部"><div class="err">请填写单位或支部名称</div></div>
+    <div class="two">
+      <div class="field" data-for="name"><label>联系人 <span class="req">*</span></label>
+        <input name="name" placeholder="姓名"><div class="err">请填写联系人</div></div>
+      <div class="field" data-for="phone"><label>手机号 <span class="req">*</span></label>
+        <input name="phone" inputmode="numeric" placeholder="11 位"><div class="err">填写 11 位手机号</div></div>
+    </div>
+    <div class="field"><label>宣讲主题</label><select name="topic">
+      ${TOPICS.map(t=>`<option${t===presetTopic?' selected':''}>${esc(t)}</option>`).join('')}</select></div>
+    <div class="two">
+      <div class="field" data-for="date"><label>日期 <span class="req">*</span></label>
+        <input name="date" type="date" value="${def}"><div class="err">请选择日期</div></div>
+      <div class="field" data-for="time"><label>开始时间 <span class="req">*</span></label>
+        <input name="time" type="time" value="19:00"><div class="err">请选择时间</div></div>
+    </div>
+    <div class="two">
+      <div class="field" data-for="people"><label>听众人数 <span class="req">*</span></label>
+        <input name="people" inputmode="numeric" placeholder="例：32"><div class="err">请填写人数</div></div>
+      <div class="field"><label>时长</label><select name="dur">
+        <option>5–15 分钟</option><option selected>30 分钟左右</option><option>45–60 分钟</option><option>由宣讲团安排</option></select></div>
+    </div>
+    <div class="field"><label>形式</label><div class="radios">
+      <label><input type="radio" name="mode" value="线下" checked><span>线下</span></label>
+      <label><input type="radio" name="mode" value="线上"><span>线上</span></label></div></div>
+    <div class="field" data-for="place"><label>地点 / 会议链接 <span class="req">*</span></label>
+      <input name="place" placeholder="例：兴庆校区主楼 B203"><div class="err">请填写地点或会议链接</div></div>
+    <div class="field"><label>备注</label><textarea name="note" placeholder="选填"></textarea></div>
+    <button class="submit" type="submit">提交预约</button>
+    <p class="fine">提交后我们会用手机号联系你，确认时间和地点。</p>
+  </form>`;
+
+  const f = $('#f');
+  f.querySelectorAll('input[name=mode]').forEach(r => r.addEventListener('change', () => {
+    const online = f.elements['mode'].value === '线上';
+    f.elements['place'].placeholder = online ? '例：腾讯会议 123-456-789' : '例：兴庆校区主楼 B203';
+    f.querySelector('.field[data-for="place"] label').firstChild.textContent = online ? '会议链接 ' : '地点 / 会议链接 ';
+  }));
+  f.addEventListener('submit', onSubmit);
+}
+
+function onSubmit(e){
+  e.preventDefault();
+  const f = e.target;
+  const v = k => (f.elements[k].value || '').trim();
+  let ok = true;
+  const mark = (k, good) => { const b = f.querySelector(`.field[data-for="${k}"]`); if(!b) return; b.classList.toggle('bad', !good); if(!good) ok = false; };
+  mark('org', v('org').length >= 2);
+  mark('name', v('name').length >= 1);
+  mark('phone', /^1\d{10}$/.test(v('phone')));
+  mark('date', !!v('date'));
+  mark('time', !!v('time'));
+  mark('people', /^\d{1,4}$/.test(v('people')) && +v('people') > 0);
+  mark('place', v('place').length >= 2);
+  if(!ok){
+    const bad = f.querySelector('.field.bad');
+    if(bad) bad.scrollIntoView({block:'center', behavior:'smooth'});
+    toast('还有几项没填完');
+    return;
+  }
+  const list = load();
+  const rec = {
+    no: nextNo(list), org: v('org'), name: v('name'), phone: v('phone'), topic: v('topic'),
+    date: v('date'), time: v('time'), people: v('people'), dur: v('dur'),
+    mode: f.elements['mode'].value, place: v('place'), note: v('note'),
+    status: '待受理', created: new Date().toISOString()
+  };
+  list.unshift(rec); save(list); presetTopic = '';
+  $('#formBox').innerHTML = `
+    <div class="done">
+      <div class="ok">✓</div>
+      <div class="no">${rec.no}</div>
+      <p class="tip">${esc(rec.org)} · ${fmtDate(rec.date)} ${esc(rec.time)} · ${esc(rec.people)} 人 · ${esc(rec.mode)}<br>
+        主题：${esc(rec.topic)}<br>请记下单号。我们会按 ${rec.phone.slice(0,3)}****${rec.phone.slice(-4)} 联系你。</p>
+      <div class="btns"><button type="button" data-go="mine">查看我的预约</button><button type="button" class="dark" data-go="book">再约一场</button></div>
+    </div>`;
+}
+
+/* ── 我的预约 ── */
+function renderMine(){
+  const list = load();
+  $('#mineCount').textContent = list.length ? `共 ${list.length} 条` : '';
+  if(!list.length){
+    $('#mineBox').innerHTML = `<div class="empty">还没有预约记录</div>`;
+    return;
+  }
+  $('#mineBox').innerHTML = list.map(r => {
+    const [c,bg] = STCOLOR[r.status] || ['#555','#eee'];
+    return `<div class="mitem">
+      <div class="top"><span class="no">${r.no}</span><span class="st" style="color:${c};background:${bg}">${r.status}</span></div>
+      <div class="org">${esc(r.org)}</div>
+      <div class="m">${fmtDate(r.date)} ${esc(r.time)} · ${esc(r.people)} 人 · ${esc(r.mode)} · ${esc(r.place)}<br>主题：${esc(r.topic)}</div>
+      ${r.reject ? `<div class="m" style="color:#A3312A">退回原因：${esc(r.reject)}</div>` : ''}
+      <button class="del" data-del="${r.no}">取消这条预约</button>
+    </div>`;
+  }).join('');
+  $('#mineBox').querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => {
+    if(!confirm('确定取消 ' + b.dataset.del + ' 吗？')) return;
+    save(load().filter(x => x.no !== b.dataset.del));
+    renderMine(); toast('已取消');
+  }));
+}
+
+renderCols();
+go('home');
+</script>
+</body>
+</html>
