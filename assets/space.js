@@ -35,6 +35,9 @@
   var nextMeteor = 4;
   var mx = 0, my = 0, tmx = 0, tmy = 0;
 
+  var WORDS = ['西迁精神', '长征精神', '延安精神', '理论宣讲', '青年担当', '乡村振兴', '新质生产力', '思政课', '筑言计划', '宣讲课单'];
+  var labels = [];
+
   function rnd(a, b) { return a + Math.random() * (b - a); }
   function gauss() {
     var u = 0, v = 0;
@@ -109,6 +112,18 @@
         ph: Math.random() * 6.28
       });
     }
+
+    labels = [];
+    var words = mobile ? WORDS.slice(0, 6) : WORDS;
+    for (var wi = 0; wi < words.length; wi++) {
+      labels.push({
+        w: words[wi],
+        a: wi / words.length * Math.PI * 2 + rnd(-0.1, 0.1),
+        r: rnd(-8, 10),
+        red: wi % 3 === 0,
+        ph: Math.random() * 6.28
+      });
+    }
   }
 
   function geom() {
@@ -117,7 +132,7 @@
       return { rx: rx, ry: rx * 0.30, cx: W * 0.84, cy: H * 0.055, tilt: -0.30, pr: rx * 0.30 };
     }
     var rxd = Math.min(W * 0.37, 560);
-    return { rx: rxd, ry: rxd * 0.285, cx: W * 0.73, cy: H * 0.255, tilt: -0.30, pr: rxd * 0.30 };
+    return { rx: rxd, ry: rxd * 0.285, cx: W * 0.73, cy: H * 0.30, tilt: -0.30, pr: rxd * 0.30 };
   }
 
   function resize() {
@@ -223,6 +238,38 @@
     }
     ctx.globalAlpha = 1;
     ctx.restore();
+
+    /* 环上的宣讲关键词：跟着环走，但字保持水平 */
+    if (labels.length) {
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = (mobile ? '11px ' : '15px ') + 'LXGW, "Source Han Serif SC", serif';
+      var cosT = Math.cos(g.tilt), sinT = Math.sin(g.tilt);
+      for (var li = 0; li < labels.length; li++) {
+        var lb = labels[li];
+        var la = lb.a + t * 0.03;
+        var lx = Math.cos(la) * (g.rx + lb.r);
+        var ly = Math.sin(la) * (g.ry + lb.r * 0.4);
+        var sx2 = lx * cosT - ly * sinT;
+        var sy2 = lx * sinT + ly * cosT;
+        if (sx2 * sx2 + sy2 * sy2 < g.pr * g.pr * 0.96) continue;  // 星体上的字不画
+        var wx = g.cx + mx + sx2, wy = g.cy + my + sy2 + 16;
+        if (wx < W * 0.5 || wx > W - 70 || wy > H * 0.78) continue;   // 正文区和边缘不放字
+        var pulse = 0.62 + 0.38 * Math.sin(t * 0.45 + lb.ph);
+        ctx.globalAlpha = (lb.red ? 0.8 : 0.72) * pulse * fade;
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = 'rgba(248,250,247,.9)';
+        ctx.strokeText(lb.w, wx, wy);
+        ctx.fillStyle = lb.red ? '#C0273A' : '#241015';
+        ctx.fillText(lb.w, wx, wy);
+        ctx.beginPath();
+        ctx.arc(wx - ctx.measureText(lb.w).width / 2 - 10, wy, 1.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
 
     /* 偶尔一颗流星，从左上往右下 */
     if (!mobile) {

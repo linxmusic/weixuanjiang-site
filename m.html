@@ -412,8 +412,8 @@ function renderForm(){
     <div class="two">
       <div class="field" data-for="name"><label>联系人 <span class="req">*</span></label>
         <input name="name" placeholder="姓名"><div class="err">请填写联系人</div></div>
-      <div class="field" data-for="phone"><label>手机号 <span class="req">*</span></label>
-        <input name="phone" inputmode="numeric" placeholder="11 位"><div class="err">填写 11 位手机号</div></div>
+      <div class="field" data-for="phone"><label>微信号 <span class="req">*</span></label>
+        <input name="phone" placeholder="微信号或手机号"><div class="err">请填写微信号</div></div>
     </div>
     ${presetSpeaker ? `<div class="field"><label>指定宣讲人</label><input name="speaker" value="${esc(presetSpeaker)}" readonly></div>` : `<input type="hidden" name="speaker" value="">`}
     <div class="field"><label>宣讲主题</label><select name="topic">
@@ -437,7 +437,7 @@ function renderForm(){
       <input name="place" placeholder="例：兴庆校区主楼 B203；还没定可填「暂无」"><div class="err">请填写地点或会议链接</div></div>
     <div class="field"><label>备注</label><textarea name="note" placeholder="选填"></textarea></div>
     <button class="submit" type="submit">提交预约</button>
-    <p class="fine">提交后我们会用手机号联系你，确认时间和地点。</p>
+    <p class="fine">提交后我们会通过微信号联系你，确认时间和地点。</p>
   </form>`;
 
   const f = $('#f');
@@ -457,7 +457,7 @@ function onSubmit(e){
   const mark = (k, good) => { const b = f.querySelector(`.field[data-for="${k}"]`); if(!b) return; b.classList.toggle('bad', !good); if(!good) ok = false; };
   mark('org', v('org').length >= 2);
   mark('name', v('name').length >= 1);
-  mark('phone', /^1\d{10}$/.test(v('phone')));
+  mark('phone', /^[A-Za-z0-9_-]{4,30}$/.test(v('phone')));
   mark('date', !!v('date'));
   mark('time', !!v('time'));
   mark('people', /^\d{1,4}$/.test(v('people')) && +v('people') > 0);
@@ -481,7 +481,7 @@ function onSubmit(e){
       <div class="ok">✓</div>
       <div class="no">${rec.no}</div>
       <p class="tip">${esc(rec.org)} · ${fmtDate(rec.date)} ${esc(rec.time)} · ${esc(rec.people)} 人 · ${esc(rec.mode)}<br>
-        ${rec.speaker ? `宣讲人：${esc(rec.speaker)}<br>` : ''}主题：${esc(rec.topic)}<br>请记下单号。我们会按 ${rec.phone.slice(0,3)}****${rec.phone.slice(-4)} 联系你。</p>
+        ${rec.speaker ? `宣讲人：${esc(rec.speaker)}<br>` : ''}主题：${esc(rec.topic)}<br>请记下单号。我们会通过微信号 ${esc(rec.phone)} 联系你。</p>
       <div class="btns"><button type="button" data-go="mine">查看我的预约</button><button type="button" class="dark" data-go="book">再约一场</button></div>
     </div>`;
 }
