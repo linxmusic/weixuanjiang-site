@@ -170,7 +170,7 @@
 
   /* ── ⑧ 预约单立体倾斜 ─────────────────────────────────── */
   var tk = $('.ticket');
-  if (tk && FINE && !RM) {
+  if (tk && FINE && !RM && !tk.closest('.flip')) {
     var heroBox = tk.closest('.ticket-stage') || tk;
     heroBox.addEventListener('mousemove', function (e) {
       var r = tk.getBoundingClientRect();
