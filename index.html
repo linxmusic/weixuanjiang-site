@@ -212,6 +212,8 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   .panel-bd{padding:18px 20px 28px}
 }
 </style>
+<script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
+<link rel="stylesheet" href="assets/motion.css">
 </head>
 <body>
 
@@ -234,7 +236,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 
   <section class="hero">
     <div>
-      <h1>支部、班级、部门<br><mark>都能约</mark>一场宣讲</h1>
+      <h1><span class="ln"><span>支部、班级、部门</span></span><span class="ln"><span><mark>都能约</mark>一场宣讲</span></span></h1>
       <p class="lede">校内单位免费。一场 5–60 分钟，线上或线下都可以。填写单位、主题和时间，工作人员会电话联系确认。</p>
       <div class="acts">
         <button class="btn-p" id="btnBookHero">填写预约 · 两分钟 ›</button>
@@ -298,7 +300,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   </section>
 
   <section class="cta">
-    <h3>把这场宣讲<br>排进你们的下周议程</h3>
+    <h3><span class="ln"><span>把这场宣讲</span></span><span class="ln"><span>排进你们的下周议程</span></span></h3>
     <button class="btn-p" id="btnBookCta">发起预约 ›</button>
   </section>
 
@@ -574,5 +576,6 @@ renderCols();
 window.openBooking = openBooking;
 window.openMine = openMine;
 </script>
+<script src="assets/motion.js"></script>
 </body>
 </html>
