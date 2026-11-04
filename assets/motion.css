@@ -11,7 +11,10 @@
 .m-progress{position:fixed;left:0;top:0;height:2px;width:100%;background:var(--accent);
   transform:scaleX(0);transform-origin:0 50%;z-index:210;pointer-events:none;will-change:transform}
 
-/* ② 背景：纸上缓慢流动的淡墨与光，不用任何格线 */
+/* ② 背景：canvas 星环（space.js） */
+.m-space{position:fixed;left:0;top:0;z-index:0;pointer-events:none;display:block}
+
+/* ②b 旧的水渍层（space.js 会把它移除，这里留兜底样式） */
 .m-drift{position:fixed;left:-18%;right:-18%;top:-18%;bottom:-18%;z-index:0;pointer-events:none;will-change:transform;
   background:
     radial-gradient(40% 34% at 24% 22%, rgba(42,15,20,.055), rgba(42,15,20,0) 72%),
