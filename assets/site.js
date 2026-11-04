@@ -271,11 +271,6 @@ window.SITE = {
      "u": "https://mp.weixin.qq.com/s/VCMx_W-KeptHHGKtvDqIFw"
     },
     {
-     "t": "【分团动态】搭建招才引智桥梁",
-     "d": "2026.02.28",
-     "u": "https://weixin.sogou.com/weixin?type=2&query=%E3%80%90%E5%88%86%E5%9B%A2%E5%8A%A8%E6%80%81%E3%80%91%E6%90%AD%E5%BB%BA%E6%8B%9B%E6%89%8D%E5%BC%95%E6%99%BA%E6%A1%A5%E6%A2%81"
-    },
-    {
      "t": "西安交通大学学生微宣讲团联合四所高校学生宣讲团举办“青衿聚力·科创兴农”五校联合宣讲交流会",
      "d": "2026.01.29",
      "u": "https://weixin.sogou.com/weixin?type=2&query=%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A2%E8%81%94%E5%90%88%E5%9B%9B%E6%89%80%E9%AB%98%E6%A0%A1%E5%AD%A6%E7%94%9F%E5%AE%A3%E8%AE%B2%E5%9B%A2%E4%B8%BE%E5%8A%9E%E2%80%9C%E9%9D%92%E8%A1%BF%E8%81%9A%E5%8A%9B%C2%B7%E7%A7%91%E5%88%9B%E5%85%B4%E5%86%9C%E2%80%9D%E4%BA%94%E6%A0%A1%E8%81%94%E5%90%88%E5%AE%A3%E8%AE%B2%E4%BA%A4%E6%B5%81%E4%BC%9A"
@@ -291,24 +286,9 @@ window.SITE = {
      "u": "https://weixin.sogou.com/weixin?type=2&query=%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A2%E4%B8%8E%E9%99%95%E8%A5%BF%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E2%80%9C%E7%BA%A2%E8%89%B2%E5%9F%BA%E5%9B%A0%C2%B7%E8%96%AA%E7%81%AB%E4%BC%A0%E6%89%BF%E2%80%9D%E7%A0%94%E7%A9%B6%E7%94%9F%E5%AE%A3%E8%AE%B2%E5%9B%A2%E5%BC%80%E5%B1%95%E5%BA%A7%E8%B0%88%E4%BA%A4%E6%B5%81"
     },
     {
-     "t": "西安交通大学学生微宣讲团举办分团建设交流会",
-     "d": "2024.03.13",
-     "u": "https://weixin.sogou.com/weixin?type=2&query=%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A2%E4%B8%BE%E5%8A%9E%E5%88%86%E5%9B%A2%E5%BB%BA%E8%AE%BE%E4%BA%A4%E6%B5%81%E4%BC%9A"
-    },
-    {
      "t": "西安交通大学学生微宣讲团赴上海学习交流",
      "d": "2024.01.19",
      "u": "https://weixin.sogou.com/weixin?type=2&query=%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A2%E8%B5%B4%E4%B8%8A%E6%B5%B7%E5%AD%A6%E4%B9%A0%E4%BA%A4%E6%B5%81"
-    },
-    {
-     "t": "西安交通大学学生微宣讲团2023年度分团建设工作交流会举行",
-     "d": "2024.01.08",
-     "u": "https://weixin.sogou.com/weixin?type=2&query=%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A22023%E5%B9%B4%E5%BA%A6%E5%88%86%E5%9B%A2%E5%BB%BA%E8%AE%BE%E5%B7%A5%E4%BD%9C%E4%BA%A4%E6%B5%81%E4%BC%9A%E4%B8%BE%E8%A1%8C"
-    },
-    {
-     "t": "2023年度西安交通大学学生微宣讲各分团建设工作推进会成功召开",
-     "d": "2023.02.22",
-     "u": "https://weixin.sogou.com/weixin?type=2&query=2023%E5%B9%B4%E5%BA%A6%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%90%84%E5%88%86%E5%9B%A2%E5%BB%BA%E8%AE%BE%E5%B7%A5%E4%BD%9C%E6%8E%A8%E8%BF%9B%E4%BC%9A%E6%88%90%E5%8A%9F%E5%8F%AC%E5%BC%80"
     },
     {
      "t": "西安交通大学学生微宣讲团(筑梦社)举办 青年理论宣讲工作交流座谈会",
@@ -319,6 +299,32 @@ window.SITE = {
      "t": "西安交通大学学生微宣讲团(筑梦社)举办  “感悟宣讲力量,畅言青春未来”座谈会",
      "d": "2021.06.22",
      "u": "https://weixin.sogou.com/weixin?type=2&query=%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A2%28%E7%AD%91%E6%A2%A6%E7%A4%BE%29%E4%B8%BE%E5%8A%9E%20%20%E2%80%9C%E6%84%9F%E6%82%9F%E5%AE%A3%E8%AE%B2%E5%8A%9B%E9%87%8F%2C%E7%95%85%E8%A8%80%E9%9D%92%E6%98%A5%E6%9C%AA%E6%9D%A5%E2%80%9D%E5%BA%A7%E8%B0%88%E4%BC%9A"
+    }
+   ]
+  },
+  {
+   "name": "分团建设",
+   "color": "#7A5C9E",
+   "items": [
+    {
+     "t": "【分团动态】搭建招才引智桥梁",
+     "d": "2026.02.28",
+     "u": "https://weixin.sogou.com/weixin?type=2&query=%E3%80%90%E5%88%86%E5%9B%A2%E5%8A%A8%E6%80%81%E3%80%91%E6%90%AD%E5%BB%BA%E6%8B%9B%E6%89%8D%E5%BC%95%E6%99%BA%E6%A1%A5%E6%A2%81"
+    },
+    {
+     "t": "西安交通大学学生微宣讲团举办分团建设交流会",
+     "d": "2024.03.13",
+     "u": "https://weixin.sogou.com/weixin?type=2&query=%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A2%E4%B8%BE%E5%8A%9E%E5%88%86%E5%9B%A2%E5%BB%BA%E8%AE%BE%E4%BA%A4%E6%B5%81%E4%BC%9A"
+    },
+    {
+     "t": "西安交通大学学生微宣讲团2023年度分团建设工作交流会举行",
+     "d": "2024.01.08",
+     "u": "https://weixin.sogou.com/weixin?type=2&query=%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A22023%E5%B9%B4%E5%BA%A6%E5%88%86%E5%9B%A2%E5%BB%BA%E8%AE%BE%E5%B7%A5%E4%BD%9C%E4%BA%A4%E6%B5%81%E4%BC%9A%E4%B8%BE%E8%A1%8C"
+    },
+    {
+     "t": "2023年度西安交通大学学生微宣讲各分团建设工作推进会成功召开",
+     "d": "2023.02.22",
+     "u": "https://weixin.sogou.com/weixin?type=2&query=2023%E5%B9%B4%E5%BA%A6%E8%A5%BF%E5%AE%89%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%90%84%E5%88%86%E5%9B%A2%E5%BB%BA%E8%AE%BE%E5%B7%A5%E4%BD%9C%E6%8E%A8%E8%BF%9B%E4%BC%9A%E6%88%90%E5%8A%9F%E5%8F%AC%E5%BC%80"
     }
    ]
   },
@@ -445,6 +451,215 @@ window.SITE = {
      "u": "https://mp.weixin.qq.com/s/984aRran-f5mQDClnLPmSw"
     }
    ]
+  }
+ ],
+ "branches": [
+  {
+   "name": "崇实书院党员先锋宣讲团",
+   "short": "崇实 · 先锋",
+   "org": "崇实书院",
+   "sessions": 1,
+   "people": 100,
+   "where": "书院微党课大赛",
+   "bio": "依托书院微党课大赛开展理论宣讲，把党课讲进支部、讲进班级。",
+   "color": "#2E7D5B"
+  },
+  {
+   "name": "宗濂书院星火宣讲团",
+   "short": "宗濂 · 星火",
+   "org": "宗濂书院",
+   "sessions": 2,
+   "people": 45,
+   "where": "院史馆讲解",
+   "bio": "以院史馆为阵地，面向来访师生讲解院史与医者传统。",
+   "color": "#C06A2E"
+  },
+  {
+   "name": "医学部仁心宣讲团",
+   "short": "医学部 · 仁心",
+   "org": "医学部",
+   "sessions": 3,
+   "people": 130,
+   "where": "佛坪义诊、线上主题团课",
+   "bio": "把健康科普带到义诊现场，把红色医史讲进主题团课。",
+   "color": "#3F628F"
+  },
+  {
+   "name": "南洋书院西迁精神宣讲团",
+   "short": "南洋 · 西迁",
+   "org": "南洋书院",
+   "sessions": 1,
+   "people": 100,
+   "where": "书院师生联合党支部",
+   "bio": "围绕西迁精神与党的二十届四中全会精神，面向书院师生开展宣讲。",
+   "color": "#D6303F"
+  }
+ ],
+ "speakers": [
+  {
+   "name": "林知远",
+   "major": "微电子 2402 班",
+   "org": "西安交通大学学生微宣讲团",
+   "topics": [
+    "西迁精神",
+    "纪念长征胜利 90 周年"
+   ],
+   "bio": "讲西迁时，他总从交大西迁博物馆的一只旧皮箱讲起。",
+   "img": "assets/img/speakers/s01.jpg"
+  },
+  {
+   "name": "沈书宁",
+   "major": "电气 2305 班",
+   "org": "西安交通大学学生微宣讲团",
+   "topics": [
+    "习近平新时代中国特色社会主义思想",
+    "西迁精神"
+   ],
+   "bio": "习惯把政策文件拆成身边事，再讲给同龄人听。",
+   "img": "assets/img/speakers/s02.jpg"
+  },
+  {
+   "name": "周雨桐",
+   "major": "马克思主义理论 2501 班",
+   "org": "西安交通大学学生微宣讲团",
+   "topics": [
+    "铸牢中华民族共同体意识",
+    "西迁精神"
+   ],
+   "bio": "备课前先跑一趟调研，讲稿里常有自己拍到的一手材料。",
+   "img": "assets/img/speakers/s03.jpg"
+  },
+  {
+   "name": "陈屿",
+   "major": "能源与动力 2403 班",
+   "org": "西安交通大学学生微宣讲团",
+   "topics": [
+    "纪念长征胜利 90 周年",
+    "习近平新时代中国特色社会主义思想"
+   ],
+   "bio": "把长征路上的数字做成一张地图，讲完还留时间讨论。",
+   "img": "assets/img/speakers/s04.jpg"
+  },
+  {
+   "name": "苏念",
+   "major": "法学 2302 班",
+   "org": "西安交通大学学生微宣讲团",
+   "topics": [
+    "西迁精神",
+    "习近平新时代中国特色社会主义思想"
+   ],
+   "bio": "讲西迁精神时，更愿意聊当年师生怎么上课、怎么吃饭。",
+   "img": "assets/img/speakers/s05.jpg"
+  },
+  {
+   "name": "顾清和",
+   "major": "人工智能 2401 班",
+   "org": "西安交通大学学生微宣讲团",
+   "topics": [
+    "习近平新时代中国特色社会主义思想",
+    "西迁精神"
+   ],
+   "bio": "用大模型写代码做演示，边讲边跑给听众看。",
+   "img": "assets/img/speakers/s06.jpg"
+  },
+  {
+   "name": "江予安",
+   "major": "公共管理 2404 班",
+   "org": "西安交通大学学生微宣讲团",
+   "topics": [
+    "铸牢中华民族共同体意识",
+    "纪念长征胜利 90 周年"
+   ],
+   "bio": "在乡镇做过调研，讲乡村振兴时不回避具体的难处。",
+   "img": "assets/img/speakers/s07.jpg"
+  },
+  {
+   "name": "许望",
+   "major": "材料 2301 班",
+   "org": "西安交通大学学生微宣讲团",
+   "topics": [
+    "西迁精神",
+    "纪念长征胜利 90 周年"
+   ],
+   "bio": "把实验室里的材料故事讲成通俗的科普段子。",
+   "img": "assets/img/speakers/s08.jpg"
+  },
+  {
+   "name": "唐知微",
+   "major": "外国语 2402 班",
+   "org": "西安交通大学学生微宣讲团",
+   "topics": [
+    "西迁精神",
+    "铸牢中华民族共同体意识"
+   ],
+   "bio": "外语专业出身，擅长把理论概念翻译成日常语言。",
+   "img": "assets/img/speakers/s09.jpg"
+  },
+  {
+   "name": "何嘉树",
+   "major": "临床医学 2303 班",
+   "org": "崇实书院党员先锋宣讲团",
+   "topics": [
+    "西迁精神",
+    "纪念长征胜利 90 周年"
+   ],
+   "bio": "从医学史切入讲西迁，常拿老照片和旧病历作对照。",
+   "img": "assets/img/speakers/s10.jpg"
+  },
+  {
+   "name": "温言",
+   "major": "生物医学工程 2401 班",
+   "org": "崇实书院党员先锋宣讲团",
+   "topics": [
+    "习近平新时代中国特色社会主义思想",
+    "铸牢中华民族共同体意识"
+   ],
+   "bio": "喜欢用一张时间轴把西迁和今天的科研连起来。",
+   "img": "assets/img/speakers/s11.jpg"
+  },
+  {
+   "name": "梁思齐",
+   "major": "口腔医学 2402 班",
+   "org": "崇实书院党员先锋宣讲团",
+   "topics": [
+    "西迁精神",
+    "纪念长征胜利 90 周年"
+   ],
+   "bio": "讲乡村振兴，会从一口水井、一条村路说起。",
+   "img": "assets/img/speakers/s12.jpg"
+  },
+  {
+   "name": "叶初晴",
+   "major": "临床医学 2401 班",
+   "org": "医学部仁心宣讲团",
+   "topics": [
+    "西迁精神",
+    "习近平新时代中国特色社会主义思想"
+   ],
+   "bio": "在义诊现场讲健康科普，讲完常被围着追问。",
+   "img": "assets/img/speakers/s13.jpg"
+  },
+  {
+   "name": "陆行舟",
+   "major": "预防医学 2302 班",
+   "org": "医学部仁心宣讲团",
+   "topics": [
+    "纪念长征胜利 90 周年",
+    "铸牢中华民族共同体意识"
+   ],
+   "bio": "把长征精神与公共卫生史放在一起讲，角度少见。",
+   "img": "assets/img/speakers/s14.jpg"
+  },
+  {
+   "name": "宋听澜",
+   "major": "护理学 2403 班",
+   "org": "医学部仁心宣讲团",
+   "topics": [
+    "西迁精神",
+    "铸牢中华民族共同体意识"
+   ],
+   "bio": "讲西迁精神时，常带听众读一封老校友的信。",
+   "img": "assets/img/speakers/s15.jpg"
   }
  ]
 };

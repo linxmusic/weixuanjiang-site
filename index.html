@@ -119,6 +119,50 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 .row .c{margin-left:auto;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .row:hover{border-bottom-color:var(--ink)}
 
+/* ── 分团建设 ── */
+.hd-note{font-size:12.5px;color:var(--muted)}
+.br-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.br{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.62);
+  padding:20px;text-decoration:none;color:inherit;transition:border-color .25s,transform .25s,background .25s}
+.br:hover{border-color:rgba(42,15,20,.3);transform:translateY(-2px);background:#fff}
+.br-seal{flex:none;width:64px;height:64px;border:2px solid var(--c,#9E1B22);border-radius:4px;color:var(--c,#9E1B22);
+  display:flex;align-items:center;justify-content:center;text-align:center;font-family:'LXGW',serif;font-size:13px;line-height:1.35;
+  letter-spacing:.06em;transform:rotate(-3deg);background:rgba(255,255,255,.5)}
+.br-main{min-width:0}
+.br-main b{display:block;font-size:15.5px;letter-spacing:-.01em}
+.br-main em{display:block;font-style:normal;font-size:11.5px;color:var(--muted);margin-top:5px;font-variant-numeric:tabular-nums}
+.br-main p{font-size:12.5px;color:var(--muted);line-height:1.75;margin-top:9px}
+
+/* ── 优秀宣讲人 ── */
+.spk-box{overflow:hidden;margin-top:24px;padding:2px 0 6px}
+.spk-track{display:flex;gap:18px;will-change:transform;transition:transform .65s cubic-bezier(.16,1,.3,1)}
+.spk{flex:0 0 calc((100% - 54px)/4);min-width:0;cursor:pointer;text-align:left;border:0;background:none;padding:0;font-family:inherit;color:inherit;display:flex;flex-direction:column;align-items:flex-start}
+.spk .ph{display:block;width:100%;overflow:hidden;border-radius:8px;background:#EDEAE1;aspect-ratio:3/4}
+.spk .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1),filter .3s;filter:saturate(.94)}
+.spk:hover .ph img{transform:scale(1.035)}
+.spk .nm{font-size:15px;font-weight:700;margin-top:12px;letter-spacing:-.01em}
+.spk .mj{font-size:11.5px;color:var(--muted);margin-top:3px}
+.spk .og{display:inline-block;font-size:10.5px;color:#7A5C9E;border:1px solid rgba(122,92,158,.35);
+  border-radius:3px;padding:2px 6px;margin-top:7px;line-height:1.4}
+.spk .tp{font-size:11.5px;color:var(--ink);margin-top:9px;line-height:1.55;opacity:.82}
+.spk .bio{font-size:11.5px;color:var(--muted);line-height:1.7;margin-top:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.spk-more{display:flex;align-items:center;gap:6px;margin-top:12px}
+.spk-more .bar{flex:1;height:2px;background:rgba(42,15,20,.1);overflow:hidden}
+.spk-more .bar i{display:block;height:100%;width:25%;background:var(--accent);transition:width .4s,transform .4s}
+
+/* 宣讲人详情 */
+.spk-detail{display:grid;grid-template-columns:168px 1fr;gap:20px;align-items:start}
+.spk-detail .pic{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;background:#EDEAE1}
+.spk-detail h4{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.spk-detail .sub{font-size:12px;color:var(--muted);margin-top:5px}
+.spk-detail .orgline{display:inline-block;font-size:11px;color:#7A5C9E;border:1px solid rgba(122,92,158,.35);border-radius:3px;padding:2px 7px;margin-top:8px}
+.spk-detail p{font-size:13px;line-height:1.85;color:var(--muted);margin-top:12px}
+.spk-detail .tk-list{margin-top:14px;border-top:1px solid var(--line)}
+.spk-detail .tk-list div{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.spk-detail .tk-list span{color:var(--muted);flex:none}
+.spk-detail .go{width:100%;margin-top:16px;background:var(--ink);color:#fff;border:0;border-radius:9px;padding:13px;font-size:14px;font-weight:600;cursor:pointer}
+.spk-detail .fine2{font-size:11px;color:var(--muted);margin-top:9px;line-height:1.7}
+
 /* ── 结尾 ── */
 .cta{margin:70px 0 0;padding:52px 0;border-top:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;gap:30px}
 .cta h3{font-size:42px;line-height:1.15;font-weight:700;letter-spacing:-.03em}
@@ -208,6 +252,14 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   .cta{flex-direction:column;align-items:flex-start;padding:36px 0;margin-top:40px}
   .cta h3{font-size:27px}
   .sec{padding-top:40px}
+  .br-grid{grid-template-columns:1fr;gap:10px}
+  .br{padding:15px;gap:13px}
+  .br-seal{width:52px;height:52px;font-size:11px}
+  .br-main b{font-size:14px}
+  .spk{flex:0 0 76%}
+  .spk .ph{aspect-ratio:4/5}
+  .spk-detail{grid-template-columns:104px 1fr;gap:14px}
+  .spk-detail h4{font-size:17px}
   .mask{padding:0;align-items:flex-end}
   .panel{max-width:none;max-height:94vh;border-radius:18px 18px 0 0}
   .panel-hd{padding:20px 20px 0}
@@ -303,6 +355,18 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
     <div class="cols" id="cols"></div>
   </section>
 
+  <section class="sec" id="branches">
+    <div class="sec-hd"><h2>分团建设</h2><a href="#columns">分团动态 →</a></div>
+    <div class="br-grid" id="brGrid"></div>
+  </section>
+
+  <section class="sec" id="speakers">
+    <div class="sec-hd"><h2>优秀宣讲人</h2><span class="hd-note">15 位 · 点开看详情</span></div>
+    <div class="spk-box">
+      <div class="spk-track" id="spkTrack"></div>
+    </div>
+  </section>
+
   <section class="cta">
     <h3><span class="ln"><span>把这场宣讲</span></span><span class="ln"><span>排进你们的下周议程</span></span></h3>
     <button class="btn-p" id="btnBookCta">发起预约 ›</button>
@@ -363,7 +427,7 @@ const sub   = document.getElementById('panelSub');
 let presetTopic = '';
 
 function openMask(){ mask.classList.add('on'); document.body.style.overflow='hidden'; }
-function closeMask(){ mask.classList.remove('on'); document.body.style.overflow=''; }
+function closeMask(){ mask.classList.remove('on'); document.body.style.overflow=''; if(typeof resumeSpeakers === 'function') resumeSpeakers(); }
 mask.addEventListener('click', e => { if(e.target === mask) closeMask(); });
 document.getElementById('btnClose').addEventListener('click', closeMask);
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && mask.classList.contains('on')) closeMask(); });
@@ -389,7 +453,9 @@ document.getElementById('btnMine').addEventListener('click', openMine);
 
 /* ============ 预约表单 ============ */
 function formHTML(){
-  const opts = TOPICS.map(t => `<option${t===presetTopic?' selected':''}>${t}</option>`).join('');
+  const list = TOPICS.slice();
+  if(presetTopic && list.indexOf(presetTopic) < 0) list.unshift(presetTopic);
+  const opts = list.map(t => `<option${t===presetTopic?' selected':''}>${t}</option>`).join('');
   const d = new Date(); d.setDate(d.getDate()+7);
   const def = d.toISOString().slice(0,10);
   return `
@@ -564,6 +630,104 @@ document.getElementById('panelBody').addEventListener('click', e => {
   body.innerHTML = mineHTML();
 });
 
+/* 分团：来自 2026 年 6-8 月月报的宣讲统计 */
+function renderBranches(){
+  const box = document.getElementById('brGrid');
+  const list = (window.SITE && SITE.branches) || [];
+  if(!box || !list.length) return;
+  box.innerHTML = list.map(b => `
+    <a class="br" href="#columns">
+      <span class="br-seal" style="--c:${b.color}">${escHtml(b.short).replace(' · ','<br>')}</span>
+      <div class="br-main">
+        <b>${escHtml(b.name)}</b>
+        <em>2026 年 6–8 月 · 宣讲 ${b.sessions} 场 / ${b.people} 人次</em>
+        <p>${escHtml(b.bio)}</p>
+      </div>
+    </a>`).join('');
+}
+
+/* 优秀宣讲人：自动轮播 */
+const SPK = (window.SITE && SITE.speakers) || [];
+let spkI = 0, spkTimer = null, spkPaused = false;
+
+function renderSpeakers(){
+  const track = document.getElementById('spkTrack');
+  if(!track || !SPK.length) return;
+  track.innerHTML = SPK.map((p,i) => `
+    <button class="spk" type="button" data-spk="${i}" aria-label="查看 ${escHtml(p.name)}">
+      <span class="ph"><img src="${p.img}" alt="${escHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'"></span>
+      <span class="nm">${escHtml(p.name)}</span>
+      <span class="mj">${escHtml(p.major)}</span>
+      <span class="og">${escHtml(p.org)}</span>
+      <span class="tp">主讲：${p.topics.map(escHtml).join(' / ')}</span>
+      <span class="bio">${escHtml(p.bio)}</span>
+    </button>`).join('');
+  track.querySelectorAll('[data-spk]').forEach(el => {
+    el.addEventListener('click', () => openSpeaker(+el.dataset.spk));
+  });
+  layoutSpeakers();
+}
+
+function spkMetric(){
+  const track = document.getElementById('spkTrack');
+  const box = track && track.parentElement;
+  const card = track && track.children[0];
+  if(!track || !box || !card) return null;
+  const gap = parseFloat(getComputedStyle(track).gap) || 18;
+  const bw = box.clientWidth;
+  const cw = card.getBoundingClientRect().width;
+  const visible = Math.max(1, Math.floor((bw + gap) / (cw + gap)));
+  return {track, gap, cw, visible, max: Math.max(0, SPK.length - visible)};
+}
+
+function layoutSpeakers(){
+  const m = spkMetric();
+  if(!m) return;
+  if(spkI > m.max) spkI = m.max;
+  m.track.style.transform = `translateX(${-(spkI * (m.cw + m.gap)).toFixed(1)}px)`;
+}
+
+function stepSpeakers(){
+  const m = spkMetric();
+  if(!m) return;
+  spkI = spkI >= m.max ? 0 : spkI + 1;
+  layoutSpeakers();
+}
+
+function startSpeakers(){
+  if(spkTimer || !SPK.length) return;
+  spkTimer = setInterval(() => {
+    if(spkPaused || document.hidden) return;
+    if(document.getElementById('mask').classList.contains('on')) return;
+    stepSpeakers();
+  }, 4200);
+}
+function pauseSpeakers(){ spkPaused = true; }
+function resumeSpeakers(){ spkPaused = false; }
+
+function openSpeaker(i){
+  const p = SPK[i];
+  if(!p) return;
+  pauseSpeakers();
+  title.textContent = '优秀宣讲人';
+  sub.textContent = '来自总团与分团的宣讲人。';
+  body.innerHTML = `
+    <div class="spk-detail">
+      <img class="pic" src="${p.img}" alt="${escHtml(p.name)}" onerror="this.style.visibility='hidden'">
+      <div>
+        <h4>${escHtml(p.name)}</h4>
+        <div class="sub">${escHtml(p.major)}</div>
+        <div class="orgline">${escHtml(p.org)}</div>
+        <p>${escHtml(p.bio)}</p>
+        <div class="tk-list">${p.topics.map(t => `<div><span>主讲</span>${escHtml(t)}</div>`).join('')}</div>
+        <button class="go" type="button" onclick="bookSpeaker(${i})">约这位宣讲人</button>
+        <div class="fine2">点按钮会带着「${escHtml(p.topics[0])}」打开预约表，时间地点你填。</div>
+      </div>
+    </div>`;
+  openMask();
+}
+window.bookSpeaker = i => { const p = SPK[i]; if(p) openBooking(p.topics[0]); };
+
 /* 栏目：从 assets/site.js 渲染，八个栏目 + 78 篇文章 */
 function escHtml(t){ return String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function renderCols(){
@@ -576,10 +740,22 @@ function renderCols(){
     </details>`).join('');
 }
 renderCols();
+renderBranches();
+renderSpeakers();
+startSpeakers();
+window.addEventListener('resize', layoutSpeakers);
+const spkBox = document.querySelector('.spk-box');
+if(spkBox){
+  spkBox.addEventListener('mouseenter', pauseSpeakers);
+  spkBox.addEventListener('mouseleave', resumeSpeakers);
+  spkBox.addEventListener('touchstart', pauseSpeakers, {passive:true});
+  spkBox.addEventListener('touchend', () => setTimeout(resumeSpeakers, 3500), {passive:true});
+}
 
 /* 预填主题 */
 window.openBooking = openBooking;
 window.openMine = openMine;
+window.openSpeaker = openSpeaker;
 </script>
 <script src="assets/motion.js"></script>
 </body>
