@@ -11,14 +11,19 @@
 .m-progress{position:fixed;left:0;top:0;height:2px;width:100%;background:var(--accent);
   transform:scaleX(0);transform-origin:0 50%;z-index:210;pointer-events:none;will-change:transform}
 
-/* ② 随滚动缓慢下移的第二层红格线，叠在墨色格线上做视差 */
-.m-drift{position:fixed;left:0;right:0;top:-30%;height:160%;z-index:0;pointer-events:none;will-change:transform;
-  background-image:
-    repeating-linear-gradient(90deg,rgba(214,48,63,.042) 0 1px,transparent 1px 216px),
-    repeating-linear-gradient(0deg,rgba(214,48,63,.042) 0 1px,transparent 1px 216px);
-  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 16%,#000 84%,transparent 100%);
-          mask-image:linear-gradient(180deg,transparent 0,#000 16%,#000 84%,transparent 100%)}
-@media (min-width:561px){.m-drift{max-width:560px;margin:0 auto}}
+/* ② 背景：纸上缓慢流动的淡墨与光，不用任何格线 */
+.m-drift{position:fixed;left:-18%;right:-18%;top:-18%;bottom:-18%;z-index:0;pointer-events:none;will-change:transform;
+  background:
+    radial-gradient(40% 34% at 24% 22%, rgba(42,15,20,.055), rgba(42,15,20,0) 72%),
+    radial-gradient(36% 30% at 78% 26%, rgba(214,48,63,.05), rgba(214,48,63,0) 72%),
+    radial-gradient(48% 38% at 58% 84%, rgba(255,228,92,.13), rgba(255,228,92,0) 74%),
+    radial-gradient(34% 28% at 14% 78%, rgba(42,15,20,.04), rgba(42,15,20,0) 70%);
+  animation:m-wash 38s ease-in-out infinite alternate}
+@keyframes m-wash{
+  0%{transform:translate3d(-2.5%,-1.5%,0) scale(1) rotate(0deg)}
+  50%{transform:translate3d(1.5%,2%,0) scale(1.07) rotate(.6deg)}
+  100%{transform:translate3d(-1%,1%,0) scale(1.03) rotate(-.4deg)}
+}
 .wrap,.view{position:relative;z-index:1}
 
 /* ③ 通用入场：淡入 + 上浮 */

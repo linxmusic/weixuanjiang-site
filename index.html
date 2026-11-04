@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>学生微宣讲团 · 预约宣讲</title>
-<meta name="description" content="西安交通大学学生微宣讲团校内预约。校内单位免费，一场 5–60 分钟，线上或线下均可。">
+<meta name="description" content="西安交通大学学生微宣讲团预约。把宣讲送到支部、班级、部门，5–60 分钟，线上或线下均可。">
 <style>
 @font-face{font-family:'LXGW';src:url('assets/fonts/lxgw-subset.woff2') format('woff2');font-display:swap}
 :root{
@@ -17,10 +17,6 @@
 html{-webkit-text-size-adjust:100%}
 body{
   background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  background-image:
-    repeating-linear-gradient(90deg,rgba(42,15,20,.045) 0 1px,transparent 1px 108px),
-    repeating-linear-gradient(0deg,rgba(42,15,20,.045) 0 1px,transparent 1px 108px);
-  background-position:74px -12px;
 }
 a{color:inherit}
 .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
@@ -70,9 +66,13 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 
 /* ── 合照大图 ── */
 .cover{margin:34px 0 0;position:relative}
-.cover img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:4px;background:#e9ece8}
+.cover a{display:block;text-decoration:none;color:inherit;position:relative;cursor:pointer}
+.cover img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:4px;background:#e9ece8;transition:opacity .25s}
+.cover a:hover img{opacity:.94}
 .cover .cap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:12px;font-size:12px;color:var(--muted)}
 .cover .cap b{font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.cover .cap-link{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(214,48,63,.35);padding-bottom:1px}
+.cover .cap-link:hover{border-bottom-color:var(--accent)}
 
 /* ── 跑马灯 ── */
 .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:15px 0;margin-top:40px;background:rgba(248,250,247,.6)}
@@ -89,6 +89,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 .sec-hd a{font-size:12.5px;color:var(--accent);text-decoration:none}
 .band{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px}
 .band figure{position:relative;overflow:hidden;border-radius:6px}
+.band figure a{display:block;text-decoration:none;color:inherit;cursor:pointer}
 .band img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
 .band figure:hover img{transform:scale(1.04)}
 .band figcaption{font-size:11px;color:var(--muted);margin-top:9px;display:flex;flex-direction:column;gap:3px;align-items:flex-start}
@@ -122,6 +123,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 .cta{margin:70px 0 0;padding:52px 0;border-top:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;gap:30px}
 .cta h3{font-size:42px;line-height:1.15;font-weight:700;letter-spacing:-.03em}
 .foot{display:flex;justify-content:space-between;padding:26px 0 44px;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}
+.foot .slogan-line{font-family:'LXGW',"Source Han Serif SC",serif;font-size:12px;color:rgba(42,15,20,.66);letter-spacing:.06em}
 .foot .adm{color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(42,15,20,.2)}
 .foot .adm:hover{color:var(--ink)}
 
@@ -237,7 +239,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   <section class="hero">
     <div>
       <h1><span class="ln"><span>支部、班级、部门</span></span><span class="ln"><span><mark>都能约</mark>一场宣讲</span></span></h1>
-      <p class="lede">校内单位免费。一场 5–60 分钟，线上或线下都可以。填写单位、主题和时间，工作人员会电话联系确认。</p>
+      <p class="lede">把一场宣讲送到支部、班级、部门。5–60 分钟，线上或线下都可以。填写单位、主题和时间，工作人员会电话联系确认。</p>
       <div class="acts">
         <button class="btn-p" id="btnBookHero">填写预约 · 两分钟 ›</button>
         <a class="btn-s" href="#scenes">先看看现场</a>
@@ -261,10 +263,12 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   </section>
 
   <figure class="cover" id="cover">
-    <img src="assets/img/hero-team.jpg" alt="纪念长征胜利90周年主题活动暨第十三期筑言计划现场合影">
+    <a href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener">
+      <img src="assets/img/hero-team.jpg" alt="纪念长征胜利90周年主题活动暨第十三期筑言计划现场合影">
+    </a>
     <figcaption class="cap">
       <b>纪念长征胜利 90 周年主题活动暨第十三期「筑言计划」</b>
-      <span>2026.10.21 · 西安交通大学</span>
+      <span>2026.10.21 · 西安交通大学 · <a class="cap-link" href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener">活动原文 →</a></span>
     </figcaption>
   </figure>
 
@@ -276,10 +280,10 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   <section class="sec" id="scenes">
     <div class="sec-hd"><h2>宣讲现场</h2><a href="#columns">更多动态 →</a></div>
     <div class="band">
-      <figure><img src="assets/img/zhuyan.jpg" alt="第十三期筑言计划理论培训"><figcaption><b>第十三期「筑言计划」</b><span>理论培训 · 2026.10.21</span></figcaption></figure>
-      <figure><img src="assets/img/mogao.jpg" alt="纪念长征胜利90周年专题磨稿"><figcaption><b>纪念长征胜利 90 周年</b><span>专题磨稿 · 2026.10.13</span></figcaption></figure>
-      <figure><img src="assets/img/chuanxibei.jpg" alt="传习杯四所交通大学联合演讲比赛"><figcaption><b>「传习杯」四校联合演讲比赛</b><span>2026.09.19</span></figcaption></figure>
-      <figure><img src="assets/img/fuxiao.jpg" alt="走进交大附小宣讲生活中的核辐射"><figcaption><b>走进交大附小</b><span>生活中的核辐射 · 2026</span></figcaption></figure>
+      <figure><a href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener"><img src="assets/img/zhuyan.jpg" alt="第十三期筑言计划理论培训"><figcaption><b>第十三期「筑言计划」</b><span>理论培训 · 2026.10.21</span></figcaption></a></figure>
+      <figure><a href="https://mp.weixin.qq.com/s/984aRran-f5mQDClnLPmSw" target="_blank" rel="noopener"><img src="assets/img/mogao.jpg" alt="纪念长征胜利90周年专题磨稿"><figcaption><b>纪念长征胜利 90 周年</b><span>专题磨稿 · 2026.10.13</span></figcaption></a></figure>
+      <figure><a href="https://mp.weixin.qq.com/s/txKdNRFmcWIDp7nryoi8cA" target="_blank" rel="noopener"><img src="assets/img/chuanxibei.jpg" alt="传习杯四所交通大学联合演讲比赛"><figcaption><b>「传习杯」四校联合演讲比赛</b><span>2026.09.19</span></figcaption></a></figure>
+      <figure><a href="https://weixin.sogou.com/weixin?type=2&amp;query=%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A2%20%E7%94%9F%E6%B4%BB%E4%B8%AD%E7%9A%84%E6%A0%B8%E8%BE%90%E5%B0%84" target="_blank" rel="noopener"><img src="assets/img/fuxiao.jpg" alt="走进交大附小宣讲生活中的核辐射"><figcaption><b>走进交大附小</b><span>生活中的核辐射 · 2026</span></figcaption></a></figure>
     </div>
   </section>
 
@@ -290,7 +294,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
       <a class="row" href="#" onclick="openBooking('西迁精神');return false"><i style="background:#3F628F"></i>西迁精神<span class="c">预约 ›</span></a>
       <a class="row" href="#" onclick="openBooking('纪念长征胜利 90 周年');return false"><i style="background:#E85F8A"></i>纪念长征胜利 90 周年<span class="c">预约 ›</span></a>
       <a class="row" href="#" onclick="openBooking('铸牢中华民族共同体意识');return false"><i style="background:#E8A33F"></i>铸牢中华民族共同体意识<span class="c">预约 ›</span></a>
-      <a class="row" href="#" onclick="openBooking('请宣讲团推荐');return false"><i style="background:#D6303F"></i>以上都不确定，请宣讲团推荐<span class="c">预约 ›</span></a>
+      <a class="row" href="#" onclick="openBooking('主题还没定，请宣讲团推荐');return false"><i style="background:#D6303F"></i>主题还没定，请宣讲团推荐<span class="c">预约 ›</span></a>
     </div>
   </section>
 
@@ -304,7 +308,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
     <button class="btn-p" id="btnBookCta">发起预约 ›</button>
   </section>
 
-  <footer class="foot"><span>西安交通大学学生微宣讲团</span><span>2017 — 2026 · 校内单位免费 · <a class="adm" href="admin.html">管理</a></span></footer>
+  <footer class="foot"><span>西安交通大学学生微宣讲团</span><span class="slogan-line">“微”里话初心 · “宣”时践使命 · “讲”中融奋斗&nbsp;&nbsp;<a class="adm" href="admin.html">管理</a></span></footer>
 </div>
 
 <!-- 弹窗 -->
@@ -325,7 +329,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 <script>
 /* ============ 数据 ============ */
 const KEY = 'xyyj_bookings_v1';
-const TOPICS = (window.SITE && window.SITE.topics) || ['习近平新时代中国特色社会主义思想','西迁精神','纪念长征胜利 90 周年','铸牢中华民族共同体意识','请宣讲团推荐'];
+const TOPICS = (window.SITE && window.SITE.topics) || ['习近平新时代中国特色社会主义思想','西迁精神','纪念长征胜利 90 周年','铸牢中华民族共同体意识','主题还没定，请宣讲团推荐'];
 const STCOLOR = {
   '待受理':['#9A6B12','#FBF1DC'], '已受理':['#3F628F','#EAF1FB'], '待讲师确认':['#8A5B12','#FDF3E2'],
   '已确认':['#2F6047','#E7F1EA'], '已完成':['#5E5A51','#EEEAE0'], '已退回':['#A3312A','#F8E6E4']
@@ -445,7 +449,8 @@ function formHTML(){
     </div>
     <div class="field" data-for="place">
       <label>地点 / 会议链接 <span class="req">*</span></label>
-      <input name="place" placeholder="例：兴庆校区主楼 B203">
+      <input name="place" placeholder="例：兴庆校区主楼 B203；还没定可填「暂无」">
+      <div class="hint">地点还没定就先填「暂无」，确定后我们会电话跟你确认。</div>
       <div class="err">请填写地点或会议链接</div>
     </div>
     <div class="field">

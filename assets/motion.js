@@ -216,7 +216,6 @@
 
     var max = Math.max(1, doc.documentElement.scrollHeight - window.innerHeight);
     bar.style.transform = 'scaleX(' + Math.min(1, y / max).toFixed(4) + ')';
-    drift.style.transform = 'translate3d(0,' + (-y * 0.05).toFixed(1) + 'px,0)';
 
     if (coverImg && cover) {
       var r = cover.getBoundingClientRect();

@@ -18,9 +18,6 @@ html{-webkit-text-size-adjust:100%}
 body{
   background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;
   max-width:560px;margin:0 auto;min-height:100vh;
-  background-image:
-    repeating-linear-gradient(90deg,rgba(42,15,20,.035) 0 1px,transparent 1px 96px),
-    repeating-linear-gradient(0deg,rgba(42,15,20,.035) 0 1px,transparent 1px 96px);
   padding-bottom:calc(64px + var(--safe-b));
 }
 button{font-family:inherit}
@@ -44,8 +41,13 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 .btn-ghost{font-size:13px;color:var(--muted);background:none;border:0;padding:8px}
 
 .cover{margin:18px 0 0}
+.cover a{display:block;text-decoration:none;color:inherit}
 .cover img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:10px;background:#e9ece8}
 .cover .cap{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6}
+.cover .cap-link{color:var(--accent);text-decoration:none}
+
+.slogan{margin:28px 0 8px;padding:18px 0 6px;border-top:1px solid var(--line);text-align:center;
+  font-family:'LXGW',"Source Han Serif SC",serif;font-size:14px;line-height:2.05;color:rgba(42,15,20,.62);letter-spacing:.08em}
 
 .stats{display:flex;gap:8px;margin-top:18px}
 .stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center}
@@ -146,13 +148,15 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 <main class="view on" id="v-home">
   <section class="hero">
     <h1><span class="ln"><span>支部、班级、部门</span></span><span class="ln"><span><mark>都能约</mark>一场宣讲</span></span></h1>
-    <p class="lede">校内单位免费。一场 5–60 分钟，线上或线下都可以。填写单位、主题和时间，我们会电话联系确认。</p>
+    <p class="lede">把一场宣讲送到支部、班级、部门。5–60 分钟，线上或线下都可以。填写单位、主题和时间，我们会电话联系确认。</p>
     <div class="cta"><button class="btn-main" data-go="book">填写预约 · 两分钟</button><button class="btn-ghost" data-go="cols">看栏目</button></div>
   </section>
 
   <figure class="cover">
-    <img src="assets/img/hero-team.jpg" alt="纪念长征胜利90周年主题活动暨第十三期筑言计划现场">
-    <figcaption class="cap">纪念长征胜利 90 周年主题活动暨第十三期「筑言计划」<br>2026.10.21 · 西安交通大学</figcaption>
+    <a href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener">
+      <img src="assets/img/hero-team.jpg" alt="纪念长征胜利90周年主题活动暨第十三期筑言计划现场">
+    </a>
+    <figcaption class="cap">纪念长征胜利 90 周年主题活动暨第十三期「筑言计划」<br>2026.10.21 · 西安交通大学 · <a class="cap-link" href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener">活动原文 →</a></figcaption>
   </figure>
 
   <div class="stats">
@@ -163,14 +167,16 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 
   <div class="sec-hd"><h2>宣讲现场</h2><span>左右滑</span></div>
   <div class="scroll-x">
-    <a class="shot" href="#"><img src="assets/img/zhuyan.jpg" alt=""><b>第十三期「筑言计划」</b><span>理论培训 · 2026.10.21</span></a>
-    <a class="shot" href="#"><img src="assets/img/mogao.jpg" alt=""><b>纪念长征胜利 90 周年</b><span>专题磨稿 · 2026.10.13</span></a>
-    <a class="shot" href="#"><img src="assets/img/chuanxibei.jpg" alt=""><b>「传习杯」四校联合演讲比赛</b><span>2026.09.19</span></a>
-    <a class="shot" href="#"><img src="assets/img/fuxiao.jpg" alt=""><b>走进交大附小</b><span>生活中的核辐射 · 2026</span></a>
+    <a class="shot" href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener"><img src="assets/img/zhuyan.jpg" alt=""><b>第十三期「筑言计划」</b><span>理论培训 · 2026.10.21</span></a>
+    <a class="shot" href="https://mp.weixin.qq.com/s/984aRran-f5mQDClnLPmSw" target="_blank" rel="noopener"><img src="assets/img/mogao.jpg" alt=""><b>纪念长征胜利 90 周年</b><span>专题磨稿 · 2026.10.13</span></a>
+    <a class="shot" href="https://mp.weixin.qq.com/s/txKdNRFmcWIDp7nryoi8cA" target="_blank" rel="noopener"><img src="assets/img/chuanxibei.jpg" alt=""><b>「传习杯」四校联合演讲比赛</b><span>2026.09.19</span></a>
+    <a class="shot" href="https://weixin.sogou.com/weixin?type=2&amp;query=%E5%AD%A6%E7%94%9F%E5%BE%AE%E5%AE%A3%E8%AE%B2%E5%9B%A2%20%E7%94%9F%E6%B4%BB%E4%B8%AD%E7%9A%84%E6%A0%B8%E8%BE%90%E5%B0%84" target="_blank" rel="noopener"><img src="assets/img/fuxiao.jpg" alt=""><b>走进交大附小</b><span>生活中的核辐射 · 2026</span></a>
   </div>
 
   <div class="sec-hd"><h2>开放预约的专题</h2><span>点一下直接填</span></div>
   <div id="topics"></div>
+
+  <p class="slogan">“微”里话初心<br>“宣”时践使命<br>“讲”中融奋斗</p>
 </main>
 
 <!-- 栏目 -->
@@ -203,7 +209,7 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 <script src="assets/site.js"></script>
 <script>
 const KEY = 'xyyj_bookings_v1';
-const TOPICS = (window.SITE && window.SITE.topics) || ['请宣讲团推荐'];
+const TOPICS = (window.SITE && window.SITE.topics) || ['主题还没定，请宣讲团推荐'];
 const STCOLOR = {
   '待受理':['#9A6B12','#FBF1DC'], '已受理':['#3F628F','#EAF1FB'], '待讲师确认':['#8A5B12','#FDF3E2'],
   '已确认':['#2F6047','#E7F1EA'], '已完成':['#5E5A51','#EEEAE0'], '已退回':['#A3312A','#F8E6E4']
@@ -306,7 +312,7 @@ function renderForm(){
       <label><input type="radio" name="mode" value="线下" checked><span>线下</span></label>
       <label><input type="radio" name="mode" value="线上"><span>线上</span></label></div></div>
     <div class="field" data-for="place"><label>地点 / 会议链接 <span class="req">*</span></label>
-      <input name="place" placeholder="例：兴庆校区主楼 B203"><div class="err">请填写地点或会议链接</div></div>
+      <input name="place" placeholder="例：兴庆校区主楼 B203；还没定可填「暂无」"><div class="err">请填写地点或会议链接</div></div>
     <div class="field"><label>备注</label><textarea name="note" placeholder="选填"></textarea></div>
     <button class="submit" type="submit">提交预约</button>
     <p class="fine">提交后我们会用手机号联系你，确认时间和地点。</p>
