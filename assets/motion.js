@@ -171,13 +171,13 @@
   /* ── ⑧ 预约单立体倾斜 ─────────────────────────────────── */
   var tk = $('.ticket');
   if (tk && FINE && !RM) {
-    var heroBox = tk.closest('.hero') || tk;
+    var heroBox = tk.closest('.ticket-stage') || tk;
     heroBox.addEventListener('mousemove', function (e) {
       var r = tk.getBoundingClientRect();
       var dx = (e.clientX - (r.left + r.width / 2)) / r.width;
       var dy = (e.clientY - (r.top + r.height / 2)) / r.height;
       tk.style.animation = 'none';
-      tk.style.transform = 'rotate(-1.2deg) rotateY(' + (dx * 9).toFixed(2) + 'deg) rotateX(' + (-dy * 9).toFixed(2) + 'deg)';
+      tk.style.transform = 'rotate(-1.2deg) rotateY(' + (dx * 7).toFixed(2) + 'deg) rotateX(' + (-dy * 7).toFixed(2) + 'deg)';
     });
     heroBox.addEventListener('mouseleave', function () {
       tk.style.transform = '';
