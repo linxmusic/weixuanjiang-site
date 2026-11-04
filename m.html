@@ -377,6 +377,7 @@ function closeSheet(){
 function bookSpeaker(i){
   const p = SPK[i]; if(!p) return;
   presetTopic = p.topics[0];
+  presetSpeaker = p.name + '（' + p.org + '）';
   closeSheet();
   go('book');
 }
@@ -400,6 +401,7 @@ function renderCols(){
 
 /* ── 表单 ── */
 let presetTopic = '';
+let presetSpeaker = '';
 function renderForm(){
   const d = new Date(); d.setDate(d.getDate()+7);
   const def = d.toISOString().slice(0,10);
@@ -413,6 +415,7 @@ function renderForm(){
       <div class="field" data-for="phone"><label>手机号 <span class="req">*</span></label>
         <input name="phone" inputmode="numeric" placeholder="11 位"><div class="err">填写 11 位手机号</div></div>
     </div>
+    ${presetSpeaker ? `<div class="field"><label>指定宣讲人</label><input name="speaker" value="${esc(presetSpeaker)}" readonly></div>` : `<input type="hidden" name="speaker" value="">`}
     <div class="field"><label>宣讲主题</label><select name="topic">
       ${(presetTopic && TOPICS.indexOf(presetTopic) < 0 ? [presetTopic].concat(TOPICS) : TOPICS).map(t=>`<option${t===presetTopic?' selected':''}>${esc(t)}</option>`).join('')}</select></div>
     <div class="two">
@@ -467,18 +470,18 @@ function onSubmit(e){
   }
   const list = load();
   const rec = {
-    no: nextNo(list), org: v('org'), name: v('name'), phone: v('phone'), topic: v('topic'),
+    no: nextNo(list), org: v('org'), name: v('name'), phone: v('phone'), speaker: v('speaker'), topic: v('topic'),
     date: v('date'), time: v('time'), people: v('people'), dur: v('dur'),
     mode: f.elements['mode'].value, place: v('place'), note: v('note'),
     status: '待受理', created: new Date().toISOString()
   };
-  list.unshift(rec); save(list); presetTopic = '';
+  list.unshift(rec); save(list); presetTopic = ''; presetSpeaker = '';
   $('#formBox').innerHTML = `
     <div class="done">
       <div class="ok">✓</div>
       <div class="no">${rec.no}</div>
       <p class="tip">${esc(rec.org)} · ${fmtDate(rec.date)} ${esc(rec.time)} · ${esc(rec.people)} 人 · ${esc(rec.mode)}<br>
-        主题：${esc(rec.topic)}<br>请记下单号。我们会按 ${rec.phone.slice(0,3)}****${rec.phone.slice(-4)} 联系你。</p>
+        ${rec.speaker ? `宣讲人：${esc(rec.speaker)}<br>` : ''}主题：${esc(rec.topic)}<br>请记下单号。我们会按 ${rec.phone.slice(0,3)}****${rec.phone.slice(-4)} 联系你。</p>
       <div class="btns"><button type="button" data-go="mine">查看我的预约</button><button type="button" class="dark" data-go="book">再约一场</button></div>
     </div>`;
 }
@@ -496,7 +499,7 @@ function renderMine(){
     return `<div class="mitem">
       <div class="top"><span class="no">${r.no}</span><span class="st" style="color:${c};background:${bg}">${r.status}</span></div>
       <div class="org">${esc(r.org)}</div>
-      <div class="m">${fmtDate(r.date)} ${esc(r.time)} · ${esc(r.people)} 人 · ${esc(r.mode)} · ${esc(r.place)}<br>主题：${esc(r.topic)}</div>
+      <div class="m">${fmtDate(r.date)} ${esc(r.time)} · ${esc(r.people)} 人 · ${esc(r.mode)} · ${esc(r.place)}<br>${r.speaker ? `宣讲人：${esc(r.speaker)}<br>` : ''}主题：${esc(r.topic)}</div>
       ${r.reject ? `<div class="m" style="color:#A3312A">退回原因：${esc(r.reject)}</div>` : ''}
       <button class="del" data-del="${r.no}">取消这条预约</button>
     </div>`;

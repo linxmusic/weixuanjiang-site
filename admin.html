@@ -188,7 +188,7 @@ function visible(all){
   if(filter !== '全部') out = out.filter(x => x.status === filter);
   if(keyword){
     const k = keyword.toLowerCase();
-    out = out.filter(x => [x.no,x.org,x.name,x.topic,x.phone,x.place].join(' ').toLowerCase().includes(k));
+    out = out.filter(x => [x.no,x.org,x.name,x.topic,x.phone,x.place,x.speaker].join(' ').toLowerCase().includes(k));
   }
   out.sort((a,b) => sortBy === 'time'
     ? (a.date + a.time).localeCompare(b.date + b.time)
@@ -247,7 +247,7 @@ function render(){
       <div class="meta">
         ${esc(r.name)} · <b>${esc(r.phone)}</b><br>
         ${fmtDate(r.date)} ${esc(r.time)} · ${esc(r.people)} 人 · ${esc(r.dur)} · ${esc(r.mode)}<br>
-        主题：${esc(r.topic)}<br>
+        ${r.speaker ? `指定宣讲人：${esc(r.speaker)}<br>` : ''}主题：${esc(r.topic)}<br>
         ${r.mode === '线上' ? '会议：' : '地点：'}${esc(r.place)}
       </div>
       ${r.note ? `<div class="note">备注：${esc(r.note)}</div>` : ''}
@@ -286,8 +286,8 @@ $('btnRefresh').addEventListener('click', render);
 $('btnCsv').addEventListener('click', () => {
   const rows = visible(load());
   if(!rows.length){ alert('没有可导出的记录'); return; }
-  const head = ['单号','状态','提交时间','单位','联系人','手机号','主题','日期','时间','人数','时长','形式','地点','备注','退回原因'];
-  const body = rows.map(r => [r.no,r.status,fmtCreated(r.created),r.org,r.name,r.phone,r.topic,r.date,r.time,r.people,r.dur,r.mode,r.place,r.note||'',r.reject||'']);
+  const head = ['单号','状态','提交时间','单位','联系人','手机号','指定宣讲人','主题','日期','时间','人数','时长','形式','地点','备注','退回原因'];
+  const body = rows.map(r => [r.no,r.status,fmtCreated(r.created),r.org,r.name,r.phone,r.speaker||'',r.topic,r.date,r.time,r.people,r.dur,r.mode,r.place,r.note||'',r.reject||'']);
   const csv = '﻿' + [head].concat(body)
     .map(line => line.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\r\n');
   const a = document.createElement('a');

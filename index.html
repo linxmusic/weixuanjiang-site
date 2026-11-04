@@ -425,6 +425,7 @@ const body = document.getElementById('panelBody');
 const title = document.getElementById('panelTitle');
 const sub   = document.getElementById('panelSub');
 let presetTopic = '';
+let presetSpeaker = '';
 
 function openMask(){ mask.classList.add('on'); document.body.style.overflow='hidden'; }
 function closeMask(){ mask.classList.remove('on'); document.body.style.overflow=''; if(typeof resumeSpeakers === 'function') resumeSpeakers(); }
@@ -432,8 +433,9 @@ mask.addEventListener('click', e => { if(e.target === mask) closeMask(); });
 document.getElementById('btnClose').addEventListener('click', closeMask);
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && mask.classList.contains('on')) closeMask(); });
 
-function openBooking(topic){
+function openBooking(topic, speaker){
   presetTopic = topic || '';
+  presetSpeaker = speaker || '';
   title.textContent = '预约宣讲';
   sub.textContent = '填完提交即可，我们会电话联系确认时间与地点。';
   body.innerHTML = formHTML();
@@ -477,6 +479,7 @@ function formHTML(){
         <div class="err">请填写正确的 11 位手机号</div>
       </div>
     </div>
+    ${presetSpeaker ? `<div class="field"><label>指定宣讲人</label><input name="speaker" value="${escHtml(presetSpeaker)}" readonly></div>` : `<input type="hidden" name="speaker" value="">`}
     <div class="field">
       <label>宣讲主题</label>
       <select name="topic">${opts}</select>
@@ -567,6 +570,7 @@ body.addEventListener('submit', e => {
   const rec = {
     no: nextNo(list),
     org: v('org'), name: v('name'), phone: v('phone'),
+    speaker: v('speaker'),
     topic: v('topic'), date: v('date'), time: v('time'),
     people: v('people'), dur: v('dur'), mode: f.elements['mode'].value,
     place: v('place'), note: v('note'),
@@ -576,6 +580,7 @@ body.addEventListener('submit', e => {
   list.unshift(rec);
   save(list);
   presetTopic = '';
+  presetSpeaker = '';
   title.textContent = '预约已提交';
   sub.textContent = '把单号记下来，方便之后查询进度。';
   body.innerHTML = doneHTML(rec);
@@ -592,6 +597,7 @@ function doneHTML(r){
     <div class="no">${r.no}</div>
     <p class="tip">
       ${r.org} · ${fmtDate(r.date)} ${r.time} · ${r.people} 人 · ${r.mode}<br>
+      ${r.speaker ? `宣讲人：${r.speaker}<br>` : ''}
       主题：${r.topic}<br>
       请把这个单号记下来，方便查询进度。工作人员会按手机号 ${r.phone.slice(0,3)}****${r.phone.slice(-4)} 联系你。
     </p>
@@ -613,7 +619,7 @@ function mineHTML(){
     <div class="mitem" data-no="${r.no}">
       <div class="top"><span class="no">${r.no}</span><span class="st" style="color:${(STCOLOR[r.status]||['#555','#eee'])[0]};background:${(STCOLOR[r.status]||['#555','#eee'])[1]}">${r.status}</span></div>
       <div class="t">${r.org}</div>
-      <div class="m">${fmtDate(r.date)} ${r.time} · ${r.people} 人 · ${r.mode} · ${r.place}<br>主题：${r.topic}</div>
+      <div class="m">${fmtDate(r.date)} ${r.time} · ${r.people} 人 · ${r.mode} · ${r.place}<br>${r.speaker ? `宣讲人：${r.speaker}<br>` : ''}主题：${r.topic}</div>
       ${r.reject ? `<div class="m" style="color:#A3312A">退回原因：${r.reject}</div>` : ''}
       <button class="del" data-del="${r.no}">取消这条预约</button>
     </div>`).join('');
@@ -721,12 +727,11 @@ function openSpeaker(i){
         <p>${escHtml(p.bio)}</p>
         <div class="tk-list">${p.topics.map(t => `<div><span>主讲</span>${escHtml(t)}</div>`).join('')}</div>
         <button class="go" type="button" onclick="bookSpeaker(${i})">约这位宣讲人</button>
-        <div class="fine2">点按钮会带着「${escHtml(p.topics[0])}」打开预约表，时间地点你填。</div>
       </div>
     </div>`;
   openMask();
 }
-window.bookSpeaker = i => { const p = SPK[i]; if(p) openBooking(p.topics[0]); };
+window.bookSpeaker = i => { const p = SPK[i]; if(p) openBooking(p.topics[0], p.name + '（' + p.org + '）'); };
 
 /* 栏目：从 assets/site.js 渲染，八个栏目 + 78 篇文章 */
 function escHtml(t){ return String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
