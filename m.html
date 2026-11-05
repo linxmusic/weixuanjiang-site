@@ -198,9 +198,9 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 <!-- 首页 -->
 <main class="view on" id="v-home">
   <section class="hero">
-    <h1><span class="ln"><span>支部、班级、部门</span></span><span class="ln"><span><mark>都能约</mark>一场宣讲</span></span></h1>
-    <p class="lede">一场宣讲，五分钟到一小时都行。线上开个会，也可以到你们教室、会议室讲。填好单位和大概的日期，我们加微信把时间地点定下来。</p>
-    <div class="cta"><button class="btn-main" data-go="book">填写预约 · 两分钟</button><button class="btn-ghost" data-go="cols">看栏目</button></div>
+    <h1><span class="ln"><span>宣讲预约</span></span></h1>
+    <p class="lede">西安交通大学学生微宣讲团面向支部、班级、部门及校内外单位提供宣讲服务。请填写活动时间、地点与主题，提交后由工作人员通过微信与您联系。</p>
+    <div class="cta"><button class="btn-main" data-go="book">填写预约信息</button><button class="btn-ghost" data-go="cols">看栏目</button></div>
   </section>
 
   <figure class="cover">
@@ -450,7 +450,7 @@ function renderForm(){
       <input name="place" placeholder="例：兴庆校区主楼 B203；还没定可填「暂无」"><div class="err">请填写地点或会议链接</div></div>
     <div class="field"><label>备注</label><textarea name="note" placeholder="选填"></textarea></div>
     <button class="submit" type="submit">提交预约</button>
-    <p class="fine">提交后用微信联系你，把时间地点定下来。</p>
+    <p class="fine">提交后由工作人员通过微信与您联系，确认时间与地点。</p>
   </form>`;
 
   const f = $('#f');
@@ -494,7 +494,7 @@ function onSubmit(e){
       <div class="ok">✓</div>
       <div class="no">${rec.no}</div>
       <p class="tip">${esc(rec.org)} · ${fmtDate(rec.date)} ${esc(rec.time)} · ${esc(rec.people)} 人 · ${esc(rec.mode)}<br>
-        ${rec.speaker ? `宣讲人：${esc(rec.speaker)}<br>` : ''}主题：${esc(rec.topic)}<br>单号记一下，查进度用得上。我们会用微信 ${esc(rec.phone)} 联系你。</p>
+        ${rec.speaker ? `宣讲人：${esc(rec.speaker)}<br>` : ''}主题：${esc(rec.topic)}<br>请记下单号，便于查询进度。工作人员会通过微信 ${esc(rec.phone)} 与您联系。</p>
       <div class="btns"><button type="button" data-go="mine">查看我的预约</button><button type="button" class="dark" data-go="book">再约一场</button></div>
     </div>`;
 }
