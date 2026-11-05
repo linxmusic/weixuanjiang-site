@@ -59,6 +59,9 @@ h1{font-family:var(--serif);font-size:44px;line-height:1.22;font-weight:400;lett
 .tbl td.n{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}
 .tbl td.tt{font-family:var(--serif);font-size:14px}
 .tbl .num{text-align:right;font-variant-numeric:tabular-nums}
+.tbl td a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(192,39,58,.35);white-space:nowrap}
+.tbl td a:hover{border-bottom-color:var(--accent)}
+.note{font-size:11.5px;color:var(--muted);line-height:1.8;margin-top:14px}
 
 .people{display:flex;flex-wrap:wrap;gap:10px}
 .person{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:13px;background:rgba(255,255,255,.7)}
@@ -91,6 +94,8 @@ h1{font-family:var(--serif);font-size:44px;line-height:1.22;font-weight:400;lett
   .tbl td:nth-child(3){font-size:12px;color:var(--muted);margin-top:4px}
   .tbl td.tt{font-size:14px;margin-top:3px}
   .tbl td.num{text-align:left;font-size:11.5px;color:var(--muted);margin-top:4px}
+  .tbl tr.empty td:not(:first-child){display:none}
+  .tbl tr.empty td.n::after{content:" · 该期月报未单列本分团";font-size:11px;color:var(--muted)}
   .cta{flex-direction:column;align-items:flex-start}
   .cta h3{font-size:24px}
   .foot{flex-direction:column;align-items:flex-start;gap:6px;line-height:1.7}
@@ -109,7 +114,7 @@ h1{font-family:var(--serif);font-size:44px;line-height:1.22;font-weight:400;lett
   <main id="main"></main>
 </div>
 
-<script src="assets/site.js?v=20261105f"></script>
+<script src="assets/site.js?v=20261105g"></script>
 <script>
 const BR = (window.SITE && window.SITE.branches) || [];
 const qs = new URLSearchParams(location.search);
@@ -118,6 +123,7 @@ if (!(idx >= 0 && idx < BR.length)) idx = 0;
 const b = BR[idx] || null;
 
 function esc(t){ return String(t == null ? '' : t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+const fmtN = n => String(n == null ? '' : n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 if (!b) {
   document.getElementById('main').innerHTML = '<p style="padding:60px 0;color:#6E6A66">没有找到这个分团。<a href="index.html">回主站</a></p>';
@@ -138,9 +144,9 @@ if (!b) {
       <h1>${esc(b.name)}</h1>
       <p class="lede">${esc(b.bio)}</p>
       <div class="stats">
-        <div><b>${b.sessions}</b><span>2026 年 6–8 月宣讲场次</span></div>
-        <div><b>${b.people}</b><span>覆盖人次</span></div>
-        <div><b>${(b.members || []).length}</b><span>参与宣讲人</span></div>
+        <div><b>${fmtN(b.sessions)}</b><span>近一年月报宣讲场次</span></div>
+        <div><b>${fmtN(b.people)}</b><span>覆盖人次</span></div>
+        <div><b>${(b.members || []).length}</b><span>月报具名宣讲人</span></div>
       </div>
     </div>
     <div class="sealbox">
@@ -160,7 +166,21 @@ if (!b) {
   </section>
 
   <section class="sec">
-    <h2>宣讲台账 · 2026 年 6–8 月</h2>
+    <h2>月报数据 · 2025.09 — 2026.08</h2>
+    <table class="tbl">
+      <thead><tr><th>月份</th><th style="text-align:right">宣讲场次</th><th style="text-align:right">覆盖人次</th><th>月报</th></tr></thead>
+      <tbody>${(b.monthly || []).map(r => `<tr class="${r.s || r.p ? '' : 'empty'}">
+        <td class="n">${esc(r.m)}</td>
+        <td class="num">${r.s ? r.s + ' 场' : '—'}</td>
+        <td class="num">${r.p ? r.p + ' 人次' : '—'}</td>
+        <td>${r.u ? `<a href="${esc(r.u)}" target="_blank" rel="noopener">查看原文 ›</a>` : '—'}</td>
+      </tr>`).join('')}</tbody>
+    </table>
+    <p class="note">数据取自各期《学生宣讲工作月报》的「宣讲动态」统计表。场次按表中的宣讲人条目计，人次按该场合填报人数计；「—」表示该期月报统计表未单列本分团，不代表当月没有宣讲。</p>
+  </section>
+
+  <section class="sec">
+    <h2>宣讲台账 · 2026 年 6–8 月（明细）</h2>
     <table class="tbl">
       <thead><tr><th>日期</th><th>宣讲场合</th><th>宣讲人</th><th>题目</th><th style="text-align:right">参与人数</th></tr></thead>
       <tbody>${rows}</tbody>
