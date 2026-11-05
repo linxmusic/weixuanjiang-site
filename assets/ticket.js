@@ -1,8 +1,8 @@
 /* ============================================================
    示例预约单 · 匀速自转 + 拖动
    ------------------------------------------------------------
-   自转 40 秒一圈；鼠标按住可以拖，松手从当前角度继续转。
-   手机与「减少动态效果」下不启用。
+   自转 40 秒一圈；按住可以拖，松手从当前角度继续转。
+   手机同样自转；只在「减少动态效果」下停住。
    ============================================================ */
 (function () {
   'use strict';
@@ -11,8 +11,7 @@
   if (!flip || !stage) return;
 
   var RM = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
-  var mobile = window.innerWidth < 900;
-  if (RM || mobile) { flip.style.transform = 'rotateY(0deg)'; return; }
+  if (RM) { flip.style.transform = 'rotateY(0deg)'; return; }
 
   var angle = 0;
   var SPEED = 360 / 40;          // 度 / 秒

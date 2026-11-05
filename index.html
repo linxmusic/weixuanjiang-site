@@ -288,10 +288,12 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   .stats{gap:26px;margin-top:30px}
   .stats b{font-size:20px}
   .ticket{transform:none;animation:none}
-  .ticket-stage{height:auto;perspective:none}
-  .flip{animation:none;height:auto;transform:none}
-  .flip .ticket.face{position:relative;height:auto;backface-visibility:visible;overflow:visible}
-  .flip .face.back{display:none}
+  .ticket-stage{height:auto;perspective:1100px;perspective-origin:50% 45%}
+  .flip{animation:none;height:auto}
+  .flip .ticket.face{position:absolute;height:100%;overflow:hidden;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  .flip .face.front{position:relative;height:auto;inset:auto}
+  .flip .face.back{display:flex}
   .ticket .badge{position:static;display:inline-block;margin-bottom:10px}
   .cover img{aspect-ratio:4/3;border-radius:3px}
   .cover .cap{flex-direction:column;gap:4px}
@@ -328,7 +330,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
 <link rel="preload" as="image" href="assets/img/speakers/s01.jpg">
-<link rel="stylesheet" href="assets/motion.css?v=20261105d">
+<link rel="stylesheet" href="assets/motion.css?v=20261105e">
 </head>
 <body>
 
@@ -465,7 +467,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   </div>
 </div>
 
-<script src="assets/site.js?v=20261105d"></script>
+<script src="assets/site.js?v=20261105e"></script>
 <script>
 /* ============ 数据 ============ */
 const KEY = 'xyyj_bookings_v1';
@@ -935,8 +937,8 @@ window.openBooking = openBooking;
 window.openMine = openMine;
 window.openSpeaker = openSpeaker;
 </script>
-<script src="assets/motion.js?v=20261105d"></script>
-<script src="assets/space.js?v=20261105d"></script>
-<script src="assets/ticket.js?v=20261105d"></script>
+<script src="assets/motion.js?v=20261105e"></script>
+<script src="assets/space.js?v=20261105e"></script>
+<script src="assets/ticket.js?v=20261105e"></script>
 </body>
 </html>
