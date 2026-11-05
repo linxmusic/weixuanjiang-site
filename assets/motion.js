@@ -217,7 +217,7 @@
     var max = Math.max(1, doc.documentElement.scrollHeight - window.innerHeight);
     bar.style.transform = 'scaleX(' + Math.min(1, y / max).toFixed(4) + ')';
 
-    if (coverImg && cover) {
+    if (coverImg && cover && window.innerWidth > 900) {
       var r = cover.getBoundingClientRect();
       if (r.bottom > -200 && r.top < window.innerHeight + 200) {
         var p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;

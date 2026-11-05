@@ -128,8 +128,8 @@
 
   function geom() {
     if (mobile) {
-      var rx = W * 0.56;
-      return { rx: rx, ry: rx * 0.30, cx: W * 0.84, cy: H * 0.055, tilt: -0.30, pr: rx * 0.30 };
+      var rx = W * 0.72;
+      return { rx: rx, ry: rx * 0.30, cx: W * 0.94, cy: H * 0.085, tilt: -0.30, pr: rx * 0.26 };
     }
     var rxd = Math.min(W * 0.37, 560);
     return { rx: rxd, ry: rxd * 0.285, cx: W * 0.73, cy: H * 0.30, tilt: -0.30, pr: rxd * 0.30 };
@@ -151,7 +151,7 @@
     var t = time / 1000;
     var g = geom();
     var y = window.scrollY || 0;
-    var fade = Math.max(0.34, 1 - y / 1600);
+    var fade = mobile ? Math.max(0.10, 1 - y / 900) : Math.max(0.34, 1 - y / 1600);
 
     ctx.clearRect(0, 0, W, H);
 

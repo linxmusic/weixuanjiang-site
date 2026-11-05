@@ -94,7 +94,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 
 /* ── 合照大图 ── */
 .cover{margin:34px 0 0;position:relative}
-.cover a{display:block;text-decoration:none;color:inherit;position:relative;cursor:pointer}
+.cover a{display:block;text-decoration:none;color:inherit;position:relative;cursor:pointer;overflow:hidden;border-radius:4px;transform:translateZ(0)}
 .cover img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:4px;background:#e9ece8;transition:opacity .25s}
 .cover a:hover img{opacity:.94}
 .cover .cap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:12px;font-size:12px;color:var(--muted)}
@@ -172,12 +172,12 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 .spk .ph{display:block;width:100%;overflow:hidden;border-radius:8px;background:#EDEAE1;aspect-ratio:3/4}
 .spk .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1),filter .3s;filter:saturate(.94);pointer-events:none;-webkit-user-drag:none}
 .spk:hover .ph img{transform:scale(1.035)}
-.spk .nm{font-size:15px;font-weight:700;margin-top:12px;letter-spacing:-.01em}
-.spk .mj{font-size:11.5px;color:var(--muted);margin-top:3px}
-.spk .og{display:inline-block;font-size:10.5px;color:#7A5C9E;border:1px solid rgba(122,92,158,.35);
+.spk .nm{width:100%;font-size:15px;font-weight:700;margin-top:12px;letter-spacing:-.01em}
+.spk .mj{width:100%;font-size:11.5px;color:var(--muted);margin-top:3px}
+.spk .og{align-self:flex-start;display:inline-block;font-size:10.5px;color:#7A5C9E;border:1px solid rgba(122,92,158,.35);
   border-radius:3px;padding:2px 6px;margin-top:7px;line-height:1.4}
-.spk .tp{font-size:11.5px;color:var(--ink);margin-top:9px;line-height:1.55;opacity:.82}
-.spk .bio{font-size:11.5px;color:var(--muted);line-height:1.7;margin-top:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.spk .tp{width:100%;font-size:11.5px;color:var(--ink);margin-top:9px;line-height:1.55;opacity:.82}
+.spk .bio{width:100%;font-size:11.5px;color:var(--muted);line-height:1.7;margin-top:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .spk-more{display:flex;align-items:center;gap:6px;margin-top:12px}
 .spk-more .bar{flex:1;height:2px;background:rgba(42,15,20,.1);overflow:hidden}
 .spk-more .bar i{display:block;height:100%;width:25%;background:var(--accent);transition:width .4s,transform .4s}
@@ -293,6 +293,9 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   .ticket .badge{position:static;display:inline-block;margin-bottom:10px}
   .cover img{aspect-ratio:4/3;border-radius:3px}
   .cover .cap{flex-direction:column;gap:4px}
+  .js .cover img{transform:none!important}
+  .foot{flex-direction:column;align-items:flex-start;gap:9px;padding:22px 0 38px;font-size:11px;line-height:1.7}
+  .foot .slogan-line{font-size:11px;line-height:1.9;letter-spacing:.03em}
   .band{grid-template-columns:1fr 1fr;gap:12px 10px}
   .band img{aspect-ratio:1/1}
   .rlist{grid-template-columns:1fr;gap:0}
@@ -306,7 +309,12 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   .br{padding:15px;gap:13px}
   .br-seal{width:52px;height:52px;font-size:11px}
   .br-main b{font-size:14px}
-  .spk{flex:0 0 76%}
+  .spk-box{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    touch-action:pan-x pan-y;scrollbar-width:none;-webkit-mask-image:none;mask-image:none}
+  .spk-box::-webkit-scrollbar{display:none}
+  .spk-track{transform:none!important;will-change:auto;gap:12px}
+  .spk{flex:0 0 100%;scroll-snap-align:start}
+  .spk[data-dupe]{display:none}
   .spk .ph{aspect-ratio:4/5}
   .spk-detail{grid-template-columns:104px 1fr;gap:14px}
   .spk-detail h4{font-size:17px}
@@ -318,7 +326,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
 <link rel="preload" as="image" href="assets/img/speakers/s01.jpg">
-<link rel="stylesheet" href="assets/motion.css?v=20261105b">
+<link rel="stylesheet" href="assets/motion.css?v=20261105c">
 </head>
 <body>
 
@@ -455,7 +463,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   </div>
 </div>
 
-<script src="assets/site.js?v=20261105b"></script>
+<script src="assets/site.js?v=20261105c"></script>
 <script>
 /* ============ 数据 ============ */
 const KEY = 'xyyj_bookings_v1';
@@ -755,8 +763,8 @@ let spkPaused = false, spkDragging = false, spkOffset = 0, spkSetW = 0;
 let spkLast = 0, spkDragX = 0, spkDragOffset = 0, spkDragMoved = 0, spkDragEnd = 0;
 const SPK_SPEED = 58; // px / 秒
 
-function spkCard(p, i){
-  return `<button class="spk" type="button" data-spk="${i}" aria-label="查看 ${escHtml(p.name)}">
+function spkCard(p, i, dupe){
+  return `<button class="spk" type="button" data-spk="${i}"${dupe ? ' data-dupe="1"' : ''} aria-label="查看 ${escHtml(p.name)}">
     <span class="ph"><img src="${p.img}" alt="${escHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'"></span>
     <span class="nm">${escHtml(p.name)}</span>
     <span class="mj">${escHtml(p.major)}</span>
@@ -770,7 +778,7 @@ function renderSpeakers(){
   const track = document.getElementById('spkTrack');
   if(!track || !SPK.length) return;
   // 放两遍，滚到一半时无缝接回开头
-  track.innerHTML = SPK.concat(SPK).map((p, i) => spkCard(p, i % SPK.length)).join('');
+  track.innerHTML = SPK.concat(SPK).map((p, i) => spkCard(p, i % SPK.length, i >= SPK.length)).join('');
   track.querySelectorAll('[data-spk]').forEach(el => {
     el.addEventListener('click', () => {
       if(Date.now() - spkDragEnd < 180 && spkDragMoved > 6) return;
@@ -792,6 +800,8 @@ function measureSpeakers(){
 function spkTick(ts){
   const track = document.getElementById('spkTrack');
   if(!track) return;
+  // 手机上改成原生横滑 + 吸附（卡片宽度有限，连续滚动会把正文切在屏幕边缘）
+  if(window.innerWidth < 900) return;
   if(!spkLast) spkLast = ts;
   const dt = Math.min(64, ts - spkLast) / 1000;
   spkLast = ts;
@@ -812,6 +822,7 @@ function resumeSpeakers(){ spkPaused = false; }
 function initSpkDrag(){
   const box = document.querySelector('.spk-box');
   if(!box) return;
+  if(window.innerWidth < 900) return;   // 手机用原生滚动，不要再接管 pointer
   let spkCaptured = false, spkPointerId = null;
   box.addEventListener('pointerdown', e => {
     spkDragging = true; spkDragMoved = 0; spkCaptured = false;
@@ -888,14 +899,42 @@ renderCols();
 renderBranches();
 renderSpeakers();
 initSpkDrag();
+initSpkAuto();
+
+function initSpkAuto(){
+  if(window.innerWidth >= 900) return;
+  const box = document.querySelector('.spk-box');
+  const track = document.getElementById('spkTrack');
+  if(!box || !track) return;
+  let pauseUntil = 0;
+  const hold = () => { pauseUntil = Date.now() + 8000; };
+  box.addEventListener('touchstart', hold, {passive:true});
+  box.addEventListener('pointerdown', hold, {passive:true});
+  box.addEventListener('wheel', hold, {passive:true});
+  setInterval(() => {
+    if(document.hidden || Date.now() < pauseUntil) return;
+    if(document.getElementById('mask').classList.contains('on')) return;
+    const card = box.querySelector('.spk');
+    if(!card) return;
+    const gap = parseFloat(getComputedStyle(track).gap) || 12;
+    const step = card.getBoundingClientRect().width + gap;
+    if(box.scrollLeft + box.clientWidth >= box.scrollWidth - 8) box.scrollTo({left:0, behavior:'smooth'});
+    else box.scrollBy({left:step, behavior:'smooth'});
+  }, 5200);
+}
+(function(){
+  if(window.innerWidth >= 900) return;
+  const n = document.querySelector('#speakers .hd-note');
+  if(n) n.textContent = '15 位 · 左右滑，点开看详情';
+})();
 
 /* 预填主题 */
 window.openBooking = openBooking;
 window.openMine = openMine;
 window.openSpeaker = openSpeaker;
 </script>
-<script src="assets/motion.js?v=20261105b"></script>
-<script src="assets/space.js?v=20261105b"></script>
-<script src="assets/ticket.js?v=20261105b"></script>
+<script src="assets/motion.js?v=20261105c"></script>
+<script src="assets/space.js?v=20261105c"></script>
+<script src="assets/ticket.js?v=20261105c"></script>
 </body>
 </html>
