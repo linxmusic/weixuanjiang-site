@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>学生微宣讲团 · 预约宣讲</title>
-<meta name="description" content="西安交通大学学生微宣讲团预约。把宣讲送到支部、班级、部门，5–60 分钟，线上或线下均可。">
+<meta name="description" content="西安交通大学学生微宣讲团预约宣讲。支部、班级、部门都能约，五分钟到一小时，线上或到现场。">
 <style>
 @font-face{font-family:'LXGW';src:url('assets/fonts/lxgw-subset.woff2') format('woff2');font-display:swap}
 :root{
@@ -346,7 +346,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   <section class="hero">
     <div>
       <h1><span class="ln"><span>支部、班级、部门</span></span><span class="ln"><span><mark>都能约</mark>一场宣讲</span></span></h1>
-      <p class="lede">把一场宣讲送到支部、班级、部门。5–60 分钟，线上或线下都可以。填写单位、主题和时间，工作人员会电话联系确认。</p>
+      <p class="lede">一场宣讲，五分钟到一小时都行。线上开个会，也可以到你们教室、会议室讲。填好单位和大概的日期，我们加微信把时间地点定下来。</p>
       <div class="acts">
         <button class="btn-p" id="btnBookHero">填写预约 · 两分钟 ›</button>
         <a class="btn-s" href="#scenes">先看看现场</a>
@@ -362,7 +362,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
       <div class="flip">
         <div class="ticket face front">
           <span class="badge">示例</span>
-          <div class="hd"><div class="dot">✎</div><div><b>预约单</b><em>填写后工作人员会联系你</em></div></div>
+          <div class="hd"><div class="dot">✎</div><div><b>预约单</b><em>填写后我们会加你微信</em></div></div>
           <div class="tk"><span class="k">单位</span><span class="v">微电子 2505 团支部</span></div>
           <div class="tk"><span class="k">人数</span><span class="v">32 人</span></div>
           <div class="tk"><span class="k">主题</span><span class="v"><span class="chip"><i></i>纪念长征胜利 90 周年</span></span></div>
@@ -455,7 +455,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
     <div class="panel-hd">
       <div>
         <h3 id="panelTitle">预约宣讲</h3>
-        <p id="panelSub">填完提交即可，我们会电话联系确认时间与地点。</p>
+        <p id="panelSub">填完发过来，我们加你微信，把时间地点定下来。</p>
       </div>
       <button class="x" id="btnClose" aria-label="关闭">✕</button>
     </div>
@@ -511,7 +511,7 @@ function openBooking(topic, speaker){
   presetTopic = topic || '';
   presetSpeaker = speaker || '';
   title.textContent = '预约宣讲';
-  sub.textContent = '填完提交即可，我们会电话联系确认时间与地点。';
+  sub.textContent = '填完发过来，我们加你微信，把时间地点定下来。';
   body.innerHTML = formHTML();
   openMask();
 }
@@ -593,7 +593,7 @@ function formHTML(){
     <div class="field" data-for="place">
       <label>地点 / 会议链接 <span class="req">*</span></label>
       <input name="place" placeholder="例：兴庆校区主楼 B203；还没定可填「暂无」">
-      <div class="hint">地点还没定就先填「暂无」，确定后我们会电话跟你确认。</div>
+      <div class="hint">地点还没定就先填「暂无」，定了我们微信跟你说。</div>
       <div class="err">请填写地点或会议链接</div>
     </div>
     <div class="field">
@@ -601,7 +601,7 @@ function formHTML(){
       <textarea name="note" placeholder="有什么特别要求可以写在这里（选填）"></textarea>
     </div>
     <button class="submit" type="submit">提交预约</button>
-    <p class="fine">提交后我们会通过微信号联系你，确认时间和地点。</p>
+    <p class="fine">提交后用微信联系你，把时间地点定下来。</p>
   </form>`;
 }
 
@@ -673,7 +673,7 @@ function doneHTML(r){
       ${r.org} · ${fmtDate(r.date)} ${r.time} · ${r.people} 人 · ${r.mode}<br>
       ${r.speaker ? `宣讲人：${r.speaker}<br>` : ''}
       主题：${r.topic}<br>
-      请把这个单号记下来，方便查询进度。工作人员会通过微信号 ${r.phone} 联系你。
+      单号记一下，查进度用得上。我们会用微信 ${r.phone} 联系你。
     </p>
     <div class="btns">
       <button type="button" onclick="openMine()">查看我的预约</button>
