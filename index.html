@@ -105,8 +105,10 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 /* ── 跑马灯 ── */
 .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:15px 0;margin-top:40px;background:rgba(248,250,247,.6)}
 .ticker .t{display:flex;gap:44px;width:max-content;white-space:nowrap;animation:run 30s linear infinite}
-.ticker span{font-size:15px;font-weight:600;letter-spacing:-.01em;color:rgba(42,15,20,.26)}
-.ticker span.hl{color:var(--ink)}
+.ticker a,.ticker span{font-size:15px;font-weight:600;letter-spacing:-.01em;color:rgba(42,15,20,.26);text-decoration:none}
+.ticker a{display:inline-block;padding:6px 0}
+.ticker a.hl,.ticker span.hl{color:var(--ink)}
+.ticker a:hover{color:var(--accent)}
 @keyframes run{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.ticker .t,.ticket,.ticket-stage::after,.flip{animation:none}}
 
@@ -326,7 +328,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
 <link rel="preload" as="image" href="assets/img/speakers/s01.jpg">
-<link rel="stylesheet" href="assets/motion.css?v=20261105c">
+<link rel="stylesheet" href="assets/motion.css?v=20261105d">
 </head>
 <body>
 
@@ -399,8 +401,8 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   </figure>
 
   <div class="ticker"><div class="t">
-    <span class="hl">赓续长征薪火</span><span>·</span><span>磨稿砺初心</span><span>·</span><span class="hl">传习杯四校同台</span><span>·</span><span>寻迹 · 问道 · 传声</span><span>·</span><span class="hl">七秩西迁 三校同讲</span><span>·</span>
-    <span class="hl">赓续长征薪火</span><span>·</span><span>磨稿砺初心</span><span>·</span><span class="hl">传习杯四校同台</span><span>·</span><span>寻迹 · 问道 · 传声</span><span>·</span><span class="hl">七秩西迁 三校同讲</span><span>·</span>
+    <a class="hl" href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener">赓续长征薪火</a><span>·</span><a href="https://mp.weixin.qq.com/s/984aRran-f5mQDClnLPmSw" target="_blank" rel="noopener">磨稿砺初心</a><span>·</span><a class="hl" href="https://mp.weixin.qq.com/s/txKdNRFmcWIDp7nryoi8cA" target="_blank" rel="noopener">传习杯四校同台</a><span>·</span><a href="https://weixin.sogou.com/weixin?type=2&query=%E5%AF%BB%E8%BF%B9%C2%B7%E9%97%AE%E9%81%93%C2%B7%E4%BC%A0%E5%A3%B0%EF%BD%9C2026%E5%B9%B4%E6%9A%91%E6%9C%9F%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E7%BA%AA%E5%AE%9E" target="_blank" rel="noopener">寻迹 · 问道 · 传声</a><span>·</span><a class="hl" href="https://mp.weixin.qq.com/s/VCMx_W-KeptHHGKtvDqIFw" target="_blank" rel="noopener">七秩西迁 三校同讲</a><span>·</span>
+    <a class="hl" tabindex="-1" aria-hidden="true" href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener">赓续长征薪火</a><span>·</span><a tabindex="-1" aria-hidden="true" href="https://mp.weixin.qq.com/s/984aRran-f5mQDClnLPmSw" target="_blank" rel="noopener">磨稿砺初心</a><span>·</span><a class="hl" tabindex="-1" aria-hidden="true" href="https://mp.weixin.qq.com/s/txKdNRFmcWIDp7nryoi8cA" target="_blank" rel="noopener">传习杯四校同台</a><span>·</span><a tabindex="-1" aria-hidden="true" href="https://weixin.sogou.com/weixin?type=2&query=%E5%AF%BB%E8%BF%B9%C2%B7%E9%97%AE%E9%81%93%C2%B7%E4%BC%A0%E5%A3%B0%EF%BD%9C2026%E5%B9%B4%E6%9A%91%E6%9C%9F%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E7%BA%AA%E5%AE%9E" target="_blank" rel="noopener">寻迹 · 问道 · 传声</a><span>·</span><a class="hl" tabindex="-1" aria-hidden="true" href="https://mp.weixin.qq.com/s/VCMx_W-KeptHHGKtvDqIFw" target="_blank" rel="noopener">七秩西迁 三校同讲</a><span>·</span>
   </div></div>
 
   <section class="sec" id="scenes">
@@ -463,7 +465,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   </div>
 </div>
 
-<script src="assets/site.js?v=20261105c"></script>
+<script src="assets/site.js?v=20261105d"></script>
 <script>
 /* ============ 数据 ============ */
 const KEY = 'xyyj_bookings_v1';
@@ -933,8 +935,8 @@ window.openBooking = openBooking;
 window.openMine = openMine;
 window.openSpeaker = openSpeaker;
 </script>
-<script src="assets/motion.js?v=20261105c"></script>
-<script src="assets/space.js?v=20261105c"></script>
-<script src="assets/ticket.js?v=20261105c"></script>
+<script src="assets/motion.js?v=20261105d"></script>
+<script src="assets/space.js?v=20261105d"></script>
+<script src="assets/ticket.js?v=20261105d"></script>
 </body>
 </html>

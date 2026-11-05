@@ -124,7 +124,7 @@
 @keyframes m-stamp{from{transform:scale(1.4) rotate(-3.5deg);opacity:0;filter:blur(2px)}}
 
 /* ⑯ 跑马灯：鼠标移上去放慢，停下时有间隙呼吸 */
-.ticker:hover .t{animation-play-state:paused}
+@media (hover:hover) and (pointer:fine){.ticker:hover .t{animation-play-state:paused}}
 
 /* ⑰ 手机版：切页动画、顶栏收缩、横滑卡片轻微缩放 */
 .js .view.on{animation:m-viewin .42s var(--ease)}
