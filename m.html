@@ -192,7 +192,7 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 .toast.on{opacity:1;transform:translateX(-50%)}
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
-<link rel="stylesheet" href="assets/motion.css?v=20261105h">
+<link rel="stylesheet" href="assets/motion.css?v=20261105i">
 </head>
 <body>
 
@@ -273,7 +273,7 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 
 <div class="toast" id="toast"></div>
 
-<script src="assets/site.js?v=20261105h"></script>
+<script src="assets/site.js?v=20261105i"></script>
 <script>
 const KEY = 'xyyj_bookings_v1';
 const TOPICS = (window.SITE && window.SITE.topics) || ['主题还没定，请宣讲团推荐'];
@@ -514,7 +514,8 @@ function onSubmit(e){
   const v = k => (f.elements[k].value || '').trim();
   let ok = true;
   const mark = (k, good) => { const b = f.querySelector(`.field[data-for="${k}"]`); if(!b) return; b.classList.toggle('bad', !good); if(!good) ok = false; };
-  const topics = [...f.querySelectorAll('[name="topics"]:checked')].map(x => x.value);
+  const topicsRaw = [...f.querySelectorAll('[name="topics"]:checked')].map(x => x.value);
+  const topics = topicsRaw.map(t => t.replace(/^主题[一二三四五六七八九十]+：/, ''));
   const day = new Date(); day.setHours(0,0,0,0); day.setDate(day.getDate()+3);
   const earliest = day.toISOString().slice(0,10);
   mark('org', v('org').length >= 2);
@@ -539,7 +540,7 @@ function onSubmit(e){
     audience: v('audience'), people: v('people'),
     date: v('date'), time: v('time'), time2: v('time2'), teachers: f.elements['teachers'].value,
     dur: v('dur'), mode: f.elements['mode'].value,
-    topic: topics.join('、'), topics, place: v('place'), note: v('note'),
+    topic: topics.join('、'), topics, topicsRaw, place: v('place'), note: v('note'),
     status: '待受理', created: new Date().toISOString()
   };
   list.unshift(rec); save(list); presetTopic = ''; presetSpeaker = '';
@@ -581,7 +582,7 @@ function renderMine(){
 renderCols();
 go('home');
 </script>
-<script src="assets/motion.js?v=20261105h"></script>
-<script src="assets/space.js?v=20261105h"></script>
+<script src="assets/motion.js?v=20261105i"></script>
+<script src="assets/space.js?v=20261105i"></script>
 </body>
 </html>
