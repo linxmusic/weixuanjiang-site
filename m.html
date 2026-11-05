@@ -192,7 +192,7 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 .toast.on{opacity:1;transform:translateX(-50%)}
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
-<link rel="stylesheet" href="assets/motion.css?v=20261105g">
+<link rel="stylesheet" href="assets/motion.css?v=20261105h">
 </head>
 <body>
 
@@ -273,14 +273,14 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 
 <div class="toast" id="toast"></div>
 
-<script src="assets/site.js?v=20261105g"></script>
+<script src="assets/site.js?v=20261105h"></script>
 <script>
 const KEY = 'xyyj_bookings_v1';
 const TOPICS = (window.SITE && window.SITE.topics) || ['主题还没定，请宣讲团推荐'];
 const FORM_TOPICS = [
   '主题一：习近平新时代中国特色社会主义思想的生动实践',
   '主题二：西迁精神永放光芒',
-  '主题三：纪念长征胜利90周年',
+  '主题三：纪念中国工农红军长征胜利90周年',
   '主题四：西安交通大学建校130周年暨西迁70周年',
   '主题五：弘扬伟大抗战精神',
   '主题六：铸就精神丰碑，奔赴复兴伟业',
@@ -548,7 +548,7 @@ function onSubmit(e){
       <div class="ok">✓</div>
       <div class="no">${rec.no}</div>
       <p class="tip">${esc(rec.org)}<br>${fmtDate(rec.date)} ${esc(rec.time)}–${esc(rec.time2)} · ${esc(rec.audience)} · ${esc(rec.people)} 人 · ${esc(rec.mode)}<br>
-        ${rec.speaker ? `宣讲人：${esc(rec.speaker)}<br>` : ''}主题：${esc(rec.topic)}<br>请记下单号，便于查询进度。工作人员会通过微信 ${esc(rec.phone)} 与您联系。</p>
+        ${rec.speaker ? `宣讲人：${esc(rec.speaker)}<br>` : ''}主题：${esc(rec.topic)}<br>工作人员会通过微信 ${esc(rec.phone)} 与您联系。</p>
       <div class="btns"><button type="button" data-go="mine">查看我的预约</button><button type="button" class="dark" data-go="book">再约一场</button></div>
     </div>`;
 }
@@ -581,7 +581,7 @@ function renderMine(){
 renderCols();
 go('home');
 </script>
-<script src="assets/motion.js?v=20261105g"></script>
-<script src="assets/space.js?v=20261105g"></script>
+<script src="assets/motion.js?v=20261105h"></script>
+<script src="assets/space.js?v=20261105h"></script>
 </body>
 </html>

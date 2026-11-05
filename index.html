@@ -341,7 +341,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
 <link rel="preload" as="image" href="assets/img/speakers/s01.jpg">
-<link rel="stylesheet" href="assets/motion.css?v=20261105g">
+<link rel="stylesheet" href="assets/motion.css?v=20261105h">
 </head>
 <body>
 
@@ -380,7 +380,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
           <div class="hd"><div class="dot">✎</div><div><b>预约单</b><em>提交后由工作人员联系</em></div></div>
           <div class="tk"><span class="k">单位</span><span class="v">微电子 2505 团支部</span></div>
           <div class="tk"><span class="k">人数</span><span class="v">32 人</span></div>
-          <div class="tk"><span class="k">主题</span><span class="v"><span class="chip"><i></i>纪念长征胜利 90 周年</span></span></div>
+          <div class="tk"><span class="k">主题</span><span class="v"><span class="chip"><i></i>纪念中国工农红军长征胜利 90 周年</span></span></div>
           <div class="tk"><span class="k">时间</span><span class="v">11 月 12 日 · 19:00</span></div>
           <div class="tk"><span class="k">形式</span><span class="v">线下 · 会议室</span></div>
         </div>
@@ -394,7 +394,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
               <b>林知远</b>
               <em>西安交通大学学生微宣讲团</em>
               <span class="mj">微电子 2402 班</span>
-              <div class="nt">主讲：西迁精神 · 纪念长征胜利 90 周年</div>
+              <div class="nt">主讲：西迁精神 · 纪念中国工农红军长征胜利 90 周年</div>
               <div class="nw">微信 linzhiyuan_2024</div>
             </div>
           </div>
@@ -433,7 +433,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
     <div class="rlist">
       <a class="row" href="#" onclick="openBooking('主题一：习近平新时代中国特色社会主义思想的生动实践');return false"><i style="background:#2E7D5B"></i>习近平新时代中国特色社会主义思想的生动实践<span class="c">预约 ›</span></a>
       <a class="row" href="#" onclick="openBooking('主题二：西迁精神永放光芒');return false"><i style="background:#3F628F"></i>西迁精神永放光芒<span class="c">预约 ›</span></a>
-      <a class="row" href="#" onclick="openBooking('主题三：纪念长征胜利90周年');return false"><i style="background:#E85F8A"></i>纪念长征胜利 90 周年<span class="c">预约 ›</span></a>
+      <a class="row" href="#" onclick="openBooking('主题三：纪念中国工农红军长征胜利90周年');return false"><i style="background:#E85F8A"></i>纪念中国工农红军长征胜利 90 周年<span class="c">预约 ›</span></a>
       <a class="row" href="#" onclick="openBooking('主题七：铸牢中华民族共同体意识');return false"><i style="background:#E8A33F"></i>铸牢中华民族共同体意识<span class="c">预约 ›</span></a>
       <a class="row" href="#" onclick="openBooking();return false"><i style="background:#D6303F"></i>主题还没定，请宣讲团推荐<span class="c">预约 ›</span></a>
     </div>
@@ -478,16 +478,16 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   </div>
 </div>
 
-<script src="assets/site.js?v=20261105g"></script>
+<script src="assets/site.js?v=20261105h"></script>
 <script>
 /* ============ 数据 ============ */
 const KEY = 'xyyj_bookings_v1';
-const TOPICS = (window.SITE && window.SITE.topics) || ['习近平新时代中国特色社会主义思想','西迁精神','纪念长征胜利 90 周年','铸牢中华民族共同体意识','主题还没定，请宣讲团推荐'];
+const TOPICS = (window.SITE && window.SITE.topics) || ['习近平新时代中国特色社会主义思想','西迁精神','纪念中国工农红军长征胜利 90 周年','铸牢中华民族共同体意识','主题还没定，请宣讲团推荐'];
 /* 预约表主题：与团里现行《宣讲预约》登记表一致 */
 const FORM_TOPICS = [
   '主题一：习近平新时代中国特色社会主义思想的生动实践',
   '主题二：西迁精神永放光芒',
-  '主题三：纪念长征胜利90周年',
+  '主题三：纪念中国工农红军长征胜利90周年',
   '主题四：西安交通大学建校130周年暨西迁70周年',
   '主题五：弘扬伟大抗战精神',
   '主题六：铸就精神丰碑，奔赴复兴伟业',
@@ -720,7 +720,7 @@ body.addEventListener('submit', e => {
   presetTopic = '';
   presetSpeaker = '';
   title.textContent = '预约已提交';
-  sub.textContent = '把单号记下来，方便之后查询进度。';
+  sub.textContent = '凭单号可查询进度。';
   body.innerHTML = doneHTML(rec);
 });
 
@@ -738,7 +738,7 @@ function doneHTML(r){
       ${fmtDate(r.date)} ${r.time}–${r.time2} · ${r.audience} · ${r.people} 人 · ${r.mode}<br>
       ${r.speaker ? `宣讲人：${r.speaker}<br>` : ''}
       主题：${r.topic}<br>
-      请记下单号，便于查询进度。工作人员会通过微信 ${r.phone} 与您联系。
+      工作人员会通过微信 ${r.phone} 与您联系。
     </p>
     <div class="btns">
       <button type="button" onclick="openMine()">查看我的预约</button>
@@ -999,8 +999,8 @@ window.openBooking = openBooking;
 window.openMine = openMine;
 window.openSpeaker = openSpeaker;
 </script>
-<script src="assets/motion.js?v=20261105g"></script>
-<script src="assets/space.js?v=20261105g"></script>
-<script src="assets/ticket.js?v=20261105g"></script>
+<script src="assets/motion.js?v=20261105h"></script>
+<script src="assets/space.js?v=20261105h"></script>
+<script src="assets/ticket.js?v=20261105h"></script>
 </body>
 </html>
