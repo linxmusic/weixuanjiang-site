@@ -192,7 +192,7 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 .toast.on{opacity:1;transform:translateX(-50%)}
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
-<link rel="stylesheet" href="assets/motion.css?v=20261105i">
+<link rel="stylesheet" href="assets/motion.css?v=20261105j">
 </head>
 <body>
 
@@ -235,7 +235,7 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
   <div class="sec-hd"><h2>开放预约的专题</h2><span>点一下直接填</span></div>
   <div id="topics"></div>
 
-  <div class="sec-hd"><h2>分团动态</h2><span>4 支</span></div>
+  <div class="sec-hd"><h2>分团动态</h2><span>12 支</span></div>
   <div class="br-list" id="brList"></div>
 
   <div class="sec-hd"><h2>优秀宣讲人</h2><span>15 位 · 左右滑</span></div>
@@ -273,7 +273,7 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 
 <div class="toast" id="toast"></div>
 
-<script src="assets/site.js?v=20261105i"></script>
+<script src="assets/site.js?v=20261105j"></script>
 <script>
 const KEY = 'xyyj_bookings_v1';
 const TOPICS = (window.SITE && window.SITE.topics) || ['主题还没定，请宣讲团推荐'];
@@ -336,10 +336,12 @@ document.addEventListener('click', e => {
   if(t){ e.preventDefault(); go(t.dataset.go); }
 });
 
-/* ── 首页专题 ── */
-$('#topics').innerHTML = TOPICS.map((t,i) =>
+/* ── 首页专题：13 个主题全列 ── */
+$('#topics').innerHTML = FORM_TOPICS.map((t,i) =>
   `<a class="art" href="#" data-topic="${esc(t)}" style="font-size:14px;color:var(--ink);padding:14px 0">
-     <span class="ad" style="color:#A9A29C">0${i+1}</span><span class="at">${esc(t)}</span><span style="color:var(--muted)">›</span></a>`).join('');
+     <span class="ad" style="color:#A9A29C">${String(i+1).padStart(2,'0')}</span><span class="at">${esc(t.replace(/^主题[一二三四五六七八九十]+：/, ''))}</span><span style="color:var(--muted)">›</span></a>`).join('')
+  + `<a class="art" href="#" data-topic="" style="font-size:14px;color:var(--ink);padding:14px 0">
+     <span class="ad" style="color:#A9A29C">14</span><span class="at">主题还没定，请宣讲团推荐</span><span style="color:var(--muted)">›</span></a>`;
 $('#topics').addEventListener('click', e => {
   const a = e.target.closest('[data-topic]');
   if(!a) return;
@@ -582,7 +584,7 @@ function renderMine(){
 renderCols();
 go('home');
 </script>
-<script src="assets/motion.js?v=20261105i"></script>
-<script src="assets/space.js?v=20261105i"></script>
+<script src="assets/motion.js?v=20261105j"></script>
+<script src="assets/space.js?v=20261105j"></script>
 </body>
 </html>

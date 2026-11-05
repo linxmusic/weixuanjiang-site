@@ -121,6 +121,38 @@ a{color:inherit}
 .item .note{margin-top:9px;font-size:12px;background:#FBF7E6;border-radius:8px;padding:8px 10px;color:#7A5A12}
 .item .note.reject{background:#FDF0EF;color:#8A2620}
 
+/* 活动 / 比赛事件 */
+.evsec{margin-top:26px}
+.evsec-hd{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.evsec-hd b{font-size:14px}
+.evsec-hd span{font-size:12px;color:var(--muted)}
+.evlist{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.evitem{padding:14px 18px;border-bottom:1px solid var(--line)}
+.evitem:last-child{border-bottom:0}
+.evitem .row1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.evkind{font-size:11px;padding:3px 9px;border-radius:999px;background:#F1ECFA;color:#6B4E9E;white-space:nowrap}
+.evitem .ttl{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.evitem .when{margin-left:auto;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.evitem .meta{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.7}
+.evitem .acts{display:flex;gap:8px;margin-top:9px}
+.evitem .acts button{font-size:12px;padding:6px 11px;border-radius:8px;border:1px solid rgba(42,15,20,.16);background:#fff;cursor:pointer;font-family:inherit;color:var(--ink)}
+.evitem .acts .danger{color:var(--accent);border-color:rgba(214,48,63,.3)}
+.calday .dot.ev{background:#7A5C9E}
+
+.modal{position:fixed;inset:0;z-index:400;background:rgba(20,12,14,.42);display:none;align-items:center;justify-content:center;padding:20px}
+.modal.on{display:flex}
+.modalbox{width:100%;max-width:520px;max-height:90vh;overflow:auto;background:#fff;border-radius:16px;padding:24px}
+.modalbox h3{font-size:18px;letter-spacing:-.01em}
+.modalbox .mfield{margin-top:13px}
+.modalbox label{display:block;font-size:12px;font-weight:600;margin-bottom:5px}
+.modalbox input,.modalbox select,.modalbox textarea{width:100%;border:1px solid rgba(42,15,20,.18);border-radius:9px;padding:10px;font-size:14px;font-family:inherit;background:#FDFDFB}
+.modalbox textarea{min-height:58px;resize:vertical}
+.modalbox .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modalbox .macts{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}
+.modalbox .macts button{padding:10px 16px;border-radius:9px;border:1px solid rgba(42,15,20,.18);background:#fff;font-family:inherit;font-size:13.5px;cursor:pointer}
+.modalbox .macts .primary{background:var(--mark);border-color:rgba(42,15,20,.2);font-weight:600}
+@media (max-width:640px){.modalbox .two{grid-template-columns:1fr}}
+
 .empty{text-align:center;padding:56px 20px;color:var(--muted);font-size:13.5px;line-height:2}
 .empty .btn{margin-top:8px}
 
@@ -170,10 +202,11 @@ a{color:inherit}
   <div class="head">
     <div>
       <h1 id="hTitle">全部预约</h1>
-      <p>受理、派讲师、确认，每一步都留在记录里。</p>
-      <p class="subnote">演示版：数据只保存在这台电脑的浏览器里。</p>
+      <p>受理、派讲师、确认；活动与比赛也可以手动记进日历。</p>
+      <p class="subnote">当前为演示版：数据只保存在这台设备的浏览器里，接后端后多端共用。</p>
     </div>
     <div class="btns">
+      <button class="btn" id="btnAddEvent">添加事件</button>
       <button class="btn" id="btnCsv">导出 CSV</button>
       <button class="btn dark" id="btnRefresh">刷新</button>
     </div>
@@ -193,6 +226,11 @@ a{color:inherit}
     <div class="calgrid" id="calGrid"></div>
   </div>
 
+  <div class="evsec">
+    <div class="evsec-hd"><b>活动 / 比赛</b><span id="evCount"></span></div>
+    <div class="evlist" id="evList"></div>
+  </div>
+
   <div class="bar">
     <input type="search" id="q" placeholder="搜单位、联系人、单号…">
     <select id="sort">
@@ -207,8 +245,46 @@ a{color:inherit}
   <footer class="foot"><span>西安交通大学学生微宣讲团 · 预约管理</span><span>2017 — 2026</span></footer>
 </div>
 
+<div class="modal" id="evModal" role="dialog" aria-modal="true" aria-labelledby="evModalTitle">
+  <div class="modalbox">
+    <h3 id="evModalTitle">添加事件</h3>
+    <input type="hidden" id="evId">
+    <div class="mfield"><label>类型</label>
+      <select id="evKind"><option>活动</option><option>比赛</option><option>培训</option></select>
+    </div>
+    <div class="mfield"><label>名称 *</label>
+      <input id="evTitleIn" placeholder="例：第十三期「筑言计划」第一期理论培训">
+    </div>
+    <div class="mfield two">
+      <div><label>日期 *</label><input id="evDate" type="date"></div>
+      <div><label>开始时间</label><input id="evTime" type="time" value="14:00"></div>
+    </div>
+    <div class="mfield two">
+      <div><label>结束时间</label><input id="evTime2" type="time" value="15:00"></div>
+      <div><label>参与人数</label><input id="evPeople" inputmode="numeric" placeholder="选填"></div>
+    </div>
+    <div class="mfield"><label>地点</label>
+      <input id="evPlace" placeholder="例：兴庆校区主楼 B 座 204">
+    </div>
+    <div class="mfield"><label>主办 / 单位</label>
+      <input id="evOrg" placeholder="例：学生微宣讲团">
+    </div>
+    <div class="mfield"><label>宣讲人</label>
+      <input id="evSpeaker" placeholder="选填，多人用顿号隔开">
+    </div>
+    <div class="mfield"><label>备注</label>
+      <textarea id="evNote" placeholder="选填"></textarea>
+    </div>
+    <div class="macts">
+      <button type="button" id="evCancel">取消</button>
+      <button type="button" class="primary" id="evSave">保存</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const KEY = 'xyyj_bookings_v1';
+const EVKEY = 'xyyj_events_v1';
 const FLOW = ['待受理','已受理','待讲师确认','已确认','已完成','已退回'];
 const COLOR = {
   '待受理':   ['#9A6B12','#FBF1DC'],
@@ -227,6 +303,13 @@ const load = () => {
   return MEM.slice();
 };
 const save = list => { MEM = list.slice(); if(LS){ try { LS.setItem(KEY, JSON.stringify(list)); } catch(e){} } };
+
+let EVMEM = [];
+const loadEvents = () => {
+  if(LS){ try { const v = JSON.parse(LS.getItem(EVKEY)); if(Array.isArray(v)) return v; } catch(e){} }
+  return EVMEM.slice();
+};
+const saveEvents = list => { EVMEM = list.slice(); if(LS){ try { LS.setItem(EVKEY, JSON.stringify(list)); } catch(e){} } };
 
 let filter = '全部';
 let keyword = '';
@@ -276,10 +359,13 @@ function visible(all){
   return out;
 }
 
-function renderCal(all){
+function renderCal(all, events){
   const map = {};
   all.forEach(r => {
-    if(/^\d{4}-\d{2}-\d{2}$/.test(r.date || '')) (map[r.date] = map[r.date] || []).push(r);
+    if(/^\d{4}-\d{2}-\d{2}$/.test(r.date || '')) (map[r.date] = map[r.date] || []).push({kind:'book', ...r});
+  });
+  (events || []).forEach(e => {
+    if(/^\d{4}-\d{2}-\d{2}$/.test(e.date || '')) (map[e.date] = map[e.date] || []).push({kind:'event', ...e});
   });
 
   $('calTitle').textContent = `${calY} 年 ${calM + 1} 月`;
@@ -299,11 +385,16 @@ function renderCal(all){
     if(ds === todayStr) cls.push('today');
     if(ds === dayFilter) cls.push('on');
     const dots = recs.slice(0, 5).map(r => {
+      if(r.kind === 'event') return `<span class="dot ev"></span>`;
       const c = (COLOR[r.status] || ['#999'])[0];
       return `<span class="dot" style="background:${c}"></span>`;
     }).join('');
-    const lbl = recs.length ? esc(recs[0].org) + (recs.length > 1 ? ` +${recs.length - 1}` : '') : '';
-    html += `<div class="${cls.join(' ')}" data-date="${ds}" title="${recs.length ? recs.length + ' 条预约' : ''}">
+    const first = recs[0];
+    const lbl = recs.length ? esc(first.kind === 'event' ? first.title : first.org) + (recs.length > 1 ? ` +${recs.length - 1}` : '') : '';
+    const nb = recs.filter(x => x.kind === 'book').length;
+    const ne = recs.length - nb;
+    const tip = [nb ? nb + ' 条预约' : '', ne ? ne + ' 个活动' : ''].filter(Boolean).join(' · ');
+    html += `<div class="${cls.join(' ')}" data-date="${ds}" title="${tip}">
       <span class="d">${d}</span>
       ${recs.length ? `<span class="cnt">${recs.length}</span><div class="dots">${dots}</div><div class="lbl">${lbl}</div>` : ''}
     </div>`;
@@ -320,10 +411,51 @@ function renderCal(all){
   $('calClear').textContent = dayFilter ? '显示全部' : '';
 }
 
+function renderEvents(events){
+  const box = $('evList');
+  if(!box) return;
+  let rows = events.slice();
+  if(dayFilter) rows = rows.filter(x => x.date === dayFilter);
+  if(keyword){
+    const k = keyword.toLowerCase();
+    rows = rows.filter(x => [x.title,x.org,x.place,x.speaker].join(' ').toLowerCase().includes(k));
+  }
+  rows.sort((a,b) => (a.date + (a.time||'')).localeCompare(b.date + (b.time||'')));
+  $('evCount').textContent = rows.length ? `共 ${rows.length} 个` : '';
+  if(!rows.length){
+    box.innerHTML = `<div class="empty" style="padding:26px 18px">${events.length ? '这一天没有活动或比赛。' : '还没有添加活动或比赛。点右上角「添加事件」。'}</div>`;
+    return;
+  }
+  box.innerHTML = rows.map(e => `<div class="evitem" data-id="${esc(e.id)}">
+    <div class="row1">
+      <span class="evkind">${esc(e.kind || '活动')}</span>
+      <span class="ttl">${esc(e.title)}</span>
+      <span class="when">${fmtDate(e.date)}${e.time ? ' ' + esc(e.time) + (e.time2 ? '–' + esc(e.time2) : '') : ''}</span>
+    </div>
+    <div class="meta">
+      ${[e.place, e.org, e.people ? e.people + ' 人' : '', e.speaker ? '宣讲人：' + e.speaker : ''].filter(Boolean).map(esc).join(' · ')}
+      ${e.note ? `<br>备注：${esc(e.note)}` : ''}
+    </div>
+    <div class="acts">
+      <button data-edit="${esc(e.id)}">编辑</button>
+      <button class="danger" data-del="${esc(e.id)}">删除</button>
+    </div>
+  </div>`).join('');
+
+  box.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => openEvent(b.dataset.edit)));
+  box.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => {
+    if(!confirm('删除这个事件？')) return;
+    saveEvents(loadEvents().filter(x => x.id !== b.dataset.del));
+    render();
+  }));
+}
+
 function render(){
   const all = load();
+  const events = loadEvents();
   renderStats(all);
-  renderCal(all);
+  renderCal(all, events);
+  renderEvents(events);
   const rows = visible(all);
   $('cnt').textContent = `共 ${rows.length} 条`;
   const box = $('list');
@@ -439,6 +571,60 @@ function seedDemo(){
   ]);
   render();
 }
+
+/* 活动 / 比赛事件：新增、编辑 */
+function openEvent(id){
+  const ev = id ? loadEvents().find(x => x.id === id) : null;
+  $('evModalTitle').textContent = ev ? '编辑事件' : '添加事件';
+  $('evId').value = ev ? ev.id : '';
+  $('evKind').value = ev ? (ev.kind || '活动') : '活动';
+  $('evTitleIn').value = ev ? ev.title : '';
+  $('evDate').value = ev ? ev.date : new Date().toISOString().slice(0,10);
+  $('evTime').value = ev ? (ev.time || '14:00') : '14:00';
+  $('evTime2').value = ev ? (ev.time2 || '15:00') : '15:00';
+  $('evPeople').value = ev ? (ev.people || '') : '';
+  $('evPlace').value = ev ? (ev.place || '') : '';
+  $('evOrg').value = ev ? (ev.org || '') : '';
+  $('evSpeaker').value = ev ? (ev.speaker || '') : '';
+  $('evNote').value = ev ? (ev.note || '') : '';
+  $('evModal').classList.add('on');
+  setTimeout(() => $('evTitleIn').focus(), 60);
+}
+function closeEvent(){ $('evModal').classList.remove('on'); }
+
+$('btnAddEvent').addEventListener('click', () => openEvent(''));
+$('evCancel').addEventListener('click', closeEvent);
+$('evModal').addEventListener('click', e => { if(e.target === $('evModal')) closeEvent(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && $('evModal').classList.contains('on')) closeEvent(); });
+
+$('evSave').addEventListener('click', () => {
+  const title = $('evTitleIn').value.trim();
+  const date = $('evDate').value;
+  if(!title){ alert('请填写事件名称'); $('evTitleIn').focus(); return; }
+  if(!date){ alert('请选择日期'); $('evDate').focus(); return; }
+  const t1 = $('evTime').value, t2 = $('evTime2').value;
+  if(t1 && t2 && t2 <= t1){ alert('结束时间要晚于开始时间'); return; }
+  const rec = {
+    id: $('evId').value || ('EV' + Date.now()),
+    kind: $('evKind').value,
+    title, date, time: t1, time2: t2,
+    people: $('evPeople').value.trim(),
+    place: $('evPlace').value.trim(),
+    org: $('evOrg').value.trim(),
+    speaker: $('evSpeaker').value.trim(),
+    note: $('evNote').value.trim(),
+    created: new Date().toISOString()
+  };
+  const list = loadEvents();
+  const i = list.findIndex(x => x.id === rec.id);
+  if(i >= 0) list[i] = Object.assign({}, list[i], rec);
+  else list.push(rec);
+  saveEvents(list);
+  const [y,m] = date.split('-').map(Number);
+  calY = y; calM = m - 1; dayFilter = '';
+  closeEvent();
+  render();
+});
 
 /* 日历翻页与清除 */
 $('calPrev').addEventListener('click', () => {
