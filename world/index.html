@@ -146,6 +146,11 @@
     border-radius:14px;padding:2px 10px;cursor:pointer}
   #uiCtl button:hover{border-color:#E8B45E;color:#E8B45E}
 
+  @media (pointer:coarse){
+    #uiCtl{display:none}
+    .build-tag{display:none}
+  }
+
   /* 宣讲台小游戏 */
   #arcade{position:fixed;inset:0;z-index:45;display:none;align-items:center;justify-content:center;
     padding:24px;background:rgba(20,16,12,.62);backdrop-filter:blur(6px)}
@@ -239,7 +244,7 @@
     <span>界面</span>
     <button id="uiPlus" title="界面放大">A+</button>
   </div>
-  <div style="position:absolute;left:28px;bottom:20px;font-size:11px;letter-spacing:.18em;color:rgba(60,52,40,.45)">build 19</div>
+  <div class="build-tag" style="position:absolute;left:28px;bottom:20px;font-size:11px;letter-spacing:.18em;color:rgba(60,52,40,.45)">build 19</div>
   <div class="brand">
     <div class="dot">宣</div>
     <div><b>星火镇</b><span>学生微宣讲团 · 黄昏</span></div>
@@ -1461,18 +1466,18 @@ function animate(){
   const catDist = Math.hypot(player.position.x-catGroup.position.x, player.position.z-catGroup.position.z);
   if(nearCat){
     promptEl.classList.add('on');
-    promptEl.innerHTML = '<kbd>E</kbd>摸摸猫';
+    promptEl.innerHTML = IS_TOUCH ? '点右下「摸摸」' : '<kbd>E</kbd>摸摸猫';
     actBtn.style.opacity = 1; actBtn.textContent = '摸摸';
     actBtn.onclick = ()=> petCat();
   } else if(nearStage && (!nearDoor || stageDist < best)){
     promptEl.classList.add('on');
-    promptEl.innerHTML = '<kbd>E</kbd>上台试讲';
+    promptEl.innerHTML = IS_TOUCH ? '点右下「试讲」' : '<kbd>E</kbd>上台试讲';
     actBtn.style.opacity = 1;
     actBtn.textContent = '试讲';
     actBtn.onclick = ()=> openArcade();
   } else if(nearDoor){
     promptEl.classList.add('on');
-    promptEl.innerHTML=`<kbd>E</kbd>进入 ${nearDoor.name}`;
+    promptEl.innerHTML = IS_TOUCH ? `点右下「进入」· ${nearDoor.name}` : `<kbd>E</kbd>进入 ${nearDoor.name}`;
     actBtn.style.opacity = 1;
     actBtn.textContent = '进入';
     actBtn.onclick = ()=> tryEnter();
