@@ -1302,28 +1302,58 @@ function toast(msg){
 const cam = { yaw: -0.12, pitch: .24, dist: ASPECT<1?26:21, target: new THREE.Vector3(1.5,1.2,6) };
 let dragging=false, lastX=0, lastY=0;
 const camTarget={yaw:cam.yaw, pitch:cam.pitch, dist:cam.dist};
+let camCollide = cam.dist;
 const raycaster = new THREE.Raycaster();
 const ndc = new THREE.Vector2();
+const pointers = new Map();
+let pinchStartDist = 0, pinchStartGap = 0;
+renderer.domElement.style.touchAction = 'none';
 renderer.domElement.addEventListener('pointerdown', e=>{
   if(e.target.closest('#hud button') || arcadeOpen) return;
-  ndc.x = (e.clientX/innerWidth)*2 - 1;
-  ndc.y = -(e.clientY/innerHeight)*2 + 1;
-  raycaster.setFromCamera(ndc, camera);
-  const hits = raycaster.intersectObject(catGroup, true);
-  if(hits.length){ petCat(); return; }
-  dragging=true; lastX=e.clientX; lastY=e.clientY;
+  if(e.pointerType === 'mouse'){
+    ndc.x = (e.clientX/innerWidth)*2 - 1;
+    ndc.y = -(e.clientY/innerHeight)*2 + 1;
+    raycaster.setFromCamera(ndc, camera);
+    const hits = raycaster.intersectObject(catGroup, true);
+    if(hits.length){ petCat(); return; }
+  }
+  pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  if(pointers.size === 1){ dragging = true; lastX = e.clientX; lastY = e.clientY; }
+  else if(pointers.size === 2){
+    dragging = false;
+    const [a,b] = [...pointers.values()];
+    pinchStartGap = Math.max(10, Math.hypot(a.x-b.x, a.y-b.y));
+    pinchStartDist = camTarget.dist;
+  }
 });
 addEventListener('pointermove', e=>{
-  if(!dragging) return;
+  if(!pointers.has(e.pointerId)) return;
+  pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  if(pointers.size === 2){
+    const [a,b] = [...pointers.values()];
+    const gap = Math.hypot(a.x-b.x, a.y-b.y);
+    if(pinchStartGap > 10){
+      camTarget.dist = Math.min(40, Math.max(8, pinchStartDist * pinchStartGap / Math.max(10, gap)));
+    }
+    return;
+  }
+  if(!dragging || e.pointerType === 'touch' && pointers.size !== 1) return;
   const dx=e.clientX-lastX, dy=e.clientY-lastY;
   lastX=e.clientX; lastY=e.clientY;
   camTarget.yaw -= dx*.0026;
-  camTarget.pitch = Math.min(.92, Math.max(.10, camTarget.pitch + dy*.0021));
+  camTarget.pitch = Math.min(.46, Math.max(.20, camTarget.pitch + dy*.0011));
 });
-addEventListener('pointerup', ()=> dragging=false);
-addEventListener('wheel', e=>{
-  cam.dist = Math.min(34, Math.max(9, cam.dist + Math.sign(e.deltaY)*1.2));
-},{passive:true});
+function endPointer(e){
+  pointers.delete(e.pointerId);
+  if(pointers.size < 2) pinchStartGap = 0;
+  if(pointers.size === 0) dragging = false;
+}
+addEventListener('pointerup', endPointer);
+addEventListener('pointercancel', endPointer);
+renderer.domElement.addEventListener('wheel', e=>{
+  e.preventDefault();
+  camTarget.dist = Math.min(40, Math.max(8, camTarget.dist + Math.sign(e.deltaY)*1.2));
+}, {passive:false});
 
 /* 手机摇杆 */
 const stick=document.getElementById('stick'), knob=stick.querySelector('i');
@@ -1439,19 +1469,21 @@ function animate(){
   cam.yaw += (camTarget.yaw-cam.yaw)*k;
   cam.pitch += (camTarget.pitch-cam.pitch)*k;
   cam.dist += (camTarget.dist-cam.dist)*k;
-  let dist=cam.dist, effPitch=cam.pitch;
+  let wantDist=cam.dist, effPitch=cam.pitch;
   for(let i=0;i<14;i++){
     const cy0=Math.cos(effPitch);
     let hit=false;
     for(let t=.25;t<=1.001;t+=.15){
-      const px=player.position.x+Math.sin(cam.yaw)*dist*cy0*t;
-      const pz=player.position.z+Math.cos(cam.yaw)*dist*cy0*t;
+      const px=player.position.x+Math.sin(cam.yaw)*wantDist*cy0*t;
+      const pz=player.position.z+Math.cos(cam.yaw)*wantDist*cy0*t;
       if(blocked(px,pz)){ hit=true; break; }
     }
     if(!hit) break;
-    dist*=.90;
+    wantDist*=.90;
   }
-  if(dist<9){ dist=9; }
+  if(wantDist<9) wantDist=9;
+  camCollide += (wantDist - camCollide) * (1-Math.pow(.02, dt));
+  const dist=camCollide;
   const cy=Math.cos(effPitch), sy=Math.sin(effPitch);
   const want=new THREE.Vector3(
     player.position.x+Math.sin(cam.yaw)*dist*cy,
