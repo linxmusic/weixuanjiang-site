@@ -185,7 +185,7 @@ a{color:inherit}
     <img src="assets/img/logo-mark.png" alt="">
     <h2>预约管理</h2>
     <p>请输入访问码</p>
-    <input id="gateInput" type="password" inputmode="numeric" placeholder="访问码" autocomplete="off">
+    <input id="gateInput" type="password" placeholder="访问码 / 管理密码" autocomplete="off">
     <button id="gateBtn" type="button">进入</button>
     <div class="gateerr" id="gateErr"></div>
   </div>
@@ -282,6 +282,8 @@ a{color:inherit}
   </div>
 </div>
 
+<script src="assets/config.js?v=20261105k"></script>
+<script src="assets/api.js?v=20261105k"></script>
 <script>
 const KEY = 'xyyj_bookings_v1';
 const EVKEY = 'xyyj_events_v1';
@@ -446,6 +448,7 @@ function renderEvents(events){
   box.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => {
     if(!confirm('删除这个事件？')) return;
     saveEvents(loadEvents().filter(x => x.id !== b.dataset.del));
+    if(window.XYAPI && XYAPI.on) XYAPI.deleteEvent(b.dataset.del).catch(err => console.warn('删除未同步：', err));
     render();
   }));
 }
@@ -529,6 +532,10 @@ function render(){
     rec.status = act;
     rec.updated = new Date().toISOString();
     save(list);
+    if(window.XYAPI && XYAPI.on){
+      XYAPI.patchBooking(no, { status: act, reject: rec.reject || '' })
+        .catch(err => console.warn('状态未同步到后端：', err));
+    }
     render();
   }));
 }
@@ -620,6 +627,10 @@ $('evSave').addEventListener('click', () => {
   if(i >= 0) list[i] = Object.assign({}, list[i], rec);
   else list.push(rec);
   saveEvents(list);
+  if(window.XYAPI && XYAPI.on){
+    (i >= 0 ? XYAPI.patchEvent(rec.id, rec) : XYAPI.createEvent(rec))
+      .catch(err => console.warn('事件未同步到后端：', err));
+  }
   const [y,m] = date.split('-').map(Number);
   calY = y; calM = m - 1; dayFilter = '';
   closeEvent();
@@ -643,7 +654,7 @@ $('calToday').addEventListener('click', () => {
 });
 $('calClear').addEventListener('click', () => { if(dayFilter){ dayFilter = ''; render(); } });
 
-/* 访问码：只挡一下，不是真安全 */
+/* 访问码：接后端时走后端登录，静态页仍用 8888 遮挡 */
 const GATE_KEY = 'xyyj_admin_ok';
 const ACCESS_CODE = '8888';
 function unlockAdmin(){
@@ -651,23 +662,58 @@ function unlockAdmin(){
   if(g) g.classList.add('off');
   document.body.style.overflow = '';
 }
-try {
-  if(sessionStorage.getItem(GATE_KEY) === '1') unlockAdmin();
-  else document.body.style.overflow = 'hidden';
-} catch(e){ document.body.style.overflow = 'hidden'; }
-$('gateBtn').addEventListener('click', () => {
-  const v = $('gateInput').value.trim();
+async function syncFromServer(){
+  if(!(window.XYAPI && XYAPI.on) || !XYAPI.hasToken()) return false;
+  try{
+    const [b, e] = await Promise.all([XYAPI.adminBookings(), XYAPI.events()]);
+    if(Array.isArray(b.bookings)) save(b.bookings);
+    if(Array.isArray(e.events)) saveEvents(e.events);
+    render();
+    return true;
+  }catch(err){
+    console.warn('从后端同步失败：', err);
+    return false;
+  }
+}
+async function tryGate(v){
+  if(window.XYAPI && XYAPI.on){
+    try{
+      await XYAPI.login('admin', v);
+      unlockAdmin();
+      await syncFromServer();
+      return true;
+    }catch(err){
+      if(v !== ACCESS_CODE){
+        $('gateErr').textContent = err.message || '密码不对';
+        $('gateInput').select();
+        return true;
+      }
+    }
+  }
   if(v === ACCESS_CODE){
     try { sessionStorage.setItem(GATE_KEY, '1'); } catch(e){}
     unlockAdmin();
-  } else {
-    $('gateErr').textContent = '访问码不对';
-    $('gateInput').select();
+    return true;
   }
-});
+  $('gateErr').textContent = '访问码不对';
+  $('gateInput').select();
+  return true;
+}
+try {
+  if(window.XYAPI && XYAPI.on){
+    if(XYAPI.hasToken()) unlockAdmin();
+    else document.body.style.overflow = 'hidden';
+  } else if(sessionStorage.getItem(GATE_KEY) === '1'){
+    unlockAdmin();
+  } else {
+    document.body.style.overflow = 'hidden';
+  }
+} catch(e){ document.body.style.overflow = 'hidden'; }
+$('gateBtn').addEventListener('click', () => { tryGate($('gateInput').value.trim()); });
 $('gateInput').addEventListener('keydown', e => { if(e.key === 'Enter') $('gateBtn').click(); });
 
 render();
+syncFromServer();
 </script>
 </body>
 </html>

@@ -341,7 +341,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
 <link rel="preload" as="image" href="assets/img/speakers/s01.jpg">
-<link rel="stylesheet" href="assets/motion.css?v=20261105j">
+<link rel="stylesheet" href="assets/motion.css?v=20261105k">
 </head>
 <body>
 
@@ -472,7 +472,9 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
   </div>
 </div>
 
-<script src="assets/site.js?v=20261105j"></script>
+<script src="assets/config.js?v=20261105k"></script>
+<script src="assets/api.js?v=20261105k"></script>
+<script src="assets/site.js?v=20261105k"></script>
 <script>
 /* ============ 数据 ============ */
 const KEY = 'xyyj_bookings_v1';
@@ -712,6 +714,17 @@ body.addEventListener('submit', e => {
   };
   list.unshift(rec);
   save(list);
+  if(window.XYAPI && XYAPI.on){
+    XYAPI.createBooking(rec).then(j => {
+      if(!j.booking) return;
+      const l = load(); const i = l.findIndex(x => x.no === rec.no);
+      if(i >= 0){ l[i] = Object.assign(l[i], j.booking); save(l); }
+    }).catch(err => {
+      const l = load(); const i = l.findIndex(x => x.no === rec.no);
+      if(i >= 0){ l[i].pending = true; save(l); }
+      console.warn('后端暂时不可用，这条已存在本机：', err);
+    });
+  }
   presetTopic = '';
   presetSpeaker = '';
   title.textContent = '预约已提交';
@@ -767,6 +780,7 @@ document.getElementById('panelBody').addEventListener('click', e => {
   const no = b.dataset.del;
   if(!confirm('确定取消 ' + no + ' 这条预约吗？')) return;
   save(load().filter(x => x.no !== no));
+  if(window.XYAPI && XYAPI.on) XYAPI.cancel(no).catch(err => console.warn('取消未同步到后端：', err));
   body.innerHTML = mineHTML();
 });
 
@@ -969,6 +983,19 @@ function renderCols(){
     </details>`).join('');
 }
 renderCols();
+/* 有后端时，进页面就把自己的预约从服务器拉一遍 */
+async function refreshMine(){
+  if(!(window.XYAPI && XYAPI.on)) return;
+  try{
+    const j = await XYAPI.mine();
+    if(Array.isArray(j.bookings)){
+      save(j.bookings);
+      if(title.textContent === '我的预约') body.innerHTML = mineHTML();
+    }
+  }catch(e){ console.warn('我的预约同步失败', e); }
+}
+refreshMine();
+
 renderTopicRows();
 renderBranches();
 renderSpeakers();
@@ -1007,8 +1034,8 @@ window.openBooking = openBooking;
 window.openMine = openMine;
 window.openSpeaker = openSpeaker;
 </script>
-<script src="assets/motion.js?v=20261105j"></script>
-<script src="assets/space.js?v=20261105j"></script>
-<script src="assets/ticket.js?v=20261105j"></script>
+<script src="assets/motion.js?v=20261105k"></script>
+<script src="assets/space.js?v=20261105k"></script>
+<script src="assets/ticket.js?v=20261105k"></script>
 </body>
 </html>

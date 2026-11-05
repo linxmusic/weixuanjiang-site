@@ -192,7 +192,7 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 .toast.on{opacity:1;transform:translateX(-50%)}
 </style>
 <script>document.documentElement.className+=' js js-arm';setTimeout(function(){document.documentElement.classList.remove('js-arm')},2400);</script>
-<link rel="stylesheet" href="assets/motion.css?v=20261105j">
+<link rel="stylesheet" href="assets/motion.css?v=20261105k">
 </head>
 <body>
 
@@ -273,7 +273,9 @@ h1 mark{background:linear-gradient(180deg,transparent 56%,var(--mark) 56%);color
 
 <div class="toast" id="toast"></div>
 
-<script src="assets/site.js?v=20261105j"></script>
+<script src="assets/config.js?v=20261105k"></script>
+<script src="assets/api.js?v=20261105k"></script>
+<script src="assets/site.js?v=20261105k"></script>
 <script>
 const KEY = 'xyyj_bookings_v1';
 const TOPICS = (window.SITE && window.SITE.topics) || ['主题还没定，请宣讲团推荐'];
@@ -546,6 +548,13 @@ function onSubmit(e){
     status: '待受理', created: new Date().toISOString()
   };
   list.unshift(rec); save(list); presetTopic = ''; presetSpeaker = '';
+  if(window.XYAPI && XYAPI.on){
+    XYAPI.createBooking(rec).then(j => {
+      if(!j.booking) return;
+      const l = load(); const i = l.findIndex(x => x.no === rec.no);
+      if(i >= 0){ l[i] = Object.assign(l[i], j.booking); save(l); }
+    }).catch(err => console.warn('后端暂时不可用，这条已存在本机：', err));
+  }
   $('#formBox').innerHTML = `
     <div class="done">
       <div class="ok">✓</div>
@@ -577,14 +586,22 @@ function renderMine(){
   $('#mineBox').querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => {
     if(!confirm('确定取消 ' + b.dataset.del + ' 吗？')) return;
     save(load().filter(x => x.no !== b.dataset.del));
+    if(window.XYAPI && XYAPI.on) XYAPI.cancel(b.dataset.del).catch(err => console.warn('取消未同步：', err));
     renderMine(); toast('已取消');
   }));
 }
 
 renderCols();
 go('home');
+
+/* 有后端时同步自己的预约 */
+if(window.XYAPI && XYAPI.on){
+  XYAPI.mine().then(j => {
+    if(Array.isArray(j.bookings)){ save(j.bookings); renderMine(); }
+  }).catch(err => console.warn('我的预约同步失败', err));
+}
 </script>
-<script src="assets/motion.js?v=20261105j"></script>
-<script src="assets/space.js?v=20261105j"></script>
+<script src="assets/motion.js?v=20261105k"></script>
+<script src="assets/space.js?v=20261105k"></script>
 </body>
 </html>
