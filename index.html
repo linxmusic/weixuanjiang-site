@@ -35,7 +35,12 @@ button{font-family:inherit}
 .links a:hover{opacity:1}
 .links i{width:9px;height:9px;border-radius:2px;display:block}
 .c1 i{background:#2E7D5B}.c2 i{background:#3F628F}.c3 i{background:#E85F8A}.c4 i{background:#E8A33F}
+.nav .links{display:flex;align-items:center;gap:22px;font-size:13.5px;margin-left:40px}
+.nav .links a{text-decoration:none;color:inherit;opacity:.8;transition:opacity .18s}
+.nav .links a:hover{opacity:1;color:var(--accent)}
 .nav .right{margin-left:auto;display:flex;align-items:center;gap:20px}
+@media (max-width:1180px){ .nav .links{gap:14px;font-size:12.5px;margin-left:22px} }
+@media (max-width:940px){ .nav .links{display:none} }
 .nav .right a{font-size:13.5px;text-decoration:none}
 .nav .mine{border:0;background:none;font-size:13.5px;cursor:pointer;padding:0;color:var(--ink)}
 .nav .book{background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-weight:500;border:0;font-size:13.5px;cursor:pointer}
@@ -351,9 +356,16 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
 
   <nav class="nav">
     <div class="brand"><img src="assets/img/logo-mark.png" alt="">学生微宣讲团</div>
+    <div class="links">
+      <a href="#scenes">宣讲现场</a>
+      <a href="#topics">预约专题</a>
+      <a href="#columns">栏目</a>
+      <a href="#branches">分团</a>
+      <a href="#speakers">宣讲人</a>
+      <a href="world/index.html">进小镇</a>
+    </div>
     <div class="right">
       <button class="mine" id="btnMine">我的预约</button>
-      <a class="see" href="#scenes">查看现场</a>
       <button class="book" id="btnBookTop">发起预约</button>
     </div>
   </nav>
@@ -364,6 +376,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
       <p class="lede">西安交通大学学生微宣讲团面向支部、班级、部门及校内外单位提供宣讲服务。请填写活动时间、地点与主题，提交后由工作人员通过微信与您联系。</p>
       <div class="acts">
         <button class="btn-p" id="btnBookHero">填写预约信息 ›</button>
+        <a class="btn-s" href="world/index.html">进小镇看看 ›</a>
         <a class="btn-s" href="#scenes">先看看现场</a>
       </div>
       <div class="stats">
@@ -417,6 +430,7 @@ h1 mark{background:linear-gradient(180deg,transparent 58%,var(--mark) 58%);color
     <a class="hl" href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener">赓续长征薪火</a><span>·</span><a href="https://mp.weixin.qq.com/s/984aRran-f5mQDClnLPmSw" target="_blank" rel="noopener">磨稿砺初心</a><span>·</span><a class="hl" href="https://mp.weixin.qq.com/s/txKdNRFmcWIDp7nryoi8cA" target="_blank" rel="noopener">传习杯四校同台</a><span>·</span><a href="https://weixin.sogou.com/weixin?type=2&query=%E5%AF%BB%E8%BF%B9%C2%B7%E9%97%AE%E9%81%93%C2%B7%E4%BC%A0%E5%A3%B0%EF%BD%9C2026%E5%B9%B4%E6%9A%91%E6%9C%9F%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E7%BA%AA%E5%AE%9E" target="_blank" rel="noopener">寻迹 · 问道 · 传声</a><span>·</span><a class="hl" href="https://mp.weixin.qq.com/s/VCMx_W-KeptHHGKtvDqIFw" target="_blank" rel="noopener">七秩西迁 三校同讲</a><span>·</span>
     <a class="hl" tabindex="-1" aria-hidden="true" href="https://mp.weixin.qq.com/s/18HNmhEr6WqT4qnxrZgYKw" target="_blank" rel="noopener">赓续长征薪火</a><span>·</span><a tabindex="-1" aria-hidden="true" href="https://mp.weixin.qq.com/s/984aRran-f5mQDClnLPmSw" target="_blank" rel="noopener">磨稿砺初心</a><span>·</span><a class="hl" tabindex="-1" aria-hidden="true" href="https://mp.weixin.qq.com/s/txKdNRFmcWIDp7nryoi8cA" target="_blank" rel="noopener">传习杯四校同台</a><span>·</span><a tabindex="-1" aria-hidden="true" href="https://weixin.sogou.com/weixin?type=2&query=%E5%AF%BB%E8%BF%B9%C2%B7%E9%97%AE%E9%81%93%C2%B7%E4%BC%A0%E5%A3%B0%EF%BD%9C2026%E5%B9%B4%E6%9A%91%E6%9C%9F%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E7%BA%AA%E5%AE%9E" target="_blank" rel="noopener">寻迹 · 问道 · 传声</a><span>·</span><a class="hl" tabindex="-1" aria-hidden="true" href="https://mp.weixin.qq.com/s/VCMx_W-KeptHHGKtvDqIFw" target="_blank" rel="noopener">七秩西迁 三校同讲</a><span>·</span>
   </div></div>
+
 
   <section class="sec" id="scenes">
     <div class="sec-hd"><h2>宣讲现场</h2><a href="#columns">更多动态 →</a></div>
@@ -1037,5 +1051,34 @@ window.openSpeaker = openSpeaker;
 <script src="assets/motion.js?v=20261105k"></script>
 <script src="assets/space.js?v=20261105k"></script>
 <script src="assets/ticket.js?v=20261105k"></script>
+
+<script>
+(function(){
+  function check(){
+    var z = Math.max(window.innerWidth / Math.max(1, window.outerWidth), window.screen.width / Math.max(1, window.innerWidth));
+    var el = document.getElementById('zoomTip');
+    if(z > 1.3){
+      if(!el){
+        el = document.createElement('div');
+        el.id = 'zoomTip';
+        el.style.cssText = 'position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:9999;'+
+          'background:#B33A2B;color:#FBF3E1;padding:12px 22px;border-radius:6px;'+
+          'font:15px/1.6 "Songti SC","SimSun",serif;letter-spacing:.06em;'+
+          'box-shadow:0 10px 30px rgba(0,0,0,.25);display:flex;align-items:center;gap:14px';
+        el.innerHTML = '<span>浏览器把本站缩小了（约 <b id="zoomPct"></b>）。按 <b>Ctrl + 0</b> 恢复正常大小。</span>'+
+          '<button style="font:inherit;background:none;border:1px solid rgba(251,243,225,.6);'+
+          'color:#FBF3E1;border-radius:4px;padding:3px 10px;cursor:pointer">知道了</button>';
+        el.querySelector('button').onclick = function(){ el.remove(); };
+        document.body.appendChild(el);
+      }
+      var pct = document.getElementById('zoomPct');
+      if(pct) pct.textContent = Math.round(100 / z) + '%';
+    } else if(el){ el.remove(); }
+  }
+  window.addEventListener('resize', check);
+  setTimeout(check, 400);
+})();
+</script>
+
 </body>
 </html>
