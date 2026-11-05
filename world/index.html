@@ -69,7 +69,7 @@
     padding:1px 7px;margin-right:7px;font-size:12px}
 
   /* 手机摇杆 */
-  #stick{position:absolute;left:26px;bottom:34px;zoom:var(--u);width:120px;height:120px;border-radius:50%;
+  #stick{touch-action:none;user-select:none;position:absolute;left:26px;bottom:34px;zoom:var(--u);width:120px;height:120px;border-radius:50%;
     border:1.5px solid rgba(246,235,213,.5);background:rgba(30,26,20,.18);
     display:none;z-index:12;backdrop-filter:blur(3px)}
   #stick i{position:absolute;left:50%;top:50%;width:50px;height:50px;margin:-25px 0 0 -25px;
@@ -1330,7 +1330,13 @@ const stick=document.getElementById('stick'), knob=stick.querySelector('i');
 let stickVec={x:0,y:0}, stickId=null;
 stick.addEventListener('pointerdown', e=>{ stickId=e.pointerId; stick.setPointerCapture(stickId); moveStick(e); e.stopPropagation(); });
 stick.addEventListener('pointermove', e=>{ if(e.pointerId===stickId) moveStick(e); });
-stick.addEventListener('pointerup', ()=>{ stickId=null; stickVec={x:0,y:0}; knob.style.transform='translate(0,0)'; });
+function resetStick(){ stickId=null; stickVec={x:0,y:0}; knob.style.transform='translate(0,0)'; }
+stick.addEventListener('pointerup', resetStick);
+stick.addEventListener('pointercancel', resetStick);
+stick.addEventListener('lostpointercapture', resetStick);
+addEventListener('pointerup', resetStick);
+addEventListener('pointercancel', resetStick);
+addEventListener('blur', resetStick);
 function moveStick(e){
   const r=stick.getBoundingClientRect();
   let dx=e.clientX-(r.left+r.width/2), dy=e.clientY-(r.top+r.height/2);
